@@ -1,7 +1,7 @@
-import { ObjectId, Document } from "mongoose";
+import { ObjectId } from "mongoose";
 
-export interface IAdmin  extends Document{
-  _id: ObjectId;
+export interface IAdmin {
+  _id?: ObjectId;
   name: string | null;
   password: string | null;
   email: string | null;

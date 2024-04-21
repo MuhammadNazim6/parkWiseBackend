@@ -1,13 +1,18 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Document, Model, Schema } from 'mongoose';
 import { IAdmin } from '../../../domainLayer/admin';
 
-const AdminSchema: Schema = new Schema({
+const AdminSchema: Schema = new Schema<IAdmin & Document>({
   name: { type: String },
   password: { type: String },
   email: { type: String },
   role: { type: String },
 });
 
-const Admin = mongoose.model<IAdmin>('Admin', AdminSchema);
 
-export default Admin;
+const AdminModel: Model<IAdmin & Document> = mongoose.model<IAdmin & Document>(
+  "Admin",
+  AdminSchema
+);
+
+export default AdminModel;
+

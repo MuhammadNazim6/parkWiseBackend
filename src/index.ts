@@ -4,8 +4,9 @@ import connectDB from './infrastructureLayer/config/db'
 const startServer = ()=>{
   const port = process.env.PORT || 3000
   app.get('/',(req,res)=>{
-    res.send('Helllllllo')
+    res.send('Hello world')
   })
+
   app.listen(port,()=>{
     console.log(`server running  at ${port}`);
     connectDB()

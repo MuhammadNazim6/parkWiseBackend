@@ -1,4 +1,3 @@
-import { ObjectId } from "mongoose";
 import { IUser } from "../../../domainLayer/users";
 
 export interface StoreData {

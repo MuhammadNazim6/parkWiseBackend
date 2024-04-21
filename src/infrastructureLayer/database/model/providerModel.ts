@@ -1,7 +1,7 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Schema, Model, Document } from 'mongoose';
 import { IParkingProvider } from '../../../domainLayer/providers';
 
-const providerSchema: Schema = new Schema({
+const providerSchema: Schema = new Schema<IParkingProvider & Document>({
   profile: { type: String },
   mobile: { type: Number },
   services: [{ type: String }],
@@ -29,7 +29,12 @@ const providerSchema: Schema = new Schema({
   endTime: { type: Date },
 });
 
-const ParkingProvider = mongoose.model<IParkingProvider>('ParkingProvider', providerSchema);
 
-export default ParkingProvider;
+
+const ParkingProviderModel: Model<IParkingProvider & Document> = mongoose.model<IParkingProvider & Document>(
+  "Admin",
+  providerSchema
+);
+
+export default ParkingProviderModel;
 

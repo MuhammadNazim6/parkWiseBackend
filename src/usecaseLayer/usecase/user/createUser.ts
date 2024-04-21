@@ -46,7 +46,7 @@ export const createUser = async (
         data : createnewUser
       };
     }
-    throw ErrorResponse.badRequest("User already exist");
+    throw ErrorResponse.badRequest("User already exists");
   } catch (err) {
     throw err;
   }

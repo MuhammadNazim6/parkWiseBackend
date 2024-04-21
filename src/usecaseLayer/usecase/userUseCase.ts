@@ -1,7 +1,7 @@
 import { IUser } from "../../domainLayer/users";
 import { IRequestValidator } from "../interface/repository/IvalidateRepository";
 import { IUserRepository } from "../interface/repository/IUserRepository";
-import { IHashpassword } from "../interface/services/IHashpassword";
+import  IHashpassword  from "../interface/services/IHashpassword";
 import { Ijwt } from "../interface/services/Ijwt";
 import { INodemailer } from "../interface/services/INodemailer";
 import { createUser } from "./user/createUser";
@@ -35,7 +35,7 @@ export class UserUseCase {
     password,
   }: {
     name: string;
-    mobile: string;
+    mobile: number;
     email: string;
     password: string;
   }) {

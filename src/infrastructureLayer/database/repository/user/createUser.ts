@@ -9,7 +9,7 @@ export const createUser = async (
   userModels: typeof UserModel
 ): Promise<StoreData> => {
   try {
-    const user = await UserModel.create(newUser);
+    const user = await userModels.create(newUser);
     await user.save()
     const responseData: StoreData = {
       _id: user._id,
