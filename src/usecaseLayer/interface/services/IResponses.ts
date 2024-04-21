@@ -18,3 +18,10 @@ export interface IResponse<T = StoreData | string> {
   data?: T;
   token?: string
 }
+export interface ILoginResponse<T = IUser | string> {
+  status: number;
+  success: boolean;
+  message?: string;
+  data?: T;
+  token?: string
+}

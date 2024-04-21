@@ -5,6 +5,7 @@ import  IHashpassword  from "../interface/services/IHashpassword";
 import { Ijwt } from "../interface/services/Ijwt";
 import { INodemailer } from "../interface/services/INodemailer";
 import { createUser } from "./user/createUser";
+import {loginUser } from "./user/loginUser"
 
 export class UserUseCase {
   private readonly userRepository: IUserRepository;
@@ -46,6 +47,25 @@ export class UserUseCase {
       this.jwt,
       name,
       mobile,
+      email,
+      password
+    );
+  }
+
+
+  // logging in user
+  async loginUser({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) {
+    return loginUser(
+      this.requestValidator,
+      this.userRepository,
+      this.bcrypt,
+      this.jwt,
       email,
       password
     );

@@ -4,6 +4,7 @@ import { IForgotPassword, StoreData } from "../../../usecaseLayer/interface/serv
 import UserModel from "../model/userModel";
 import { createUser } from "./user/createUser";
 import {findUser} from "./user/findUser"
+import {loginUser} from "./user/loginUser"
 
 
 export class UserRepository implements IUserRepository{
@@ -24,5 +25,9 @@ export class UserRepository implements IUserRepository{
     //   return forgotPassword(newPassword, this.usersModel);
     // }
   
+    // logging in user
+    async loginUser(email: string, password: string): Promise<IUser | null> {
+        return loginUser(email,this.usersModel)
+    }
 
 }

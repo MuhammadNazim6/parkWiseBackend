@@ -9,4 +9,7 @@ router.post("/signup", (req: Req, res: Res, next: Next) =>
   userAdapter.createUser(req, res, next)
 );
 
+router.post('/login', (req: Req, res: Res, next: Next) =>
+  userAdapter.loginUser(req, res, next)
+)
 export default router;  
