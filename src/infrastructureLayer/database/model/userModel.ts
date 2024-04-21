@@ -1,10 +1,10 @@
-import mongoose, { Schema } from 'mongoose';
-import { IUsers } from '../../../domainLayer/users';
+import mongoose, { Document, Model, Schema } from 'mongoose';
+import { IUser } from '../../../domainLayer/users';
 
-const userSchema: Schema = new Schema({
+const userSchema: Schema = new Schema<IUser & Document>({
   password: { type: String, required: true },
   mobile: { type: Number },
-  username: { type: String, required: true },
+  name: { type: String, required: true },
   email: { type: String, required: true },
   profilePic: { type: String },
   bookingHistory: [{
@@ -31,6 +31,9 @@ const userSchema: Schema = new Schema({
 });
 
 
-const Users = mongoose.model<IUsers>('Users', userSchema);
+const UserModel: Model<IUser & Document> = mongoose.model<IUser & Document>(
+  "User",
+  userSchema
+);
 
-export default Users;
+export default UserModel;
