@@ -1,3 +1,4 @@
+import { IAdmin } from "../../../domainLayer/admin";
 import { IUser } from "../../../domainLayer/users";
 
 export interface StoreData {
@@ -18,10 +19,23 @@ export interface IResponse<T = StoreData | string> {
   data?: T;
   token?: string
 }
-export interface ILoginResponse<T = IUser | string> {
+
+
+export interface ILoginResponse<T = IUser | string | IAdmin> {
   status: number;
   success: boolean;
   message?: string;
   data?: T;
   token?: string
 }
+
+
+
+
+
+export interface ILogoutResponse {
+  status: number;
+  success: boolean;
+  message?: string;
+}
+

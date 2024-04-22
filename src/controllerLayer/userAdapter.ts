@@ -55,4 +55,23 @@ export class UserAdapter {
       next(err);
     }
   }
+
+  // @desc  Logout user
+  //route     POST api/user/logout
+  //@access   Public
+  async logoutuser(req:Req, res:Res, next:Next){
+    try {
+      res.cookie('userjwt','',{
+        httpOnly: false,
+        expires:new Date(0)
+      })
+      const user = await this.userusecase.logoutUser();
+      res.status(user.status).json({
+        success: user.success,
+        message: user.message,
+      });
+    } catch (error) {
+      next(error)
+    }
+  }
 }

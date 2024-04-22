@@ -4,8 +4,10 @@ import { IUserRepository } from "../interface/repository/IUserRepository";
 import  IHashpassword  from "../interface/services/IHashpassword";
 import { Ijwt } from "../interface/services/Ijwt";
 import { INodemailer } from "../interface/services/INodemailer";
+// function imports
 import { createUser } from "./user/createUser";
 import {loginUser } from "./user/loginUser"
+import { logoutUser } from "./user/logoutUser";
 
 export class UserUseCase {
   private readonly userRepository: IUserRepository;
@@ -68,6 +70,13 @@ export class UserUseCase {
       this.jwt,
       email,
       password
+    );
+  }
+  
+  // logging out user
+  async logoutUser() {
+    return logoutUser(
+      this.userRepository,
     );
   }
 }

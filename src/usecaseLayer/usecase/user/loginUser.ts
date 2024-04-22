@@ -24,9 +24,9 @@ export const loginUser = async (
     }
 
     const user = await userRepository.findUser(email); // checking if the user exist or not
-    if(!user){
-      throw ErrorResponse.badRequest("No user found with this email");
-    }
+      if(!user){
+        throw ErrorResponse.badRequest("No user found with this email");
+      }
 
     const matchedPassword = await bcrypt.compare(password, user.password)
     if(!matchedPassword){

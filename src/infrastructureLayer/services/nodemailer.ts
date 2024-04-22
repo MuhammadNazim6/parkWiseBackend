@@ -14,7 +14,7 @@ class Nodemailer implements INodemailer{
     console.log(`OTP GENERATED ${otp}`);
     
     return otp;
-  }
+  }  
 }
 
 export default Nodemailer;

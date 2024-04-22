@@ -5,7 +5,8 @@ import morgan from "morgan";
 
 
 // Provide route imports here
-import userRouter from '../route/userRoute'
+import userRouter from '../route/userRoute';
+import adminRouter from '../route/adminRoutes';
 
 
 export const app = express()
@@ -17,4 +18,4 @@ app.use(morgan('dev'))
 
 // Provide route usage here
 app.use("/api/user", userRouter);
- 
+app.use("/api/admin", adminRouter);
