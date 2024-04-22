@@ -31,4 +31,28 @@ export class AdminAdapter{
       next(err);
     }
   }
+
+
+  // @desc Admin logout 
+  // route POST api/admin/logout
+  // @access Private
+  async logoutAdmin(req: Req, res: Res, next: Next) {
+    try {
+
+      res.cookie('userjwt','',{
+        httpOnly: false,
+        expires:new Date(0)
+      })
+
+  
+      res.status(200).json({
+        success: true,
+        message: 'Admin logged out',
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+
 }

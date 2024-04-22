@@ -2,10 +2,9 @@ import { Next, Req, Res } from "../../infrastructureLayer/types/expressTypes";
 import ErrorResponse from "./errorResponse";
 
 const errorHandler = (err: any, req: Req, res: Res, next: Next) => {
-  console.error(err);
+  // console.error(err);
   console.log('From the errorhandler');
   
-
   if (err instanceof ErrorResponse) {
     return res.status(err.status).json({
       success: false,

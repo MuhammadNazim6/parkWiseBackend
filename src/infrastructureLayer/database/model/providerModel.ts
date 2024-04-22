@@ -32,7 +32,7 @@ const providerSchema: Schema = new Schema<IParkingProvider & Document>({
 
 
 const ParkingProviderModel: Model<IParkingProvider & Document> = mongoose.model<IParkingProvider & Document>(
-  "Admin",
+  "Provider",
   providerSchema
 );
 

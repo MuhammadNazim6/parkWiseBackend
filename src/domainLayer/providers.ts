@@ -1,7 +1,7 @@
 import { ObjectId, Document } from "mongoose";
 
 export interface IParkingProvider {
-  _id?: ObjectId;
+  _id?: string;
   profile?: string | null;
   services?: string[] | null;
   startTime?: Date | null;
@@ -10,7 +10,7 @@ export interface IParkingProvider {
   mobile: number | null;
   availableSpace?: string | null;
   feedbacks?: ObjectId[] | null;
-  email: string | null;
+  email: string ;
   images?: string[] | null;
   description?: string | null;
   parkingName?: string | null;

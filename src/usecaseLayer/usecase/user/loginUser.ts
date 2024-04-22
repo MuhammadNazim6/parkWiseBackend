@@ -20,12 +20,20 @@ export const loginUser = async (
     );
 
     if (!validation.success) {
-      throw ErrorResponse.badRequest(validation.message as string);
+      return{
+        status: 401,
+        success: false,
+        message: `The username or password is incorrect`, 
+      }
     }
 
     const user = await userRepository.findUser(email); // checking if the user exist or not
       if(!user){
-        throw ErrorResponse.badRequest("No user found with this email");
+        return{
+          status: 401,
+          success: false,
+          message: `The username or password is incorrect`, 
+        }
       }
 
     const matchedPassword = await bcrypt.compare(password, user.password)

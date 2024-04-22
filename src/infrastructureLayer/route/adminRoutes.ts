@@ -10,4 +10,9 @@ router.post('/login',(req:Req, res:Res, next:Next)=>{
   adminAdapter.loginAdmin(req, res, next);
 })
 
+// Admin logout
+router.post('/logout',(req:Req,res:Res,next:Next)=>{
+  adminAdapter.logoutAdmin(req,res,next)
+})
+
 export default router;  

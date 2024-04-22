@@ -6,7 +6,7 @@ export class UserAdapter {
   private readonly userusecase: UserUseCase;
 
   constructor(userusecase: UserUseCase) {
-    this.userusecase = userusecase; // using dependency injection to call the userusecase
+    this.userusecase = userusecase;   
   }
 
   // @desc  Register new user
@@ -58,7 +58,7 @@ export class UserAdapter {
 
   // @desc  Logout user
   //route     POST api/user/logout
-  //@access   Public
+  //@access   Private
   async logoutuser(req:Req, res:Res, next:Next){
     try {
       res.cookie('userjwt','',{

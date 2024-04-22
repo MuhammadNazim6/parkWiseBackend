@@ -25,12 +25,20 @@ export const loginAdmin = async (
     }
     const admin = await adminRepository.findAdmin(email);
     if(!admin){
-      throw ErrorResponse.badRequest("No admin found with this email");
+      return{
+        status: 401,
+        success: false,
+        message: `The name or password is incorrect`, 
+      }
     }
 
     const matchedPassword = await bcrypt.compare(password,admin.password)
     if(!matchedPassword){
-      throw ErrorResponse.badRequest('Passwords do not match')
+      return{
+        status: 401,
+        success: false,
+        message: `The name or password is incorrect`, 
+      }
     }
 
     const token = jwt.createJWT(admin._id as string , email, 'admin', admin.name);

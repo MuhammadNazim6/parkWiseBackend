@@ -1,4 +1,5 @@
 import { IAdmin } from "../../../domainLayer/admin";
+import { IParkingProvider } from "../../../domainLayer/providers";
 import { IUser } from "../../../domainLayer/users";
 
 export interface StoreData {
@@ -21,15 +22,13 @@ export interface IResponse<T = StoreData | string> {
 }
 
 
-export interface ILoginResponse<T = IUser | string | IAdmin> {
+export interface ILoginResponse<T = IUser | string | IAdmin | IParkingProvider> {
   status: number;
   success: boolean;
   message?: string;
   data?: T;
   token?: string
 }
-
-
 
 
 
