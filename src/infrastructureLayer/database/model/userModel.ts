@@ -2,11 +2,12 @@ import mongoose, { Document, Model, Schema } from 'mongoose';
 import { IUser } from '../../../domainLayer/users';
 
 const userSchema: Schema = new Schema<IUser & Document>({
-  password: { type: String, required: true },
+  password: { type: String },
   mobile: { type: Number },
   name: { type: String, required: true },
   email: { type: String, required: true },
   profilePic: { type: String },
+  google: { type: Boolean, default: false },
   bookingHistory: [{
     amount: { type: Number },
     date: { type: Date },

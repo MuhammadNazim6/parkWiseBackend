@@ -5,8 +5,9 @@ export interface IUser {
   name: string;
   password: string;
   email: string;
-  mobile: number | null;
+  mobile: number;
   profilePic?: string | null;
+  google?:boolean;
   bookingHistory?: {
     amount: number | null;
     date: Date | null;

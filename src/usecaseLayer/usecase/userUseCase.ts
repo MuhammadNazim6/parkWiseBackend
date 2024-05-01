@@ -3,13 +3,13 @@ import { IUserRepository } from "../interface/repository/IUserRepository";
 import IHashpassword from "../interface/services/IHashpassword";
 import { Ijwt } from "../interface/services/Ijwt";
 import { INodemailer } from "../interface/services/INodemailer";
-
 import { createUser } from "./user/createUser";
 import { loginUser } from "./user/loginUser"
 import { logoutUser } from "./user/logoutUser";
-import {sendOtpUser} from "./user/sendOtpUser"
+import { sendOtpUser } from "./user/sendOtpUser"
 import { checkOtpCommon } from "./user/otpRelated";
 import { IOtpRepository } from "../interface/repository/IOtpRepository";
+import { signGoogleUser } from "./user/signGoogle";
 
 export class UserUseCase {
   private readonly userRepository: IUserRepository;
@@ -25,7 +25,7 @@ export class UserUseCase {
     jwt: Ijwt,
     nodemailer: INodemailer,
     requestValidator: IRequestValidator,
-    otpRepository:IOtpRepository
+    otpRepository: IOtpRepository
   ) {
     this.userRepository = userRepository;
     this.bcrypt = bcrypt;
@@ -109,7 +109,7 @@ export class UserUseCase {
     enteredOtp
   }: {
     email: string,
-    enteredOtp:string
+    enteredOtp: string
   }) {
     return checkOtpCommon(
       this.requestValidator,
@@ -118,6 +118,34 @@ export class UserUseCase {
       enteredOtp
 
     )
-
   }
+
+
+  // signup/login google
+  async signGoogleUser({
+    name,
+    email,
+    mobile,
+    password,
+    google
+  }: {
+    name: string,
+    email: string,
+    mobile: number,
+    password: string,
+    google: boolean
+  }) {
+    return signGoogleUser(
+      this.requestValidator,
+      this.userRepository,
+      this.bcrypt,
+      this.jwt,
+      name,
+      email,
+      mobile,
+      password,
+      google
+    )
+  }
+
 }

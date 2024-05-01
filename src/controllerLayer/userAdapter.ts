@@ -110,5 +110,23 @@ export class UserAdapter {
   }
 
 
+  // @desc For login in or signup of user with google Auth
+  // route POST api/user/signGoogle
+  // @access Public
+  async signGoogle(req: Req, res: Res, next: Next) {
+    try {
+      const signed = await this.userusecase.signGoogleUser(req.body);
+
+      res.status(signed.status).json({
+        success: signed.success,
+        message: signed.message
+      });
+
+    } catch (err) {
+      next(err);
+    }
+  }
+
+
 
 } 

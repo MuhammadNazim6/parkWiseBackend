@@ -32,5 +32,9 @@ router.post('/check-otp',(req:Req,res:Res,next:Next)=>{
   userAdapter.checkOtp(req,res,next)
 })
 
+// For login in or signup of user with google Auth
+router.post('/signGoogle',(req:Req,res:Res,next:Next)=>{
+  userAdapter.signGoogle(req,res,next)
+})
 
 export default router;  
