@@ -7,7 +7,6 @@ interface ValidationResult {
 
 export class RequestValidator implements IRequestValidator {
   private validateEmail(email: string): ValidationResult {
-    // Basic email format validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return {

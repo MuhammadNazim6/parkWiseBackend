@@ -45,7 +45,7 @@ export const loginProvider = async (
     return {
       status: 200,
       success: true,
-      message: `Successfully Logged In Welcome ${provider.name}`,
+      message: `Welcome ${provider.name}`,
       token : token,
       data : provider
     };

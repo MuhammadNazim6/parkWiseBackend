@@ -38,3 +38,17 @@ export interface ILogoutResponse {
   message?: string;
 }
 
+export interface IOtpSendResponse {
+  status: number;
+  success: boolean;
+  otp?:string;
+  message?:string;
+  
+}
+
+export interface IOtpDocSaveResponse{
+  email: string;
+  role: string;
+  otp:string;
+  expiry_at:Date
+}

@@ -5,7 +5,7 @@ import { providerAdapter } from './injections/providerInjection';
 const router = express();
 
 // Provider register
-router.post('/register', (req: Req, res: Res, next: Next) => {
+router.post('/signup', (req: Req, res: Res, next: Next) => {
   providerAdapter.createProvider(req, res, next)
 })
 
@@ -17,6 +17,16 @@ router.post('/login',(req:Req,res:Res,next:Next)=>{
 // Provider logout
 router.post('/logout',(req:Req,res:Res,next:Next)=>{
   providerAdapter.logoutProvider(req,res,next)
+})
+
+// Provider OTP send to mail
+router.post('/email-verify',(req:Req,res:Res,next:Next)=>{
+  providerAdapter.sendOtp(req,res,next)
+})
+
+// For checking user entered otp and stored otp
+router.post('/check-otp',(req:Req,res:Res,next:Next)=>{
+  providerAdapter.checkOtp(req,res,next)
 })
 
 export default router; 

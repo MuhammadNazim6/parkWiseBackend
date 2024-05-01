@@ -13,18 +13,20 @@ export class ProviderAdapter{
   //@access   Public
   async createProvider(req: Req, res: Res, next: Next) {
     try {
-      const newUser = await this.providerUseCase.createProvider(req.body);
-      newUser &&
-        res.cookie("providerJwt", newUser.token, {
+      console.log('Body in adapeter provider ',req.body);
+      
+      const newProvider = await this.providerUseCase.createProvider(req.body);
+      newProvider &&
+        res.cookie("providerJwt", newProvider.token, {
           httpOnly: true,
           sameSite: "strict", // Prevent CSRF attacks
           maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
         });
 
-      res.status(newUser.status).json({
-        success: newUser.success,
-        message: newUser.message,
-        user: newUser.data,
+      res.status(newProvider.status).json({
+        success: newProvider.success,
+        message: newProvider.message,
+        user: newProvider.data,
       });
     } catch (err) {
       next(err);
@@ -72,6 +74,40 @@ async loginProvider(req:Req, res:Res, next:Next) {
         success: true,
         message: 'Provider logged out',
       });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  // @desc Provider otp send 
+  // route POST api/provider/sendOtp
+  // @access Public
+  async sendOtp(req: Req, res: Res, next: Next) {
+    try {
+      const otpSentResponse = await this.providerUseCase.sendOtpProvider(req.body);
+      res.status(otpSentResponse.status).json({
+        success: otpSentResponse.success,
+        message:otpSentResponse.message
+      });
+
+    } catch (err) {
+      next(err);
+    }
+  }
+
+
+    // @desc checking provider otp
+  // route POST api/user/check-otp
+  // @access Public
+  async checkOtp(req: Req, res: Res, next: Next) {
+    try {
+      const matched = await this.providerUseCase.checkOtpProvider(req.body);
+
+      res.status(matched.status).json({
+        success: matched.success,
+        message: matched.message
+      });
+      
     } catch (err) {
       next(err);
     }

@@ -45,8 +45,14 @@ export const createUser = async (
         token : token,
         data : createnewUser
       };
+    }else{
+      return {
+        status: 200,
+        success: true,
+        message: `User already exists`,
+      };
     }
-    throw ErrorResponse.badRequest("User already exists");
+  
   } catch (err) {
     throw err;
   }

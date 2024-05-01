@@ -5,7 +5,7 @@ import { userAdapter } from './injections/userInjection';
 const router = express.Router();
 
 // User register route
-router.post("/signup", (req: Req, res: Res, next: Next) =>
+router.post("/signup", (req: Req, res: Res, next: Next) =>  
   userAdapter.createUser(req, res, next)
 );
 
@@ -15,7 +15,22 @@ router.post('/login', (req: Req, res: Res, next: Next) =>
 )
 
 // User logout route
-router.post('/logout', (req: Req, res: Res, next: Next) =>
+router.post('/logout', (req: Req, res: Res, next: Next) =>{
+  console.log('Logoutttt');
+  
   userAdapter.logoutuser(req, res, next)
+}
 )
+
+// User OTP send to mail
+router.post('/email-verify',(req:Req,res:Res,next:Next)=>{
+  userAdapter.sendOtp(req,res,next)
+})
+
+// For checking user entered otp and stored otp
+router.post('/check-otp',(req:Req,res:Res,next:Next)=>{
+  userAdapter.checkOtp(req,res,next)
+})
+
+
 export default router;  

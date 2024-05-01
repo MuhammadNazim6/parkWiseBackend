@@ -1,13 +1,15 @@
-import { IUser } from "../../domainLayer/users";
 import { IRequestValidator } from "../interface/repository/IvalidateRepository";
 import { IUserRepository } from "../interface/repository/IUserRepository";
-import  IHashpassword  from "../interface/services/IHashpassword";
+import IHashpassword from "../interface/services/IHashpassword";
 import { Ijwt } from "../interface/services/Ijwt";
 import { INodemailer } from "../interface/services/INodemailer";
 
 import { createUser } from "./user/createUser";
-import {loginUser } from "./user/loginUser"
+import { loginUser } from "./user/loginUser"
 import { logoutUser } from "./user/logoutUser";
+import {sendOtpUser} from "./user/sendOtpUser"
+import { checkOtpCommon } from "./user/otpRelated";
+import { IOtpRepository } from "../interface/repository/IOtpRepository";
 
 export class UserUseCase {
   private readonly userRepository: IUserRepository;
@@ -15,6 +17,7 @@ export class UserUseCase {
   private readonly jwt: Ijwt;
   private readonly nodemailer: INodemailer;
   private readonly requestValidator: IRequestValidator
+  private readonly otpRepository: IOtpRepository
 
   constructor(
     userRepository: IUserRepository,
@@ -22,12 +25,14 @@ export class UserUseCase {
     jwt: Ijwt,
     nodemailer: INodemailer,
     requestValidator: IRequestValidator,
+    otpRepository:IOtpRepository
   ) {
     this.userRepository = userRepository;
     this.bcrypt = bcrypt;
     this.jwt = jwt;
     this.nodemailer = nodemailer;
     this.requestValidator = requestValidator;
+    this.otpRepository = otpRepository;
   }
 
   // creating user
@@ -72,11 +77,47 @@ export class UserUseCase {
       password
     );
   }
-  
+
   // logging out user
   async logoutUser() {
     return logoutUser(
       this.userRepository,
     );
+  }
+
+  // sending otp to user
+  async sendOtpUser({
+    email,
+    name
+  }: {
+    email: string,
+    name: string
+  }) {
+    return sendOtpUser(
+      this.requestValidator,
+      this.userRepository,
+      this.otpRepository,
+      email,
+      name
+    )
+  }
+
+
+  // checking otp of user
+  async checkOtpUser({
+    email,
+    enteredOtp
+  }: {
+    email: string,
+    enteredOtp:string
+  }) {
+    return checkOtpCommon(
+      this.requestValidator,
+      this.otpRepository,
+      email,
+      enteredOtp
+
+    )
+
   }
 }

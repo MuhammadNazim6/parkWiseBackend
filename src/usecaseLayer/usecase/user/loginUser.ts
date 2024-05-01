@@ -44,7 +44,7 @@ export const loginUser = async (
     return {
       status: 200,
       success: true,
-      message: `Successfully Logged In Welcome ${user.name}`,
+      message: `Welcome ${user.name}`,
       token : token,
       data : user
     };

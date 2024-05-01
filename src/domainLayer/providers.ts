@@ -5,12 +5,12 @@ export interface IParkingProvider {
   profile?: string | null;
   services?: string[] | null;
   startTime?: Date | null;
-  name: string ;
-  password: string ;
+  name: string;
+  password: string;
   mobile: number | null;
   availableSpace?: string | null;
   feedbacks?: ObjectId[] | null;
-  email: string ;
+  email: string;
   images?: string[] | null;
   description?: string | null;
   parkingName?: string | null;

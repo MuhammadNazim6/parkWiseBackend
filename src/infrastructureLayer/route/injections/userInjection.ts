@@ -1,6 +1,8 @@
 import { UserAdapter } from "../../../controllerLayer/userAdapter";
 import { UserUseCase } from "../../../usecaseLayer/usecase/userUseCase";
+import OtpModel from "../../database/model/otpModel";
 import UserModel from "../../database/model/userModel";
+import { OtpRepository } from "../../database/repository/otpRepository";
 import { UserRepository } from "../../database/repository/userRepository";
 import Encrypt from "../../services/bcrypt";
 import JwtPassword from "../../services/jwt";
@@ -13,12 +15,14 @@ const bcrypt = new Encrypt();
 const jwt = new JwtPassword();
 const nodemailer = new Nodemailer();
 const requestValidator = new RequestValidator();
+const otpRepository = new OtpRepository(OtpModel);
 const userusecase = new UserUseCase(
   userRepository,
   bcrypt,
   jwt,  
   nodemailer,
-  requestValidator
+  requestValidator,
+  otpRepository
 );
 const userAdapter = new UserAdapter(userusecase);
 
