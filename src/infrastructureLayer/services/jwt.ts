@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import {Ijwt} from "../../usecaseLayer/interface/services/Ijwt";
+import { Ijwt } from "../../usecaseLayer/interface/services/Ijwt";
 
 class JwtPassword implements Ijwt {
   //to create jwt token
@@ -11,6 +11,7 @@ class JwtPassword implements Ijwt {
         jwtKey,
         { expiresIn: '30d' }
       );
+      console.log('Inside the jwt config file');
       return token;
     }
     throw new Error("JWT_KEY is not defined");

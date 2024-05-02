@@ -20,6 +20,7 @@ export class UserAdapter {
           httpOnly: true,
           sameSite: "strict", // Prevent CSRF attacks
           maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+
         });
 
       res.status(newUser.status).json({
@@ -37,18 +38,19 @@ export class UserAdapter {
   async loginUser(req: Req, res: Res, next: Next) {
     try {
       const user = await this.userusecase.loginUser(req.body);
-
-      user &&
+      if (user) {
         res.cookie("userjwt", user.token, {
           httpOnly: true,
+          secure:process.env.NODE_ENV === 'production',
           sameSite: "strict", // Prevent CSRF attacks
-          maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+          maxAge: 30 * 24 * 60 * 60 * 1000
         });
+      }
 
       res.status(user.status).json({
         success: user.success,
         message: user.message,
-        // user: user.data,
+        user: user.data,
       });
     } catch (err) {
       next(err);
@@ -62,7 +64,8 @@ export class UserAdapter {
     try {
       res.cookie('userjwt', '', {
         httpOnly: false,
-        expires: new Date(0)
+        expires: new Date(0),
+
       })
       const user = await this.userusecase.logoutUser();
       res.status(user.status).json({
