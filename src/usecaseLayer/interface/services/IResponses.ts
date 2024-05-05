@@ -26,12 +26,12 @@ export interface ILoginResponse<T = IUser | string | IAdmin | IParkingProvider> 
   status: number;
   success: boolean;
   message?: string;
+  token?: string
   data?:{
     name:string;
     role:string;
     email:string;
   } ;
-  token: string
 }
 
 

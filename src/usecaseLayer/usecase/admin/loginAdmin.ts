@@ -2,7 +2,7 @@ import { IRequestValidator } from "../../interface/repository/IvalidateRepositor
 import { IAdminRepsitory } from "../../interface/repository/IAdminRepository";
 import IHashpassword from "../../interface/services/IHashpassword";
 import { Ijwt } from "../../interface/services/Ijwt";
-import { ILoginResponse,IErrorResponse } from "../../interface/services/IResponses";
+import { ILoginResponse, IErrorResponse } from "../../interface/services/IResponses";
 import ErrorResponse from "../../handler/errorResponse";
 import RequestValidator from "../../../infrastructureLayer/services/validateRepository";
 
@@ -10,46 +10,48 @@ export const loginAdmin = async (
   requestValidator: IRequestValidator,
   adminRepository: IAdminRepsitory,
   bcrypt: IHashpassword,
-  jwt:Ijwt,
+  jwt: Ijwt,
   email: string,
-  password:string
-): Promise<ILoginResponse | IErrorResponse>=>{
+  password: string
+): Promise<ILoginResponse> => {
   try {
     const validation = requestValidator.validateRequiredFields(
-      {email,password},
-      ['email','password']
+      { email, password },
+      ['email', 'password']
     );
 
-    if(!validation.success){
+    if (!validation.success) {
       throw ErrorResponse.badRequest(validation.message as string);
     }
     const admin = await adminRepository.findAdmin(email);
-    if(!admin){
-      return{
-        status: 401,
-        success: false,
-        message: `The name or password is incorrect`, 
-      }
+    if (!admin) {
+      // return {
+      //   status: 401,
+      //   success: false,
+      //   message: `The name or password is incorrect`,
+      // }
+      throw ErrorResponse.badRequest('The name or password is incorrect');
     }
 
-    const matchedPassword = await bcrypt.compare(password,admin.password)
-    if(!matchedPassword){
-      return{
-        status: 401,
-        success: false,
-        message: `The name or password is incorrect`, 
-      }
+    const matchedPassword = await bcrypt.compare(password, admin.password)
+    if (!matchedPassword) {
+      // return {
+      //   status: 401,
+      //   success: false,
+      //   message: `The name or password is incorrect`,
+      // }
+      throw ErrorResponse.badRequest('The name or password is incorrect');
     }
 
-    const token = jwt.createJWT(admin._id as string , email, 'admin', admin.name);
-    return{
+    const token = jwt.createJWT(admin._id as string, email, 'admin', admin.name);
+    return {
       status: 200,
       success: true,
       token: token,
       data: {
-        name:admin.name,
-        role:'admin',
-        email:admin.email
+        name: admin.name,
+        role: 'admin',
+        email: admin.email
       }
     }
   } catch (error) {

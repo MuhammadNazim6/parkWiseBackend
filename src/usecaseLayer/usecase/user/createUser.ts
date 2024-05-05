@@ -15,7 +15,7 @@ export const createUser = async (
   mobile: number,
   email: string,
   password: string
-): Promise<ILoginResponse | IErrorResponse> => {
+): Promise<ILoginResponse> => {
   try {
     const validation = requestValidator.validateRequiredFields(
       { name, mobile, email, password },
@@ -50,10 +50,11 @@ export const createUser = async (
       };
     } else {
       return {
-        status: 409, //changed from 200 to 409 for checking 
+        status: 200, //changed from 200 to 409 for checking 
         success: true,
         message: `User already exists`,
       };
+      // throw ErrorResponse.badRequest("User already exists");
     }
 
   } catch (err) {

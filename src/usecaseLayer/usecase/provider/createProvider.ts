@@ -3,7 +3,7 @@ import { IProviderRepository } from '../../interface/repository/IProviderReposit
 import { IRequestValidator } from '../../interface/repository/IvalidateRepository';
 import IHashpassword from '../../interface/services/IHashpassword';
 import { Ijwt } from '../../interface/services/Ijwt';
-import { ILoginResponse, IErrorResponse } from '../../interface/services/IResponses';
+import { ILoginResponse } from '../../interface/services/IResponses';
 
 export const createProvider = async (
   requestValidator: IRequestValidator,
@@ -14,7 +14,7 @@ export const createProvider = async (
   mobile: number,
   email: string,
   password: string
-): Promise<ILoginResponse | IErrorResponse> => {
+): Promise<ILoginResponse> => {
   try {
     const validation = requestValidator.validateRequiredFields(
       { name, mobile, email, password },
@@ -39,15 +39,22 @@ export const createProvider = async (
 
       return {
         status: 200,
-      success: true,
-      token: token,
-      data: {
-        name:provider.name,
-        role:'user',
-        email:provider.email
-      }
+        success: true,
+        token: token,
+        data: {
+          name: provider.name,
+          role: 'user',
+          email: provider.email
+        }
       };
     }
+    // else{
+    //   return {
+    //     status: 409, //changed from 200 to 409 for checking 
+    //     success: true,
+    //     message: `Provider already exists`,
+    //   };
+    // }
     throw ErrorResponse.badRequest("Provider already exists");
 
   } catch (error) {

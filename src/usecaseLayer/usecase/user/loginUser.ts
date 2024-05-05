@@ -12,7 +12,7 @@ export const loginUser = async (
   jwt: Ijwt,
   email: string,
   password: string
-): Promise<ILoginResponse | IErrorResponse> => {
+): Promise<ILoginResponse> => {
   try {
     const validation = requestValidator.validateRequiredFields(
       { email, password },
@@ -21,24 +21,31 @@ export const loginUser = async (
 
     if (!validation.success) {
       return {
-        status: 401,
+        status: 200,
         success: false,
         message: `The username or password is incorrect`,
       }
+      // throw ErrorResponse.badRequest("The username or password is incorrect");
+
     }
 
     const user = await userRepository.findUser(email); // checking if the user exist or not
     if (!user) {
       return {
-        status: 401,
+        status: 200,
         success: false,
         message: `The username or password is incorrect`,
       }
+      // throw ErrorResponse.badRequest("The username or password is incorrect");
     }
 
     const matchedPassword = await bcrypt.compare(password, user.password)
     if (!matchedPassword) {
-      throw ErrorResponse.badRequest("Passwords do not match");
+      return {
+        status: 200,
+        success: false,
+        message: `The username or password is incorrect`,
+      }
     }
     const token = jwt.createJWT(user._id as string, user.email, "user", user.name);
     return {

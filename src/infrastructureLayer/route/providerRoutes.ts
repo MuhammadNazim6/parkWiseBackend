@@ -20,7 +20,7 @@ router.post('/logout',(req:Req,res:Res,next:Next)=>{
 })
 
 // Provider OTP send to mail
-router.post('/email-verify',(req:Req,res:Res,next:Next)=>{
+router.post('/send-otp',(req:Req,res:Res,next:Next)=>{
   providerAdapter.sendOtp(req,res,next)
 })
 

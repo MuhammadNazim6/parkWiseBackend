@@ -14,7 +14,7 @@ export const loginProvider = async (
   jwt: Ijwt,
   email: string,
   password: string
-): Promise<ILoginResponse | IErrorResponse> => {
+): Promise<ILoginResponse > => {
   try {
     const validation = requestValidator.validateRequiredFields(
       { email, password },
@@ -27,19 +27,22 @@ export const loginProvider = async (
 
     const provider = await providerRepository.findProvider(email);
     if (!provider) {
-      return {
-        status: 401,
-        success: false,
-        message: `The username or password is incorrect`,
-      }
+      // return {
+      //   status: 401,
+      //   success: false,
+      //   message: `The username or password is incorrect`,
+      // }
+      throw ErrorResponse.badRequest("he username or password is incorrect");
+
     }
     const matchedPassword = await bcrypt.compare(password, provider.password)
     if (!matchedPassword) {
-      return {
-        status: 401,
-        success: false,
-        message: `The username or password is incorrect`,
-      }
+      // return {
+      //   status: 401,
+      //   success: false,
+      //   message: `The username or password is incorrect`,
+      // }
+      throw ErrorResponse.badRequest("he username or password is incorrect");
     }
     const token = jwt.createJWT(provider._id as string, provider.email, "providerJwt", provider.name);
     return {

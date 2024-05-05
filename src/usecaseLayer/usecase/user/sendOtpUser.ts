@@ -26,7 +26,7 @@ export const sendOtpUser = async (
     const user = await userRepository.findUser(email);
     if (user) {
       return {
-        status: 409, //changed from 200 to 409 for checking
+        status: 200, //changed from 200 to 409 for checking
         success: false,
         message: `This user already exists`,
       }
@@ -38,12 +38,13 @@ export const sendOtpUser = async (
 
     if (OTP) {
       let expiryTime = new Date();
-      expiryTime.setMinutes(expiryTime.getMinutes() + 5);
+      expiryTime.setMinutes(expiryTime.getMinutes() + 20);
 
       const otpSaved = await otpRepository.createOtpCollection(email, role , OTP, expiryTime)
       return {
         status: 200,
         success: true,
+        message:'Otp sent to mail'
       }
     }
     return {

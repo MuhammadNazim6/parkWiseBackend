@@ -13,18 +13,18 @@ export class UserAdapter {
   async createUser(req: Req, res: Res, next: Next) {
     try {
       const newUser = await this.userusecase.createUser(req.body);
-      newUser &&
+      if (newUser && newUser.token) {
         res.cookie("userjwt", newUser.token, {
           httpOnly: true,
-
-          sameSite: "none", // Prevent CSRF attacks
-          maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+          sameSite: "none", 
+          maxAge: 30 * 24 * 60 * 60 * 1000, 
         });
+      }
 
       res.status(newUser.status).json({
-        success: newUser.success,
-        message: newUser.message,
-        token:newUser.token
+          success: newUser.success,
+          message: newUser.message,
+          token: newUser  .token,
       });
     } catch (err) {
       next(err);
@@ -40,8 +40,8 @@ export class UserAdapter {
       if (user) {
         res.cookie("userjwt", user.token, {
           httpOnly: true,
-          sameSite: "none", 
-          secure:true,
+          sameSite: "none",
+          secure: true,
           maxAge: 30 * 24 * 60 * 60 * 1000,
         });
       }
@@ -49,9 +49,8 @@ export class UserAdapter {
       res.status(user.status).json({
         success: user.success,
         message: user.message,
-        user: user.data,
-        token:user.token
-
+        token: user.token,
+        data:user.data
       });
     } catch (err) {
       next(err);

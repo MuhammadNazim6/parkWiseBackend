@@ -1,21 +1,20 @@
 import { token } from "morgan";
 import { Req, Res, Next } from "../infrastructureLayer/types/expressTypes";
 import { ProviderUseCase } from "../usecaseLayer/usecase/providerUseCase";
+import { ILoginResponse } from "../usecaseLayer/interface/services/IResponses";
 
-export class ProviderAdapter{
+export class ProviderAdapter {
   private readonly providerUseCase: ProviderUseCase;
-  
-  constructor(providerUseCase:ProviderUseCase){
+
+  constructor(providerUseCase: ProviderUseCase) {
     this.providerUseCase = providerUseCase;  // using dependency injection to call the providerUseCase
-  } 
+  }
 
   // @desc  Register new provider
   //route     POST api/provider/register
   //@access   Public
   async createProvider(req: Req, res: Res, next: Next) {
     try {
-      console.log('Body in adapeter provider ',req.body);
-      
       const newProvider = await this.providerUseCase.createProvider(req.body);
       newProvider &&
         res.cookie("providerJwt", newProvider.token, {
@@ -27,7 +26,8 @@ export class ProviderAdapter{
       res.status(newProvider.status).json({
         success: newProvider.success,
         user: newProvider.data,
-        token:newProvider.token
+        token: newProvider.token,
+        data:newProvider.data
       });
     } catch (err) {
       next(err);
@@ -38,26 +38,26 @@ export class ProviderAdapter{
   // @desc Provider Login
   // route POST api/provider/login
   // @access Public
-async loginProvider(req:Req, res:Res, next:Next) {
-  try {
-    const provider = await this.providerUseCase.loginProvider(req.body);
-    provider &&
-    res.cookie("providerJwt", provider.token, {
-      httpOnly: true,
-      sameSite: "strict", // Prevent CSRF attacks
-      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-    });
+  async loginProvider(req: Req, res: Res, next: Next) {
+    try {
+      const provider = await this.providerUseCase.loginProvider(req.body);
+      provider &&
+        res.cookie("providerJwt", provider.token, {
+          httpOnly: true,
+          sameSite: "strict", // Prevent CSRF attacks
+          maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+        });
 
-  res.status(provider.status).json({
-    success: provider.success,
-    // message: provider.message,
-    user: provider.data,
-    token:provider.token
-  });
-  } catch (error) {
-    throw error
+      res.status(provider.status).json({
+        success: provider.success,
+        user: provider.data,
+        token: provider.token,
+        data:provider.data
+      });
+    } catch (error) {
+      throw error
+    }
   }
-}
 
 
   // @desc Provider logout 
@@ -66,11 +66,11 @@ async loginProvider(req:Req, res:Res, next:Next) {
   async logoutProvider(req: Req, res: Res, next: Next) {
     try {
 
-      res.cookie('providerJwt','',{
+      res.cookie('providerJwt', '', {
         httpOnly: false,
-        expires:new Date(0)
+        expires: new Date(0)
       })
-  
+
       res.status(200).json({
         success: true,
         message: 'Provider logged out',
@@ -88,7 +88,7 @@ async loginProvider(req:Req, res:Res, next:Next) {
       const otpSentResponse = await this.providerUseCase.sendOtpProvider(req.body);
       res.status(otpSentResponse.status).json({
         success: otpSentResponse.success,
-        message:otpSentResponse.message
+        message: otpSentResponse.message
       });
 
     } catch (err) {
@@ -97,7 +97,7 @@ async loginProvider(req:Req, res:Res, next:Next) {
   }
 
 
-    // @desc checking provider otp
+  // @desc checking provider otp
   // route POST api/user/check-otp
   // @access Public
   async checkOtp(req: Req, res: Res, next: Next) {
@@ -108,7 +108,7 @@ async loginProvider(req:Req, res:Res, next:Next) {
         success: matched.success,
         message: matched.message
       });
-      
+
     } catch (err) {
       next(err);
     }

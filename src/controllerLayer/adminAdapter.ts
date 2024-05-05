@@ -19,8 +19,8 @@ export class AdminAdapter{
       admin &&
         res.cookie("adminjwt", admin.token, {
           httpOnly: true,
-          sameSite: "strict", // Prevent CSRF attacks
-          maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+          sameSite: "strict", 
+          maxAge: 30 * 24 * 60 * 60 * 1000, 
         });
 
       res.status(admin.status).json({

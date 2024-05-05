@@ -1,7 +1,7 @@
 import express from 'express'
 import { Req, Res, Next } from '../types/expressTypes';
 import { userAdapter } from './injections/userInjection';
-import { protectUser } from '../middleware/userAuth';
+// import { protectUser } from '../middleware/userAuth';
 
 const router = express.Router();
 
@@ -16,13 +16,13 @@ router.post('/login', (req: Req, res: Res, next: Next) =>
 )
 
 // User logout route
-router.post('/logout', protectUser ,(req: Req, res: Res, next: Next) => {
+router.post('/logout' ,(req: Req, res: Res, next: Next) => {
   userAdapter.logoutuser(req, res, next)
 }
 )
 
 // User OTP send to mail
-router.post('/email-verify', (req: Req, res: Res, next: Next) => {
+router.post('/send-otp', (req: Req, res: Res, next: Next) => {
   userAdapter.sendOtp(req, res, next)
 })
 
