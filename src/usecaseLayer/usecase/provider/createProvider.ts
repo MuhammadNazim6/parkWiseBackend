@@ -3,30 +3,30 @@ import { IProviderRepository } from '../../interface/repository/IProviderReposit
 import { IRequestValidator } from '../../interface/repository/IvalidateRepository';
 import IHashpassword from '../../interface/services/IHashpassword';
 import { Ijwt } from '../../interface/services/Ijwt';
-import { IResponse } from '../../interface/services/IResponses';
+import { ILoginResponse, IErrorResponse } from '../../interface/services/IResponses';
 
-export const createProvider = async(
+export const createProvider = async (
   requestValidator: IRequestValidator,
   providerRepository: IProviderRepository,
   bcrypt: IHashpassword,
   jwt: Ijwt,
   name: string,
-  mobile: number,  
+  mobile: number,
   email: string,
   password: string
-): Promise<IResponse>=>{
+): Promise<ILoginResponse | IErrorResponse> => {
   try {
     const validation = requestValidator.validateRequiredFields(
-      {name,mobile,email,password},
-      ['name','mobile','email','password']
+      { name, mobile, email, password },
+      ['name', 'mobile', 'email', 'password']
     );
 
-    if(!validation.success){
+    if (!validation.success) {
       throw ErrorResponse.badRequest(validation.message as string)
     }
 
     const provider = await providerRepository.findProvider(email);
-    if(!provider){
+    if (!provider) {
       const hashedPassword = await bcrypt.createHash(password);
       const newProvider = {
         name,
@@ -34,15 +34,18 @@ export const createProvider = async(
         email,
         password: hashedPassword,
       };
-      const createnewProvider = await providerRepository.createProvider(newProvider);
-      const token = jwt.createJWT(createnewProvider._id as string, createnewProvider.email, "provider", createnewProvider.name);
+      const provider = await providerRepository.createProvider(newProvider);
+      const token = jwt.createJWT(provider._id as string, provider.email, "provider", provider.name);
 
       return {
         status: 200,
-        success: true,
-        message: `Successfully Registerd Welcome ${createnewProvider.name}`,
-        token : token,
-        data : createnewProvider
+      success: true,
+      token: token,
+      data: {
+        name:provider.name,
+        role:'user',
+        email:provider.email
+      }
       };
     }
     throw ErrorResponse.badRequest("Provider already exists");

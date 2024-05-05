@@ -6,7 +6,7 @@ import { Ijwt } from "../interface/services/Ijwt";
 
 import { loginAdmin } from "./admin/loginAdmin";
 
-export class AdminUseCase{
+export class AdminUseCase {
   private readonly adminRepository: IAdminRepsitory;
   private readonly bcrypt: IHashpassword;
   private readonly jwt: Ijwt;
@@ -17,7 +17,7 @@ export class AdminUseCase{
     bcrypt: IHashpassword,
     jwt: Ijwt,
     requestValidator: IRequestValidator
-  ){
+  ) {
     this.adminRepository = adminRepository;
     this.bcrypt = bcrypt;
     this.jwt = jwt;
@@ -28,7 +28,7 @@ export class AdminUseCase{
   async loginAdmin({
     email,
     password
-  }:{email:string,password:string}){
+  }: { email: string, password: string }) {
     return loginAdmin(
       this.requestValidator,
       this.adminRepository,

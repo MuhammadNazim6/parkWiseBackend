@@ -1,10 +1,8 @@
 import { Req, Res, Next } from "../infrastructureLayer/types/expressTypes";
 import { UserUseCase } from "../usecaseLayer/usecase/userUseCase";
 
-
 export class UserAdapter {
   private readonly userusecase: UserUseCase;
-
   constructor(userusecase: UserUseCase) {
     this.userusecase = userusecase;
   }
@@ -18,14 +16,15 @@ export class UserAdapter {
       newUser &&
         res.cookie("userjwt", newUser.token, {
           httpOnly: true,
-          sameSite: "strict", // Prevent CSRF attacks
-          maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
 
+          sameSite: "none", // Prevent CSRF attacks
+          maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
         });
 
       res.status(newUser.status).json({
         success: newUser.success,
         message: newUser.message,
+        token:newUser.token
       });
     } catch (err) {
       next(err);
@@ -41,9 +40,9 @@ export class UserAdapter {
       if (user) {
         res.cookie("userjwt", user.token, {
           httpOnly: true,
-          secure:process.env.NODE_ENV === 'production',
-          sameSite: "strict", // Prevent CSRF attacks
-          maxAge: 30 * 24 * 60 * 60 * 1000
+          sameSite: "none", 
+          secure:true,
+          maxAge: 30 * 24 * 60 * 60 * 1000,
         });
       }
 
@@ -51,6 +50,8 @@ export class UserAdapter {
         success: user.success,
         message: user.message,
         user: user.data,
+        token:user.token
+
       });
     } catch (err) {
       next(err);
@@ -62,22 +63,21 @@ export class UserAdapter {
   //@access   Private
   async logoutuser(req: Req, res: Res, next: Next) {
     try {
-      res.cookie('userjwt', '', {
+      res.cookie("userjwt", "", {
         httpOnly: false,
         expires: new Date(0),
-
-      })
+      });
       const user = await this.userusecase.logoutUser();
       res.status(user.status).json({
         success: user.success,
         message: user.message,
       });
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 
-  // @desc User otp send 
+  // @desc User otp send
   // route POST api/user/sendOtp
   // @access Public
   async sendOtp(req: Req, res: Res, next: Next) {
@@ -86,14 +86,12 @@ export class UserAdapter {
 
       res.status(otpSentResponse.status).json({
         success: otpSentResponse.success,
-        message: otpSentResponse.message
+        message: otpSentResponse.message,
       });
-
     } catch (err) {
       next(err);
     }
   }
-
 
   // @desc checking user otp
   // route POST api/user/check-otp
@@ -104,16 +102,14 @@ export class UserAdapter {
 
       res.status(matched.status).json({
         success: matched.success,
-        message: matched.message
+        message: matched.message,
       });
-
     } catch (err) {
       next(err);
     }
   }
 
-
-  // @desc For login in or signup of user with google Auth
+  // @desc For logging in or signuing up of user with google Authentication
   // route POST api/user/signGoogle
   // @access Public
   async signGoogle(req: Req, res: Res, next: Next) {
@@ -122,14 +118,10 @@ export class UserAdapter {
 
       res.status(signed.status).json({
         success: signed.success,
-        message: signed.message
+        message: signed.message,
       });
-
     } catch (err) {
       next(err);
     }
   }
-
-
-
-} 
+}

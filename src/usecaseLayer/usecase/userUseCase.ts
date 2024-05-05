@@ -46,7 +46,7 @@ export class UserUseCase {
     mobile: number;
     email: string;
     password: string;
-  }) {
+  }) { 
     return createUser(
       this.requestValidator,
       this.userRepository,

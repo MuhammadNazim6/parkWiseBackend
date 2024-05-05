@@ -8,7 +8,7 @@ export const logoutUser = async(
     return {
       status: 200,
       success: true,
-      message: `Successfully Logged out user`,
+      message: `Logged out successfully`,
     };
  
   } catch (error) {

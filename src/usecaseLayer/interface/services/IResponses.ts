@@ -26,8 +26,12 @@ export interface ILoginResponse<T = IUser | string | IAdmin | IParkingProvider> 
   status: number;
   success: boolean;
   message?: string;
-  data?: T;
-  token?: string
+  data?:{
+    name:string;
+    role:string;
+    email:string;
+  } ;
+  token: string
 }
 
 
@@ -41,7 +45,6 @@ export interface ILogoutResponse {
 export interface IOtpSendResponse {
   status: number;
   success: boolean;
-  otp?:string;
   message?:string;
   
 }
@@ -51,4 +54,16 @@ export interface IOtpDocSaveResponse{
   role: string;
   otp:string;
   expiry_at:Date
+}
+
+export interface IErrorResponse{
+  status:number;
+  success:boolean;
+  message:string;
+}
+
+export interface ISuccessResponse{
+  status:number;
+  success:boolean;
+  message:string;
 }

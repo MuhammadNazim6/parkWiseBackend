@@ -1,3 +1,4 @@
+import { token } from "morgan";
 import { Req, Res, Next } from "../infrastructureLayer/types/expressTypes";
 import { ProviderUseCase } from "../usecaseLayer/usecase/providerUseCase";
 
@@ -25,8 +26,8 @@ export class ProviderAdapter{
 
       res.status(newProvider.status).json({
         success: newProvider.success,
-        message: newProvider.message,
         user: newProvider.data,
+        token:newProvider.token
       });
     } catch (err) {
       next(err);
@@ -49,8 +50,9 @@ async loginProvider(req:Req, res:Res, next:Next) {
 
   res.status(provider.status).json({
     success: provider.success,
-    message: provider.message,
-    // user: user.data,
+    // message: provider.message,
+    user: provider.data,
+    token:provider.token
   });
   } catch (error) {
     throw error
@@ -68,7 +70,6 @@ async loginProvider(req:Req, res:Res, next:Next) {
         httpOnly: false,
         expires:new Date(0)
       })
-
   
       res.status(200).json({
         success: true,

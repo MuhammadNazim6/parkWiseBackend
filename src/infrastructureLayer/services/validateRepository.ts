@@ -6,18 +6,7 @@ interface ValidationResult {
 }
 
 export class RequestValidator implements IRequestValidator {
-  private validateEmail(email: string): ValidationResult {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return {
-        success: false,
-        message: "Invalid email format",
-      };
-    }
-
-    return { success: true };
-  }
-
+  
   validateRequiredFields(
     data: Record<string, any>,
     requiredFields: string[]
@@ -29,7 +18,7 @@ export class RequestValidator implements IRequestValidator {
           message: `Missing required parameter: ${field}`,
         };
       }
-
+      
       if (field === "email") {
         const emailValidationResult = this.validateEmail(data[field]);
         if (!emailValidationResult.success) {
@@ -37,9 +26,21 @@ export class RequestValidator implements IRequestValidator {
         }
       }
     }
-
+    
     return { success: true };
   }
+
+  private validateEmail(email: string): ValidationResult {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return {
+        success: false,
+        message: "Invalid email format",
+      };
+    }
+    return { success: true };
+  }
+  
 }
 
 export default RequestValidator;

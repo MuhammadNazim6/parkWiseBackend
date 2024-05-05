@@ -14,8 +14,6 @@ export const sendOtpUser = async (
   name: string
 ): Promise<IOtpSendResponse> => {
   try {
-    console.log('2 in sendOtpUser.ts');
-
     const validation = requestValidator.validateRequiredFields(
       { email, name },
       ['email', 'name']
@@ -28,9 +26,9 @@ export const sendOtpUser = async (
     const user = await userRepository.findUser(email);
     if (user) {
       return {
-        status: 200,
+        status: 409, //changed from 200 to 409 for checking
         success: false,
-        message: `The user already exists`,
+        message: `This user already exists`,
       }
     }
     const role = 'user'

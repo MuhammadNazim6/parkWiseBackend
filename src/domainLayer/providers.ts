@@ -2,7 +2,7 @@ import { ObjectId, Document } from "mongoose";
 
 export interface IParkingProvider {
   _id?: string;
-  profile?: string | null;
+  // profile?: string | null;
   services?: string[] | null;
   startTime?: Date | null;
   name: string;
@@ -12,10 +12,10 @@ export interface IParkingProvider {
   feedbacks?: ObjectId[] | null;
   email: string;
   images?: string[] | null;
-  description?: string | null;
+  // description?: string | null;
   parkingName?: string | null;
   pricePerHour?: string | null;
-  nearbyAttractions?: string | null;
+  // nearbyAttractions?: string | null;
   location?: {
     coordinates: number[] | null;
     type: string | null;

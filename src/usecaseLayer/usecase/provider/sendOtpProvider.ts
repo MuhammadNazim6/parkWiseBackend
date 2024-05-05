@@ -6,8 +6,6 @@ import { IRequestValidator } from '../../interface/repository/IvalidateRepositor
 import { IOtpSendResponse } from '../../interface/services/IResponses';
 
 
-
-
 export const sendOtpProvider = async (
   requestValidator: IRequestValidator,
   providerRepository: IProviderRepository,
@@ -36,17 +34,18 @@ export const sendOtpProvider = async (
     const role = 'provider'
     const nodemailerInstance = new Nodemailer();
     const OTP = await nodemailerInstance.sendOtpToMail(email, name, role);
-    
+
     if (OTP) {
       let expiryTime = new Date();
       expiryTime.setMinutes(expiryTime.getMinutes() + 5);
 
-      const otpSaved = await otpRepository.createOtpCollection(email, role , OTP, expiryTime)
+      const otpSaved = await otpRepository.createOtpCollection(email, role, OTP, expiryTime)
       return {
         status: 200,
         success: true,
       }
     }
+    // If unable to send otp
     return {
       status: 500,
       success: false,

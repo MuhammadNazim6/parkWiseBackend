@@ -1,5 +1,5 @@
 import { IRequestValidator } from "../../interface/repository/IvalidateRepository";
-import { ILoginResponse } from "../../interface/services/IResponses";
+import { IErrorResponse, ISuccessResponse } from "../../interface/services/IResponses";
 import ErrorResponse from "../../handler/errorResponse";
 import { IOtpRepository } from "../../interface/repository/IOtpRepository";
 
@@ -8,7 +8,7 @@ export const checkOtpCommon = async (
   otpRepository: IOtpRepository,
   email: string,
   enteredOtp: string
-): Promise<ILoginResponse> => {
+): Promise<ISuccessResponse | IErrorResponse> => {
   try {
     const validation = requestValidator.validateRequiredFields(
       { email },
@@ -19,7 +19,7 @@ export const checkOtpCommon = async (
       return {
         status: 401,
         success: false,
-        message: `Email entered is invalid`,
+        message: `Entered email is invalid`,
       }
     }
 
@@ -32,14 +32,14 @@ export const checkOtpCommon = async (
       }
     }
 
-    if(enteredOtp !== otpFound.otp){
+    if (enteredOtp !== otpFound.otp) {
       throw ErrorResponse.badRequest("Incorrect Otp");
     }
 
     return {
       status: 200,
       success: true,
-      message: 'Entered otp is correct'
+      message: 'Entered otp is correct',
     };
 
 

@@ -2,7 +2,7 @@ import { IRequestValidator } from "../../interface/repository/IvalidateRepositor
 import { IAdminRepsitory } from "../../interface/repository/IAdminRepository";
 import IHashpassword from "../../interface/services/IHashpassword";
 import { Ijwt } from "../../interface/services/Ijwt";
-import { ILoginResponse } from "../../interface/services/IResponses";
+import { ILoginResponse,IErrorResponse } from "../../interface/services/IResponses";
 import ErrorResponse from "../../handler/errorResponse";
 import RequestValidator from "../../../infrastructureLayer/services/validateRepository";
 
@@ -13,7 +13,7 @@ export const loginAdmin = async (
   jwt:Ijwt,
   email: string,
   password:string
-): Promise<ILoginResponse>=>{
+): Promise<ILoginResponse | IErrorResponse>=>{
   try {
     const validation = requestValidator.validateRequiredFields(
       {email,password},
@@ -45,9 +45,12 @@ export const loginAdmin = async (
     return{
       status: 200,
       success: true,
-      message: `Admin ${admin.name} logged in successfully`,
       token: token,
-      data: admin
+      data: {
+        name:admin.name,
+        role:'admin',
+        email:admin.email
+      }
     }
   } catch (error) {
     throw error

@@ -3,7 +3,7 @@ import { IProviderRepository } from '../../interface/repository/IProviderReposit
 import { IRequestValidator } from '../../interface/repository/IvalidateRepository';
 import IHashpassword from '../../interface/services/IHashpassword';
 import { Ijwt } from '../../interface/services/Ijwt';
-import { ILoginResponse } from '../../interface/services/IResponses';
+import { ILoginResponse, IErrorResponse } from '../../interface/services/IResponses';
 
 
 
@@ -11,43 +11,46 @@ export const loginProvider = async (
   requestValidator: IRequestValidator,
   providerRepository: IProviderRepository,
   bcrypt: IHashpassword,
-  jwt: Ijwt, 
+  jwt: Ijwt,
   email: string,
   password: string
-): Promise<ILoginResponse>=>{
+): Promise<ILoginResponse | IErrorResponse> => {
   try {
     const validation = requestValidator.validateRequiredFields(
-      {email,password},
-      ['email','password']
+      { email, password },
+      ['email', 'password']
     );
 
-    if(!validation.success){
+    if (!validation.success) {
       throw ErrorResponse.badRequest(validation.message as string)
     }
 
     const provider = await providerRepository.findProvider(email);
-    if(!provider){
-      return{
+    if (!provider) {
+      return {
         status: 401,
         success: false,
-        message: `The username or password is incorrect`, 
+        message: `The username or password is incorrect`,
       }
     }
     const matchedPassword = await bcrypt.compare(password, provider.password)
-    if(!matchedPassword){
-      return{
+    if (!matchedPassword) {
+      return {
         status: 401,
-      success: false,
-      message: `The username or password is incorrect`, 
+        success: false,
+        message: `The username or password is incorrect`,
       }
     }
     const token = jwt.createJWT(provider._id as string, provider.email, "providerJwt", provider.name);
     return {
       status: 200,
       success: true,
-      message: `Welcome ${provider.name}`,
-      token : token,
-      data : provider
+      token: token,
+      data: {
+        name: provider.name,
+        role: 'provider',
+        email: provider.email
+      }
     };
 
   } catch (error) {

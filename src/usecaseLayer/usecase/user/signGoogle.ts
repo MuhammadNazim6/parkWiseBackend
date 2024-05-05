@@ -2,9 +2,8 @@ import ErrorResponse from '../../handler/errorResponse';
 import { IUserRepository } from '../../interface/repository/IUserRepository';
 import { IRequestValidator } from '../../interface/repository/IvalidateRepository';
 import IHashpassword from '../../interface/services/IHashpassword';
-import { IOtpSendResponse } from '../../interface/services/IResponses';
+import { ILoginResponse } from '../../interface/services/IResponses';
 import { Ijwt } from "../../interface/services/Ijwt";
-import { ILoginResponse } from "../../interface/services/IResponses";
 
 export const signGoogleUser = async (
   requestValidator: IRequestValidator,
@@ -13,9 +12,9 @@ export const signGoogleUser = async (
   jwt: Ijwt,
   name: string,
   email: string,
-  mobile:number,
-  password:string,
-  google:boolean
+  mobile: number,
+  password: string,
+  google: boolean
 ): Promise<ILoginResponse> => {
   try {
     const validation = requestValidator.validateRequiredFields(
@@ -32,13 +31,15 @@ export const signGoogleUser = async (
       return {
         status: 200,
         success: true,
-        message: `Welcome ${user.name}`,
-        token : token,
-        data : user
+        token: token,
+        data: {
+          name: user.name,
+          role: 'user',
+          email: user.email
+        }
       };
-    }else{
+    } else {
       // registering as a user
-
       const hashedPassword = await bcrypt.createHash(password);
       const newUser = {
         name,
@@ -52,8 +53,12 @@ export const signGoogleUser = async (
       return {
         status: 200,
         success: true,
-        message: `Successfully Registerd Welcome ${createnewUser.name}`,
-        token : token,
+        token: token,
+        data: {
+          name: createnewUser.name,
+          role: 'user',
+          email: createnewUser.email
+        }
       };
     }
   } catch (error) {

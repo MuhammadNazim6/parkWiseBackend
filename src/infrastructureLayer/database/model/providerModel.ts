@@ -2,7 +2,7 @@ import mongoose, { Schema, Model, Document } from 'mongoose';
 import { IParkingProvider } from '../../../domainLayer/providers';
 
 const providerSchema: Schema = new Schema<IParkingProvider & Document>({
-  profile: { type: String },
+  // profile: { type: String },
   mobile: { type: Number },
   services: [{ type: String }],
   startTime: { type: Date },
@@ -12,10 +12,10 @@ const providerSchema: Schema = new Schema<IParkingProvider & Document>({
   feedbacks: [{ type: Schema.Types.ObjectId }],    //Object id reference to be given
   email: { type: String },
   images: [{ type: String }],
-  description: { type: String },
+  // description: { type: String },
   parkingName: { type: String },
   pricePerHour: { type: String },
-  nearbyAttractions: { type: String },
+  // nearbyAttractions: { type: String },
   location: {
     coordinates: [{ type: Number }],
     type: { type: String },
