@@ -7,4 +7,6 @@ export interface IUserRepository {
   // forgotPassword(newPassword: IForgotPassword): Promise<StoreData>;
   loginUser(email:string, password:string): Promise<IUser | null>;
   createGoogleUser(newUser:IUser):Promise<StoreData>;
+  changePassword(email:string,password:string): Promise< boolean >;
+
 }  

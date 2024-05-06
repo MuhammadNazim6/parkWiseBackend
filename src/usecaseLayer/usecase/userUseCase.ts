@@ -1,5 +1,6 @@
 import { IRequestValidator } from "../interface/repository/IvalidateRepository";
 import { IUserRepository } from "../interface/repository/IUserRepository";
+import { IProviderRepository } from "../interface/repository/IProviderRepository";
 import IHashpassword from "../interface/services/IHashpassword";
 import { Ijwt } from "../interface/services/Ijwt";
 import { INodemailer } from "../interface/services/INodemailer";
@@ -10,6 +11,8 @@ import { sendOtpUser } from "./user/sendOtpUser"
 import { checkOtpCommon } from "./user/otpRelated";
 import { IOtpRepository } from "../interface/repository/IOtpRepository";
 import { signGoogleUser } from "./user/signGoogle";
+import { sendForgotPassword } from "./user/sendForgotPassword";
+import {changePassword} from "./user/changePassword"
 
 export class UserUseCase {
   private readonly userRepository: IUserRepository;
@@ -18,6 +21,7 @@ export class UserUseCase {
   private readonly nodemailer: INodemailer;
   private readonly requestValidator: IRequestValidator
   private readonly otpRepository: IOtpRepository
+  private readonly providerRepository:IProviderRepository
 
   constructor(
     userRepository: IUserRepository,
@@ -25,7 +29,8 @@ export class UserUseCase {
     jwt: Ijwt,
     nodemailer: INodemailer,
     requestValidator: IRequestValidator,
-    otpRepository: IOtpRepository
+    otpRepository: IOtpRepository,
+    providerRepository:IProviderRepository
   ) {
     this.userRepository = userRepository;
     this.bcrypt = bcrypt;
@@ -33,6 +38,7 @@ export class UserUseCase {
     this.nodemailer = nodemailer;
     this.requestValidator = requestValidator;
     this.otpRepository = otpRepository;
+    this.providerRepository = providerRepository
   }
 
   // creating user
@@ -98,7 +104,8 @@ export class UserUseCase {
       this.userRepository,
       this.otpRepository,
       email,
-      name
+      name,
+      this.nodemailer,
     )
   }
 
@@ -145,6 +152,44 @@ export class UserUseCase {
       mobile,
       password,
       google
+    )
+  }
+  
+  // signup/login google
+  async sendForgotPassword({
+    email,
+  }: {
+    email: string,
+
+  }) {
+    return sendForgotPassword(
+      this.requestValidator,
+      this.userRepository,
+      this.providerRepository,
+      this.otpRepository,
+      this.bcrypt,
+      this.nodemailer,
+      this.jwt,
+      email,
+    )
+  }
+
+  // For password changing
+  async changePassword({
+    email,
+    password
+  }:{
+    email:string,
+    password:string,
+  }){
+    return changePassword(
+      this.requestValidator,
+      this.userRepository,
+      this.providerRepository,
+      this.bcrypt,
+      this.nodemailer,
+      email,
+      password
     )
   }
 

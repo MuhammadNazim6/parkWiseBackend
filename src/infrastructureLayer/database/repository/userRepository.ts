@@ -6,6 +6,7 @@ import { createUser } from "./user/createUser";
 import { findUser } from "./user/findUser"
 import { loginUser } from "./user/loginUser"
 import { createGoogleUser } from "./user/createGoogleUser";
+import { changePassword } from "./user/changePassword";
 
 
 export class UserRepository implements IUserRepository {
@@ -21,11 +22,6 @@ export class UserRepository implements IUserRepository {
     return findUser(email, this.usersModel);
   }
 
-  // forgot password
-  // async forgotPassword(newPassword: IForgotPassword): Promise<StoreData> {
-  //   return forgotPassword(newPassword, this.usersModel);
-  // }
-
   // logging in user
   async loginUser(email: string, password: string): Promise<IUser | null> {
     return loginUser(email, this.usersModel)
@@ -35,4 +31,7 @@ export class UserRepository implements IUserRepository {
     return createGoogleUser(newUser, this.usersModel)
   }
 
+  async changePassword(email: string, password: string): Promise<boolean> {
+    return changePassword(email, password, this.usersModel)
+  }
 }

@@ -3,6 +3,7 @@ import ErrorResponse from '../../handler/errorResponse';
 import { IOtpRepository } from '../../interface/repository/IOtpRepository';
 import { IUserRepository } from '../../interface/repository/IUserRepository';
 import { IRequestValidator } from '../../interface/repository/IvalidateRepository';
+import { INodemailer } from '../../interface/services/INodemailer';
 import { IOtpSendResponse } from '../../interface/services/IResponses';
 
 
@@ -11,7 +12,8 @@ export const sendOtpUser = async (
   userRepository: IUserRepository,
   otpRepository: IOtpRepository,
   email: string,
-  name: string
+  name: string,
+  nodemailer:INodemailer
 ): Promise<IOtpSendResponse> => {
   try {
     const validation = requestValidator.validateRequiredFields(
@@ -32,13 +34,13 @@ export const sendOtpUser = async (
       }
     }
     const role = 'user'
-    const nodemailerInstance = new Nodemailer();
-    const OTP = await nodemailerInstance.sendOtpToMail(email, name, role);
+    // const nodemailerInstance = new Nodemailer();
+    const OTP = await nodemailer.sendOtpToMail(email, name, role);
 
 
     if (OTP) {
       let expiryTime = new Date();
-      expiryTime.setMinutes(expiryTime.getMinutes() + 20);
+      expiryTime.setMinutes(expiryTime.getMinutes() + 1);
 
       const otpSaved = await otpRepository.createOtpCollection(email, role , OTP, expiryTime)
       return {

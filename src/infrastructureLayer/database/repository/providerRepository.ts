@@ -2,9 +2,9 @@ import { IParkingProvider } from "../../../domainLayer/providers";
 import { IProviderRepository } from "../../../usecaseLayer/interface/repository/IProviderRepository";
 import { StoreData } from "../../../usecaseLayer/interface/services/IResponses";
 import ParkingProviderModel from "../model/providerModel";
-
 import { createProvider } from "./provider/createProvider";
 import { findProvider } from "./provider/findProvider";
+import { changePassword } from "./provider/changePassword";
 
 
 export class ProviderRepository implements IProviderRepository{
@@ -20,6 +20,8 @@ export class ProviderRepository implements IProviderRepository{
     return findProvider(email, this.providerModel);
   }
 
-  
+  async changePassword(email: string, password: string): Promise<boolean> {
+    return changePassword(email, password, this.providerModel)
+  }
 
 }

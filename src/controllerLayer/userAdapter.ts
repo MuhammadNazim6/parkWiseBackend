@@ -123,4 +123,36 @@ export class UserAdapter {
       next(err);
     }
   }
+
+  // @desc For logging in or signuing up of user with google Authentication
+  // route POST api/user/signGoogle
+  // @access Public
+  async forgotPassword(req: Req, res: Res, next: Next) {
+    try {
+      const otpSentForForgotpass = await this.userusecase.sendForgotPassword(req.body)
+      
+      res.status(otpSentForForgotpass.status).json({
+        success: otpSentForForgotpass.success,
+        message: otpSentForForgotpass.message,
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+
+  // @desc Updating existing password with newpassword
+  // @access Public
+  async changePassword(req: Req, res: Res, next: Next) {
+    try {
+      const passwordChanged = await this.userusecase.changePassword(req.body)
+      
+      res.status(passwordChanged.status).json({
+        success: passwordChanged.success,
+        message: passwordChanged.message,
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
 }

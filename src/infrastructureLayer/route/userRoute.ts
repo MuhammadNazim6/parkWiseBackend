@@ -36,4 +36,14 @@ router.post('/signGoogle', (req: Req, res: Res, next: Next) => {
   userAdapter.signGoogle(req, res, next)
 })
 
+// For sending otp and resetting password
+router.post('/forgotPassword', (req: Req, res: Res, next: Next) => {
+  userAdapter.forgotPassword(req, res, next)
+})
+
+// For changing password 
+router.post('/changePassword', (req: Req, res: Res, next: Next) => {
+  userAdapter.changePassword(req, res, next)
+})
+
 export default router;  
