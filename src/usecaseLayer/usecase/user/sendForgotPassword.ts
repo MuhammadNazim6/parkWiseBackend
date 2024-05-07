@@ -50,7 +50,7 @@ export const sendForgotPassword = async (
     const OTP = await nodemailer.sendOtpForForgotPassword(email, Name, Role);
     if (OTP) {
       let expiryTime = new Date();
-      expiryTime.setMinutes(expiryTime.getMinutes() + 1);
+      expiryTime.setMinutes(expiryTime.getMinutes() + 3);
 
       const otpSaved = await otpRepository.createOtpCollection(email, Role, OTP, expiryTime)
       return {

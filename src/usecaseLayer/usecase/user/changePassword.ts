@@ -39,7 +39,6 @@ export const changePassword = async (
         }
       }
     }
-
     return {
       status: 404,
       success: false,

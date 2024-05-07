@@ -28,6 +28,14 @@ class Nodemailer implements INodemailer {
       </div>
     </div>`;
   }
+  private prepareContentWithoutOtp(name: string, role: string,  message: string): string {
+    return `<div style="font-family: 'Arial', sans-serif; max-width: 600px; margin: 0 auto;">
+      <div style="background-color: #f8f8f8; padding: 20px; text-align: center; border-radius: 10px;">
+        <h3 style="color: #333;">Dear ${name},</h3>
+        <p style="color: #555; font-size: 16px;">${message}</p>
+      </div>
+    </div>`;
+  }
 
  
   private async sendEmailWithOTP(email: string, name: string, role: string, subject: string, message: string): Promise<string> {
@@ -60,6 +68,33 @@ class Nodemailer implements INodemailer {
       throw new Error(`Unable to send email to ${email}: ${error}`);
     }
   }
+  private async sendEmailContentOnly(email: string, name: string, role: string, subject: string, message: string): Promise<string> {
+    try {
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.EMAIL_NODEMAILER,
+          pass: process.env.PASSWORD_NODEMAILER
+        }
+      });
+
+
+      const htmlContent = this.prepareContentWithoutOtp(name, role, message);
+
+      const mailOptions = {
+        from: process.env.EMAIL_NODEMAILER,
+        to: email,
+        subject: subject,
+        html: htmlContent
+      };
+
+      await transporter.sendMail(mailOptions);
+      console.log('Email sent successfully');
+return ''
+    } catch (error) {
+      throw new Error(`Unable to send email to ${email}: ${error}`);
+    }
+  }
 
   // OTP for email verification
   async sendOtpToMail(email: string, name: string, role: string): Promise<string> {
@@ -87,7 +122,7 @@ class Nodemailer implements INodemailer {
     
     Best regards,
     The ParkWise Team`;
-    return await this.sendEmailWithOTP(email, name, role, subject, message);
+    return await this.sendEmailContentOnly(email, name, role, subject, message);
   }
 }
 

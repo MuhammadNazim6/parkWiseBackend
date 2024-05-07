@@ -6,6 +6,7 @@ import morgan from "morgan";
 import userRouter from '../route/userRoute';
 import adminRouter from '../route/adminRoutes';
 import providerRouter from '../route/providerRoutes';
+import commonRouter from '../route/commonRoutes';
 import errorHandler from "../../usecaseLayer/handler/errorHandler";
 
 export const app = express()
@@ -26,6 +27,7 @@ app.use(morgan('dev'))
 
 // Provide route usage here
 app.use("/api/user", userRouter);
+app.use("/api/common", commonRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/provider", providerRouter);
 

@@ -1,6 +1,7 @@
 import { IRequestValidator } from "../interface/repository/IvalidateRepository";
 import { IUserRepository } from "../interface/repository/IUserRepository";
 import { IProviderRepository } from "../interface/repository/IProviderRepository";
+import { IOtpRepository } from "../interface/repository/IOtpRepository";
 import IHashpassword from "../interface/services/IHashpassword";
 import { Ijwt } from "../interface/services/Ijwt";
 import { INodemailer } from "../interface/services/INodemailer";
@@ -9,7 +10,6 @@ import { loginUser } from "./user/loginUser"
 import { logoutUser } from "./user/logoutUser";
 import { sendOtpUser } from "./user/sendOtpUser"
 import { checkOtpCommon } from "./user/otpRelated";
-import { IOtpRepository } from "../interface/repository/IOtpRepository";
 import { signGoogleUser } from "./user/signGoogle";
 import { sendForgotPassword } from "./user/sendForgotPassword";
 import {changePassword} from "./user/changePassword"

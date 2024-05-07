@@ -40,7 +40,7 @@ export const sendOtpUser = async (
 
     if (OTP) {
       let expiryTime = new Date();
-      expiryTime.setMinutes(expiryTime.getMinutes() + 1);
+      expiryTime.setMinutes(expiryTime.getMinutes() + 3);
 
       const otpSaved = await otpRepository.createOtpCollection(email, role , OTP, expiryTime)
       return {
