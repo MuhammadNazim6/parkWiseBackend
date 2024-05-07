@@ -9,10 +9,6 @@ router.post('/signup', (req: Req, res: Res, next: Next) => {
   providerAdapter.createProvider(req, res, next)
 })
 
-// Provider login
-router.post('/login',(req:Req,res:Res,next:Next)=>{
-  providerAdapter.loginProvider(req,res,next)
-})
 
 // Provider logout
 router.post('/logout',(req:Req,res:Res,next:Next)=>{

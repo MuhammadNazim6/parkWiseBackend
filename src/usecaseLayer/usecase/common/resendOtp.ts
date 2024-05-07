@@ -4,7 +4,6 @@ import IHashpassword from "../../interface/services/IHashpassword";
 import { INodemailer } from "../../interface/services/INodemailer";
 import { IOtpRepository } from "../../interface/repository/IOtpRepository";
 import { IOtpSendResponse } from "../../interface/services/IResponses";
-import e from "express";
 
 export const resendOtp = async (
   userRepository: IUserRepository,

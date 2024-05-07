@@ -6,7 +6,6 @@ import IHashpassword from "../interface/services/IHashpassword";
 import { Ijwt } from "../interface/services/Ijwt";
 import { INodemailer } from "../interface/services/INodemailer";
 import { createUser } from "./user/createUser";
-import { loginUser } from "./user/loginUser"
 import { logoutUser } from "./user/logoutUser";
 import { sendOtpUser } from "./user/sendOtpUser"
 import { checkOtpCommon } from "./user/otpRelated";
@@ -65,24 +64,6 @@ export class UserUseCase {
     );
   }
 
-
-  // logging in user
-  async loginUser({
-    email,
-    password,
-  }: {
-    email: string;
-    password: string;
-  }) {
-    return loginUser(
-      this.requestValidator,
-      this.userRepository,
-      this.bcrypt,
-      this.jwt,
-      email,
-      password
-    );
-  }
 
   // logging out user
   async logoutUser() {

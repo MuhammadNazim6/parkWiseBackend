@@ -5,7 +5,6 @@ import IHashpassword from "../interface/services/IHashpassword";
 import { Ijwt } from "../interface/services/Ijwt";
 import { INodemailer } from "../interface/services/INodemailer";
 import { createProvider } from "./provider/createProvider";
-import { loginProvider } from "./provider/loginProvider";
 import { sendOtpProvider } from './provider/sendOtpProvider';
 import { IOtpRepository } from "../interface/repository/IOtpRepository";
 import { checkOtpCommon } from "./user/otpRelated";
@@ -58,25 +57,7 @@ export class ProviderUseCase {
       password
     )
   }
-
-
-  // provider login
-  async loginProvider({
-    email,
-    password,
-  }: {
-    email: string,
-    password: string,
-  }) {
-    return loginProvider(
-      this.requestValidator,
-      this.providerRepository,
-      this.bcrypt,
-      this.jwt,
-      email,
-      password
-    )
-  }
+  
 
   // sending otp to provider
   async sendOtpProvider({

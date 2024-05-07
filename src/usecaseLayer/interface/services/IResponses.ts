@@ -67,3 +67,11 @@ export interface ISuccessResponse{
   success:boolean;
   message:string;
 }
+
+// export interface ICommonLoginResponse{
+//   status:number;
+//   success:boolean;
+//   message:string;
+//   role:string;
+//   token:string;
+// }

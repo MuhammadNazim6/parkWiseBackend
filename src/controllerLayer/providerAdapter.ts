@@ -17,7 +17,7 @@ export class ProviderAdapter {
     try {
       const newProvider = await this.providerUseCase.createProvider(req.body);
       newProvider &&
-        res.cookie("providerJwt", newProvider.token, {
+        res.cookie("providerjwt", newProvider.token, {
           httpOnly: true,
           sameSite: "strict", // Prevent CSRF attacks
           maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
@@ -34,39 +34,13 @@ export class ProviderAdapter {
     }
   }
 
-
-  // @desc Provider Login
-  // route POST api/provider/login
-  // @access Public
-  async loginProvider(req: Req, res: Res, next: Next) {
-    try {
-      const provider = await this.providerUseCase.loginProvider(req.body);
-      provider &&
-        res.cookie("providerJwt", provider.token, {
-          httpOnly: true,
-          sameSite: "strict", // Prevent CSRF attacks
-          maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-        });
-
-      res.status(provider.status).json({
-        success: provider.success,
-        user: provider.data,
-        token: provider.token,
-        data:provider.data
-      });
-    } catch (error) {
-      throw error
-    }
-  }
-
-
   // @desc Provider logout 
   // route POST api/provider/logout
   // @access Private
   async logoutProvider(req: Req, res: Res, next: Next) {
     try {
 
-      res.cookie('providerJwt', '', {
+      res.cookie('providerjwt', '', {
         httpOnly: false,
         expires: new Date(0)
       })

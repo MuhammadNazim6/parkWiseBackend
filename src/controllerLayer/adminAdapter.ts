@@ -9,37 +9,13 @@ export class AdminAdapter{
   }
 
 
-  // @desc Admin login 
-  // route POST api/admin/login
-  // @access Public
-  async loginAdmin(req: Req, res: Res, next: Next) {
-    try {
-      const admin = await this.adminUsecase.loginAdmin(req.body);
-
-      admin &&
-        res.cookie("adminjwt", admin.token, {
-          httpOnly: true,
-          sameSite: "strict", 
-          maxAge: 30 * 24 * 60 * 60 * 1000, 
-        });
-
-      res.status(admin.status).json({
-        success: admin.success,
-        message: admin.message,
-      });
-    } catch (err) {
-      next(err);
-    }
-  }
-
-
   // @desc Admin logout 
   // route POST api/admin/logout
   // @access Private
   async logoutAdmin(req: Req, res: Res, next: Next) {
     try {
 
-      res.cookie('userjwt','',{
+      res.cookie('adminjwt','',{
         httpOnly: false,
         expires:new Date(0)
       })
