@@ -26,7 +26,8 @@ export interface ILoginResponse<T = IUser | string | IAdmin | IParkingProvider> 
   status: number;
   success: boolean;
   message?: string;
-  token?: string
+  token?: string;
+  refreshToken?: string;
   data?:{
     name:string;
     role:string;
@@ -68,10 +69,9 @@ export interface ISuccessResponse{
   message:string;
 }
 
-// export interface ICommonLoginResponse{
-//   status:number;
-//   success:boolean;
-//   message:string;
-//   role:string;
-//   token:string;
-// }
+export interface IRefreshTokenResponse {
+  status:number,
+  success:boolean,
+  message:string,
+  accessToken?:string
+}

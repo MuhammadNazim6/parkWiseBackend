@@ -13,9 +13,9 @@ export class CommonAdapter {
     try {
       const loggedInAccount = await this.commonUsecase.commonLogin(req.body);
       if (loggedInAccount) {
-        const jwtKey = `${loggedInAccount.data?.role.toLowerCase()}jwt`;
+        const jwtKey = 'refreshToken'
   
-        res.cookie(jwtKey, loggedInAccount.token, {
+        res.cookie(jwtKey, loggedInAccount.refreshToken, {
           httpOnly: true,
           sameSite: "strict", 
           maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -45,6 +45,23 @@ export class CommonAdapter {
         success: resentOtp.success,
         message: resentOtp.message,
       });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  // @desc For refreshing expired token 
+  // @access Private
+  async refreshToken(req: Req, res: Res, next: Next) {
+    try {
+      const refreshToken = await this.commonUsecase.updateToken(req.cookies.refreshToken)
+      
+      res.status(refreshToken.status).json({
+        success: refreshToken.success,
+        message: refreshToken.message,
+        accessToken:refreshToken.accessToken
+      });
+
     } catch (err) {
       next(err);
     }

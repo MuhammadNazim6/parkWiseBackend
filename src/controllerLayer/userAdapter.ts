@@ -14,17 +14,18 @@ export class UserAdapter {
     try {
       const newUser = await this.userusecase.createUser(req.body);
       if (newUser && newUser.token) {
-        res.cookie("userjwt", newUser.token, {
+        res.cookie('refreshToken', newUser.token, {
           httpOnly: true,
-          sameSite: "none", 
-          maxAge: 30 * 24 * 60 * 60 * 1000, 
+          sameSite: "strict",
+          maxAge: 30 * 24 * 60 * 60 * 1000,
         });
       }
 
       res.status(newUser.status).json({
-          success: newUser.success,
-          message: newUser.message,
-          token: newUser  .token,
+        success: newUser.success,
+        message: newUser.message,
+        token: newUser.token,
+        data: newUser.data,
       });
     } catch (err) {
       next(err);
@@ -37,7 +38,7 @@ export class UserAdapter {
   //@access   Private
   async logoutuser(req: Req, res: Res, next: Next) {
     try {
-      res.cookie("userjwt", "", {
+      res.cookie('refreshToken', "", {
         httpOnly: false,
         expires: new Date(0),
       });
@@ -90,9 +91,18 @@ export class UserAdapter {
     try {
       const signed = await this.userusecase.signGoogleUser(req.body);
 
+      if (signed && signed.token) {
+        res.cookie('refreshToken', signed.token, {
+          httpOnly: true,
+          sameSite: "strict",
+          maxAge: 30 * 24 * 60 * 60 * 1000,
+        });
+      }
       res.status(signed.status).json({
         success: signed.success,
         message: signed.message,
+        token: signed.token,
+        data: signed.data,
       });
     } catch (err) {
       next(err);
@@ -105,7 +115,7 @@ export class UserAdapter {
   async forgotPassword(req: Req, res: Res, next: Next) {
     try {
       const otpSentForForgotpass = await this.userusecase.sendForgotPassword(req.body)
-      
+
       res.status(otpSentForForgotpass.status).json({
         success: otpSentForForgotpass.success,
         message: otpSentForForgotpass.message,
@@ -121,7 +131,7 @@ export class UserAdapter {
   async changePassword(req: Req, res: Res, next: Next) {
     try {
       const passwordChanged = await this.userusecase.changePassword(req.body)
-      
+
       res.status(passwordChanged.status).json({
         success: passwordChanged.success,
         message: passwordChanged.message,

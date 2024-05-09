@@ -17,9 +17,9 @@ export class ProviderAdapter {
     try {
       const newProvider = await this.providerUseCase.createProvider(req.body);
       newProvider &&
-        res.cookie("providerjwt", newProvider.token, {
+        res.cookie('refreshToken', newProvider.token, {
           httpOnly: true,
-          sameSite: "strict", // Prevent CSRF attacks
+          sameSite: "strict", 
           maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
         });
 
@@ -40,7 +40,7 @@ export class ProviderAdapter {
   async logoutProvider(req: Req, res: Res, next: Next) {
     try {
 
-      res.cookie('providerjwt', '', {
+      res.cookie('refreshToken', '', {
         httpOnly: false,
         expires: new Date(0)
       })

@@ -15,7 +15,7 @@ export class AdminAdapter{
   async logoutAdmin(req: Req, res: Res, next: Next) {
     try {
 
-      res.cookie('adminjwt','',{
+      res.cookie('refreshToken','',{
         httpOnly: false,
         expires:new Date(0)
       })

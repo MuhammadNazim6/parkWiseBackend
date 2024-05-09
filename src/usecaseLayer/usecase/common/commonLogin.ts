@@ -25,12 +25,13 @@ export const commonLogin = async (
       { email, password },
       ["email", "password"]
     );
+console.log(email);
 
     if (!validation.success) {
       return {
         status: 400,
         success: false,
-        message: `The username or password is incorrect`
+        message: `Username or password is not valid`
       }
     }
 
@@ -45,10 +46,12 @@ export const commonLogin = async (
         }
       }
       const token = jwt.createJWT(user._id as string, email, 'user', user.name);
+      const refreshToken = jwt.createRefreshToken(user._id as string, email, 'user', user.name);
       return {
         status: 200,
         success: true,
         token: token,
+        refreshToken,
         data: {
           name: user.name,
           role: 'user',
@@ -106,7 +109,7 @@ export const commonLogin = async (
     return {
       status: 200,
       success: false,
-      message: 'Incorrect username or password'
+      message: 'No user, provider or admin with this email'
     }
   } catch (error) {
     throw error

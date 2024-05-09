@@ -9,6 +9,7 @@ import { INodemailer } from "../interface/services/INodemailer";
 
 import { resendOtp } from "./common/resendOtp";
 import { commonLogin } from "./common/commonLogin";
+import { updateToken } from "./common/updateToken";
 
 export class CommonUseCase {
   private readonly userRepository: IUserRepository;
@@ -17,8 +18,8 @@ export class CommonUseCase {
   private readonly nodemailer: INodemailer;
   private readonly requestValidator: IRequestValidator;
   private readonly otpRepository: IOtpRepository;
-  private readonly providerRepository:IProviderRepository;
-  private readonly adminRepository:IAdminRepsitory;
+  private readonly providerRepository: IProviderRepository;
+  private readonly adminRepository: IAdminRepsitory;
   constructor(
     userRepository: IUserRepository,
     bcrypt: IHashpassword,
@@ -26,8 +27,8 @@ export class CommonUseCase {
     nodemailer: INodemailer,
     requestValidator: IRequestValidator,
     otpRepository: IOtpRepository,
-    providerRepository:IProviderRepository,
-    adminRepository:IAdminRepsitory
+    providerRepository: IProviderRepository,
+    adminRepository: IAdminRepsitory
   ) {
     this.userRepository = userRepository;
     this.bcrypt = bcrypt;
@@ -39,45 +40,43 @@ export class CommonUseCase {
     this.adminRepository = adminRepository;
   }
 
-    // For logging in user,admin,provider
-    async commonLogin({
+  // For logging in user,admin,provider
+  async commonLogin({email,password}: {email: string,password: string}) {
+    return commonLogin(
+      this.userRepository,
+      this.providerRepository,
+      this.adminRepository,
+      this.bcrypt,
+      this.nodemailer,
+      this.otpRepository,
+      this.requestValidator,
+      this.jwt,
       email,
       password
-    }:{
-      email:string,
-      password:string
-    }){
-      return commonLogin(
-        this.userRepository,
-        this.providerRepository,
-        this.adminRepository,
-        this.bcrypt,
-        this.nodemailer,
-        this.otpRepository,
-        this.requestValidator,
-        this.jwt,
-        email,
-        password
-      )
-    }
+    )
+  }
 
 
-    // For password changing
-    async resendOtp({
+  // For password changing
+  async resendOtp({email}: {email: string}) {
+    return resendOtp(
+      this.userRepository,
+      this.providerRepository,
+      this.bcrypt,
+      this.nodemailer,
+      this.otpRepository,
       email,
+    )
+  }
 
-    }:{
-      email:string,
-    }){
-      return resendOtp(
-        this.userRepository,
-        this.providerRepository,
-        this.bcrypt,
-        this.nodemailer,
-        this.otpRepository,
-        email,
-      )
-    }
+
+  // For refreshing expired token
+  async updateToken(refreshToken: string) {
+    return updateToken(
+      refreshToken,
+      this.jwt,
+    )
+  }
 
 
 }

@@ -14,5 +14,9 @@ router.post('/resend-otp', (req: Req, res: Res, next: Next) => {
   commonAdapter.resendOtp(req, res, next)
 })
 
+// For refresh token 
+router.post('/refreshToken', (req: Req, res: Res, next: Next) => {
+  commonAdapter.refreshToken(req, res, next)
+})
 
 export default router;    
