@@ -9,7 +9,7 @@ class JwtPassword implements Ijwt {
       const token: string = jwt.sign(
         { id: userId, email: email, role: role, name: name },
         jwtKey,
-        { expiresIn: '10s' }
+        { expiresIn: '1d' }
       );
       console.log('Inside the jwt config file');
       return token;

@@ -28,10 +28,12 @@ export const signGoogleUser = async (
     if (user) {
       // user alreday present so logging in 
       const token = jwt.createJWT(user._id as string, user.email, "user", user.name);
+      const refreshToken = jwt.createRefreshToken(user._id as string, user.email, "user", user.name);
       return {
         status: 200,
         success: true,
         token: token,
+        refreshToken,
         data: {
           name: user.name,
           role: 'user',

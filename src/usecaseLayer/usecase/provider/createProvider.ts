@@ -36,14 +36,16 @@ export const createProvider = async (
       };
       const provider = await providerRepository.createProvider(newProvider);
       const token = jwt.createJWT(provider._id as string, provider.email, "provider", provider.name);
+      const refreshToken = jwt.createRefreshToken(provider._id as string, provider.email, "provider", provider.name);
 
       return {
         status: 200,
         success: true,
         token: token,
+        refreshToken,
         data: {
           name: provider.name,
-          role: 'user',
+          role: 'provider',
           email: provider.email
         }
       };

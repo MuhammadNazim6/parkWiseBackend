@@ -11,7 +11,7 @@ const providerSchema: Schema = new Schema<IParkingProvider & Document>({
   availableSpace: { type: String },
   feedbacks: [{ type: Schema.Types.ObjectId }],    //Object id reference to be given
   email: { type: String },
-  images: [{ type: String }],
+  // images: [{ type: String }],
   // description: { type: String },
   parkingName: { type: String },
   pricePerHour: { type: String },
@@ -20,7 +20,7 @@ const providerSchema: Schema = new Schema<IParkingProvider & Document>({
     coordinates: [{ type: Number }],
     type: { type: String },
   },
-  parkingRules: { type: String },
+  // parkingRules: { type: String },
   isApproved: { type: Boolean },
   notifications: [{
     message: { type: String },

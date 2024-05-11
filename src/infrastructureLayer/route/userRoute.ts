@@ -1,7 +1,7 @@
 import express from 'express'
 import { Req, Res, Next } from '../types/expressTypes';
 import { userAdapter } from './injections/userInjection';
-import { authUser } from '../middleware/authMiddleware';
+import {userAuth} from '../middleware/authMiddleware';
 
 const router = express.Router();
 
@@ -13,7 +13,7 @@ router.post("/signup", (req: Req, res: Res, next: Next) =>
 
 // User logout route
 router.post('/logout',
-authUser,
+userAuth,
 (req: Req, res: Res, next: Next) => {
   userAdapter.logoutuser(req, res, next)
 }

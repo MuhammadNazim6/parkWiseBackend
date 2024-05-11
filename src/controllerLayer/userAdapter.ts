@@ -14,7 +14,7 @@ export class UserAdapter {
     try {
       const newUser = await this.userusecase.createUser(req.body);
       if (newUser && newUser.token) {
-        res.cookie('refreshToken', newUser.token, {
+        res.cookie('refreshToken', newUser.refreshToken, {
           httpOnly: true,
           sameSite: "strict",
           maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -92,7 +92,7 @@ export class UserAdapter {
       const signed = await this.userusecase.signGoogleUser(req.body);
 
       if (signed && signed.token) {
-        res.cookie('refreshToken', signed.token, {
+        res.cookie('refreshToken', signed.refreshToken, {
           httpOnly: true,
           sameSite: "strict",
           maxAge: 30 * 24 * 60 * 60 * 1000,

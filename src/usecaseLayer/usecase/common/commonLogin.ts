@@ -25,7 +25,6 @@ export const commonLogin = async (
       { email, password },
       ["email", "password"]
     );
-console.log(email);
 
     if (!validation.success) {
       return {
@@ -72,10 +71,13 @@ console.log(email);
         }
       }
       const token = jwt.createJWT(provider._id as string, email, 'provider', provider.name);
+      const refreshToken = jwt.createRefreshToken(provider._id as string, email, 'provider', provider.name);
+
       return {
         status: 200,
         success: true,
         token: token,
+        refreshToken,
         data: {
           name: provider.name,
           role: 'provider',
@@ -95,10 +97,13 @@ console.log(email);
         }
       }
       const token = jwt.createJWT(admin._id as string, email, 'admin', admin.name);
+      const refreshToken = jwt.createRefreshToken(admin._id as string, email, 'admin', admin.name);
+
       return {
         status: 200,
         success: true,
         token: token,
+        refreshToken,
         data: {
           name: admin.name,
           role: 'admin',

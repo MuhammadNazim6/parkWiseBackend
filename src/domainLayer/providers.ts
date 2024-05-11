@@ -11,7 +11,7 @@ export interface IParkingProvider {
   availableSpace?: string | null;
   feedbacks?: ObjectId[] | null;
   email: string;
-  images?: string[] | null;
+  // images?: string[] | null;
   // description?: string | null;
   parkingName?: string | null;
   pricePerHour?: string | null;
@@ -20,7 +20,7 @@ export interface IParkingProvider {
     coordinates: number[] | null;
     type: string | null;
   };
-  parkingRules?: string | null;
+  // parkingRules?: string | null;
   isApproved?: boolean | null;
   notifications?: {
     message: string | null;

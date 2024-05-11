@@ -16,18 +16,19 @@ export class ProviderAdapter {
   async createProvider(req: Req, res: Res, next: Next) {
     try {
       const newProvider = await this.providerUseCase.createProvider(req.body);
-      newProvider &&
-        res.cookie('refreshToken', newProvider.token, {
+      if (newProvider && newProvider.token) {
+        res.cookie('refreshToken', newProvider.refreshToken, {
           httpOnly: true,
-          sameSite: "strict", 
-          maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+          sameSite: "strict",
+          maxAge: 30 * 24 * 60 * 60 * 1000, //30 days
         });
+      }
 
       res.status(newProvider.status).json({
         success: newProvider.success,
         user: newProvider.data,
         token: newProvider.token,
-        data:newProvider.data
+        data: newProvider.data
       });
     } catch (err) {
       next(err);
