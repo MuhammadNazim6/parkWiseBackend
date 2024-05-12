@@ -1,13 +1,14 @@
-import { IParkingProvider } from "../../domainLayer/providers";
 import { IRequestValidator } from "../interface/repository/IvalidateRepository";
 import { IProviderRepository } from "../interface/repository/IProviderRepository";
+import { IOtpRepository } from "../interface/repository/IOtpRepository";
+import { IAddressRepository } from "../interface/repository/IAddressRepository";
 import IHashpassword from "../interface/services/IHashpassword";
 import { Ijwt } from "../interface/services/Ijwt";
 import { INodemailer } from "../interface/services/INodemailer";
 import { createProvider } from "./provider/createProvider";
 import { sendOtpProvider } from './provider/sendOtpProvider';
-import { IOtpRepository } from "../interface/repository/IOtpRepository";
 import { checkOtpCommon } from "./user/otpRelated";
+import { sendLotForApproval } from "./provider/sendLotForApproval";
 
 
 export class ProviderUseCase {
@@ -17,6 +18,7 @@ export class ProviderUseCase {
   private readonly nodemailer: INodemailer;
   private readonly requestValidator: IRequestValidator;
   private readonly otpRepository: IOtpRepository;
+  private readonly addressRepository: IAddressRepository;
 
   constructor(
     providerRepository: IProviderRepository,
@@ -24,7 +26,8 @@ export class ProviderUseCase {
     jwt: Ijwt,
     nodemailer: INodemailer,
     requestValidator: IRequestValidator,
-    otpRepository:IOtpRepository
+    otpRepository: IOtpRepository,
+    addressRepository: IAddressRepository
   ) {
     this.providerRepository = providerRepository;
     this.bcrypt = bcrypt;
@@ -32,6 +35,7 @@ export class ProviderUseCase {
     this.nodemailer = nodemailer;
     this.requestValidator = requestValidator;
     this.otpRepository = otpRepository;
+    this.addressRepository = addressRepository
   }
 
   // provider register
@@ -57,7 +61,7 @@ export class ProviderUseCase {
       password
     )
   }
-  
+
 
   // sending otp to provider
   async sendOtpProvider({
@@ -76,22 +80,98 @@ export class ProviderUseCase {
     )
   }
 
-  
+
   // checking otp of provider
   async checkOtpProvider({
     email,
     enteredOtp
   }: {
     email: string,
-    enteredOtp:string
+    enteredOtp: string
   }) {
     return checkOtpCommon(
       this.requestValidator,
       this.otpRepository,
       email,
       enteredOtp
-
     )
-
   }
+
+
+
+  // send Lot For Approval
+  async sendLotForApproval({
+    email,
+    parkingName,
+    parkingCount,
+    waterServicePrice,
+    evChargeFacilityPrice,
+    airPressureCheckPrice,
+    oneHourParkingAmount,
+    // location,
+    latitude,
+    longitude,
+    startEndTime,
+
+    buildingOrAreaName,
+    street,
+    city,
+    state,
+    landmark,
+    country,
+    pinNumber,
+
+  }: {
+    email:string,
+    parkingName: string;
+    parkingCount: number;
+    waterServicePrice: number;
+    evChargeFacilityPrice: number;
+    airPressureCheckPrice: number;
+    oneHourParkingAmount: number;
+    // location: {
+    //   lng: number,
+    //   lat: number
+    // };
+    latitude:number,
+    longitude:number,
+    isApproved: boolean;
+    startEndTime: string;
+
+    buildingOrAreaName: string;
+    street: string;
+    city: string;
+    state: string;
+    landmark: string;
+    country: string;
+    pinNumber: number;
+  }) {
+
+
+    return sendLotForApproval(
+      this.providerRepository,
+      this.addressRepository,
+      email,
+      parkingName,
+      parkingCount,
+      waterServicePrice,
+      evChargeFacilityPrice,
+      airPressureCheckPrice,
+      oneHourParkingAmount,
+      // location,
+      latitude,
+      longitude,
+      startEndTime,
+
+      buildingOrAreaName,
+      street,
+      city,
+      state,
+      landmark,
+      country,
+      pinNumber,
+    )
+    
+  }
+
 }

@@ -1,6 +1,6 @@
 import { IUser } from "../../../domainLayer/users";
 import { IUserRepository } from "../../../usecaseLayer/interface/repository/IUserRepository";
-import { IForgotPassword, StoreData } from "../../../usecaseLayer/interface/services/IResponses";
+import { StoreData } from "../../../usecaseLayer/interface/services/IResponses";
 import UserModel from "../model/userModel";
 import { createUser } from "./user/createUser";
 import { findUser } from "./user/findUser"

@@ -1,5 +1,5 @@
 import { IAdmin } from "../../../domainLayer/admin";
-import { IParkingProvider } from "../../../domainLayer/providers";
+import { IParkingProvider, IParkingProviderReady } from "../../../domainLayer/providers";
 import { IUser } from "../../../domainLayer/users";
 
 export interface StoreData {
@@ -8,18 +8,6 @@ export interface StoreData {
   email: string;
 }
 
-export interface IForgotPassword {
-  email: string;
-  password: string;
-}
-
-export interface IResponse<T = StoreData | string> {
-  status: number;
-  success: boolean;
-  message?: string;
-  data?: T;
-  token?: string
-}
 
 
 export interface ILoginResponse<T = IUser | string | IAdmin | IParkingProvider> {
@@ -32,7 +20,17 @@ export interface ILoginResponse<T = IUser | string | IAdmin | IParkingProvider> 
     name:string;
     role:string;
     email:string;
+    
   } ;
+}
+
+export interface IProviderLoginResponse<T = IParkingProvider | IParkingProviderReady> {
+  status: number;
+  success: boolean;
+  message?: string;
+  token?: string;
+  refreshToken?: string;
+  data?:T ;
 }
 
 

@@ -24,4 +24,9 @@ router.post('/check-otp',(req:Req,res:Res,next:Next)=>{
   providerAdapter.checkOtp(req,res,next)
 })
 
+// For sending approval request to admin and add parking slot
+router.post('/sendLotForApproval',(req:Req,res:Res,next:Next)=>{
+  providerAdapter.sendLotForApproval(req,res,next)
+})
+
 export default router; 
