@@ -9,7 +9,9 @@ import { createProvider } from "./provider/createProvider";
 import { sendOtpProvider } from './provider/sendOtpProvider';
 import { checkOtpCommon } from "./user/otpRelated";
 import { sendLotForApproval } from "./provider/sendLotForApproval";
-
+import { getRequests } from "./provider/getRequests";
+import { getApprovedProviders } from "./provider/getApprovedProviders";
+import { blockUnblockProvider } from "./provider/blockUnblockProvider";
 
 export class ProviderUseCase {
   private readonly providerRepository: IProviderRepository;
@@ -108,11 +110,9 @@ export class ProviderUseCase {
     evChargeFacilityPrice,
     airPressureCheckPrice,
     oneHourParkingAmount,
-    // location,
     latitude,
     longitude,
     startEndTime,
-
     buildingOrAreaName,
     street,
     city,
@@ -122,22 +122,16 @@ export class ProviderUseCase {
     pinNumber,
 
   }: {
-    email:string,
+    email: string,
     parkingName: string;
     parkingCount: number;
     waterServicePrice: number;
     evChargeFacilityPrice: number;
     airPressureCheckPrice: number;
     oneHourParkingAmount: number;
-    // location: {
-    //   lng: number,
-    //   lat: number
-    // };
-    latitude:number,
-    longitude:number,
-    isApproved: boolean;
+    latitude: number,
+    longitude: number,
     startEndTime: string;
-
     buildingOrAreaName: string;
     street: string;
     city: string;
@@ -146,8 +140,6 @@ export class ProviderUseCase {
     country: string;
     pinNumber: number;
   }) {
-
-
     return sendLotForApproval(
       this.providerRepository,
       this.addressRepository,
@@ -158,11 +150,9 @@ export class ProviderUseCase {
       evChargeFacilityPrice,
       airPressureCheckPrice,
       oneHourParkingAmount,
-      // location,
       latitude,
       longitude,
       startEndTime,
-
       buildingOrAreaName,
       street,
       city,
@@ -171,7 +161,30 @@ export class ProviderUseCase {
       country,
       pinNumber,
     )
-    
   }
 
-}
+
+  // fetch providers requests
+  async getRequests() {
+    return getRequests(
+      this.providerRepository
+    )
+  }
+  async getApprovedProviders() {
+    return getApprovedProviders(
+      this.providerRepository
+    )
+  }
+
+  async blockUnblockProvider({
+    email,
+  }: {
+    email: string
+  }) {
+    return blockUnblockProvider(
+      this.providerRepository,
+      email
+    )
+  }
+
+}   

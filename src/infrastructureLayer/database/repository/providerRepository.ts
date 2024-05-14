@@ -6,6 +6,9 @@ import { createProvider } from "./provider/createProvider";
 import { findProvider } from "./provider/findProvider";
 import { changePassword } from "./provider/changePassword";
 import { updateProviderWithSlots } from "./provider/updateProviderWithSlots";
+import { getProviderRequests } from "./provider/getProviderRequests";
+import { getApprovedProviders } from "./provider/getApprovedProviders";
+import { blockUnblockProvider } from "./provider/blockUnblockProvider";
 
 export class ProviderRepository implements IProviderRepository {
   constructor(private readonly providerModel: typeof ParkingProviderModel) { }
@@ -33,7 +36,6 @@ export class ProviderRepository implements IProviderRepository {
     evChargeFacilityPrice: number,
     airPressureCheckPrice: number,
     oneHourParkingAmount: number,
-    // location: { lng: number, lat: number },
     latitude:number,
     longitude:number,
     startEndTime: string): Promise<boolean> {
@@ -46,11 +48,30 @@ export class ProviderRepository implements IProviderRepository {
         evChargeFacilityPrice,
         airPressureCheckPrice,
         oneHourParkingAmount,
-        // location,
         latitude,
         longitude,
         startEndTime,
         this.providerModel)
+  }
+
+  async getProviderRequests():Promise<{}[]>{
+    return getProviderRequests(
+      this.providerModel
+    )
+  }
+
+  async getApprovedProviders():Promise<{}[]>{
+    return getApprovedProviders(
+      this.providerModel
+    )    
+  }
+
+  async blockUnblockProvider(email: string, state: boolean): Promise<boolean> {
+    return blockUnblockProvider(
+      email,
+      state,
+      this.providerModel
+    )
   }
 
 }

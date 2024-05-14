@@ -28,5 +28,6 @@ export interface IUser {
     providerId: ObjectId | null;
     reason: string | null;
   }[];
-  joinedAt?: Date | null
+  joinedAt?: Date | null;
+  isBlocked?:Boolean;
 }

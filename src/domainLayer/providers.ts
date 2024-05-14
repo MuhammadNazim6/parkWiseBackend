@@ -6,7 +6,8 @@ export interface IParkingProvider {
   password: string;
   mobile: number | null;
   email: string;
-  isApproved?: boolean | null;
+  approvalStatus?: string;
+  isBlocked?:Boolean;
 }
 
 export interface IParkingProviderReady extends IParkingProvider {

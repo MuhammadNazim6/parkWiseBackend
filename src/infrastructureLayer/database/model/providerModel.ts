@@ -23,9 +23,13 @@ const providerSchema: Schema = new Schema<IParkingProviderReady & Document>({
       type: Number
     }
   },
-  isApproved: {
-    type: Boolean,
-    default: false
+  approvalStatus: {
+    type: String,
+    default: 'false'   //false,true,rejected,pending
+  },
+  isBlocked:{
+    type:Boolean,
+    default:false
   },
   notifications: [{
     message: { type: String },

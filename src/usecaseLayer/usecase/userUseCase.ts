@@ -11,7 +11,9 @@ import { sendOtpUser } from "./user/sendOtpUser"
 import { checkOtpCommon } from "./user/otpRelated";
 import { signGoogleUser } from "./user/signGoogle";
 import { sendForgotPassword } from "./user/sendForgotPassword";
-import {changePassword} from "./user/changePassword"
+import { changePassword } from "./user/changePassword"
+import { getUsers } from "./user/getUsers";
+import { blockUnblockUser } from "./user/blockUnblockUser";
 
 export class UserUseCase {
   private readonly userRepository: IUserRepository;
@@ -20,7 +22,7 @@ export class UserUseCase {
   private readonly nodemailer: INodemailer;
   private readonly requestValidator: IRequestValidator
   private readonly otpRepository: IOtpRepository
-  private readonly providerRepository:IProviderRepository
+  private readonly providerRepository: IProviderRepository
 
   constructor(
     userRepository: IUserRepository,
@@ -29,7 +31,7 @@ export class UserUseCase {
     nodemailer: INodemailer,
     requestValidator: IRequestValidator,
     otpRepository: IOtpRepository,
-    providerRepository:IProviderRepository
+    providerRepository: IProviderRepository
   ) {
     this.userRepository = userRepository;
     this.bcrypt = bcrypt;
@@ -51,7 +53,7 @@ export class UserUseCase {
     mobile: number;
     email: string;
     password: string;
-  }) { 
+  }) {
     return createUser(
       this.requestValidator,
       this.userRepository,
@@ -135,7 +137,7 @@ export class UserUseCase {
       google
     )
   }
-  
+
   // signup/login google
   async sendForgotPassword({
     email,
@@ -159,10 +161,10 @@ export class UserUseCase {
   async changePassword({
     email,
     password
-  }:{
-    email:string,
-    password:string,
-  }){
+  }: {
+    email: string,
+    password: string,
+  }) {
     return changePassword(
       this.requestValidator,
       this.userRepository,
@@ -174,4 +176,20 @@ export class UserUseCase {
     )
   }
 
+  async getUsers() {
+    return getUsers(
+      this.userRepository
+    )
+  }
+
+  async blockUnblockUser({
+    email,
+  }: {
+    email: string
+  }) {
+    return blockUnblockUser(
+      this.userRepository,
+      email
+    )
+  }
 }

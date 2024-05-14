@@ -16,6 +16,7 @@ const userSchema: Schema = new Schema<IUser & Document>({
     servicesTaken: [{ type: String, }],
   }],
   status: { type: Boolean },
+  isBlocked: { type: Boolean },
   favParkingLots: [{ type: Schema.Types.ObjectId }],     //Object id reference to be given
   wallet: {
     balance: { type: Number },

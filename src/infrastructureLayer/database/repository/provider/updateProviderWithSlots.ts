@@ -9,10 +9,6 @@ export const updateProviderWithSlots = async (
   evChargeFacilityPrice: number,
   airPressureCheckPrice: number,
   oneHourParkingAmount: number,
-  // location: {
-  //   lng: number;
-  //   lat: number;
-  // },
   latitude:number,
   longitude:number,
   startEndTime: string,
@@ -22,7 +18,7 @@ export const updateProviderWithSlots = async (
     const startTime = startEndTime === "HALF" ? "06:00" : "00:00";
     const endTime = startEndTime === "HALF" ? "20:00" : "00:00";
     console.log(typeof location);
-    
+    const approvalStatus = 'pending';
     
     const updatedProvider = await ParkingProviderModel.updateOne(
       { email: email },
@@ -41,6 +37,7 @@ export const updateProviderWithSlots = async (
             lng: longitude
           },
           addressId,
+          approvalStatus
         },
       }
     );

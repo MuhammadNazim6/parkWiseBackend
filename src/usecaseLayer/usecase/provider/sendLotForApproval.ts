@@ -13,14 +13,9 @@ export const sendLotForApproval = async (
   evChargeFacilityPrice: number,
   airPressureCheckPrice: number,
   oneHourParkingAmount: number,
-  // location: {
-  //   lng: number,
-  //   lat: number
-  // },
   latitude: number,
   longitude: number,
   startEndTime: string,
-
   buildingOrAreaName: string,
   street: string,
   city: string,
@@ -59,7 +54,6 @@ export const sendLotForApproval = async (
       evChargeFacilityPrice,
       airPressureCheckPrice,
       oneHourParkingAmount,
-      // location,
       latitude,
       longitude,
       startEndTime,

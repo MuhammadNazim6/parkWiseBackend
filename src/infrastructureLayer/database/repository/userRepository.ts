@@ -7,6 +7,8 @@ import { findUser } from "./user/findUser"
 import { loginUser } from "./user/loginUser"
 import { createGoogleUser } from "./user/createGoogleUser";
 import { changePassword } from "./user/changePassword";
+import { getUsers } from "./user/getUsers";
+import { blockUnblockUser } from "./user/blockUnblockUser";
 
 
 export class UserRepository implements IUserRepository {
@@ -33,5 +35,17 @@ export class UserRepository implements IUserRepository {
 
   async changePassword(email: string, password: string): Promise<boolean> {
     return changePassword(email, password, this.usersModel)
+  }
+  async getUsers(): Promise<{}[]> {
+    return getUsers(
+      this.usersModel
+    )
+  }
+  async blockUnblockUser(email: string, state: boolean): Promise<boolean> {
+    return blockUnblockUser(
+      email,
+      state,
+      this.usersModel
+    )
   }
 }

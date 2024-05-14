@@ -24,18 +24,29 @@ export interface ILoginResponse<T = IUser | string | IAdmin | IParkingProvider> 
   } ;
 }
 
-export interface IProviderLoginResponse<T = IParkingProvider | IParkingProviderReady> {
+
+export interface IProviderLoginResponse {
   status: number;
   success: boolean;
   message?: string;
   token?: string;
   refreshToken?: string;
-  data?:T ;
+ data?:{
+    name:string;
+    role:string;
+    email:string;
+    approvalStatus:string;
+}
 }
 
 
-
 export interface ILogoutResponse {
+  status: number;
+  success: boolean;
+  message?: string;
+}
+
+export interface IBlockUnblockResponse {
   status: number;
   success: boolean;
   message?: string;

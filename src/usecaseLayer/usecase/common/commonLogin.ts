@@ -4,7 +4,7 @@ import { IProviderRepository } from "../../interface/repository/IProviderReposit
 import { INodemailer } from "../../interface/services/INodemailer";
 import { IOtpRepository } from "../../interface/repository/IOtpRepository";
 import IHashpassword from "../../interface/services/IHashpassword";
-import { ILoginResponse } from "../../interface/services/IResponses";
+import { ILoginResponse, IProviderLoginResponse } from "../../interface/services/IResponses";
 import { IRequestValidator } from "../../interface/repository/IvalidateRepository";
 import { Ijwt } from "../../interface/services/Ijwt";
 
@@ -19,7 +19,7 @@ export const commonLogin = async (
   jwt: Ijwt,
   email: string,
   password: string
-): Promise<ILoginResponse> => {
+): Promise<ILoginResponse | IProviderLoginResponse> => {
   try {
     const validation = requestValidator.validateRequiredFields(
       { email, password },
@@ -81,7 +81,8 @@ export const commonLogin = async (
         data: {
           name: provider.name,
           role: 'provider',
-          email: email
+          email: email,
+          approvalStatus: provider.approvalStatus
         }
       };
     }

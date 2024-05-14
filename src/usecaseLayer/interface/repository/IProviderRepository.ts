@@ -14,10 +14,13 @@ export interface IProviderRepository {
     evChargeFacilityPrice: number,
     airPressureCheckPrice: number,
     oneHourParkingAmount: number,
-    // location: { lng: number, lat: number },
     latitude:number,
     longitude:number,
     startEndTime: string
   ):Promise<boolean>;
+  getProviderRequests():Promise<{}[]>;
+  getApprovedProviders():Promise<{}[]>;
+  blockUnblockProvider(email:string,status:boolean): Promise<boolean>;
+
 
 }
