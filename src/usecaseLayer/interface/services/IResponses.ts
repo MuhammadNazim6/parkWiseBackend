@@ -20,6 +20,7 @@ export interface ILoginResponse<T = IUser | string | IAdmin | IParkingProvider> 
     name:string;
     role:string;
     email:string;
+    id:string;
     
   } ;
 }
@@ -36,6 +37,7 @@ export interface IProviderLoginResponse {
     role:string;
     email:string;
     approvalStatus:string;
+    id:string;
 }
 }
 

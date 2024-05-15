@@ -12,6 +12,7 @@ import { sendLotForApproval } from "./provider/sendLotForApproval";
 import { getRequests } from "./provider/getRequests";
 import { getApprovedProviders } from "./provider/getApprovedProviders";
 import { blockUnblockProvider } from "./provider/blockUnblockProvider";
+import { acceptRequest, declineRequest } from "./provider/manageRequest";
 
 export class ProviderUseCase {
   private readonly providerRepository: IProviderRepository;
@@ -187,4 +188,26 @@ export class ProviderUseCase {
     )
   }
 
-}   
+  async acceptRequest({
+    id,
+  }: {
+    id: string
+  }) {
+    return acceptRequest(
+      this.providerRepository,
+      id
+    )
+  }
+
+  async rejectRequest({
+    id,
+  }: {
+    id: string
+  }) {
+    return declineRequest(
+      this.providerRepository,
+      id
+    )
+  }
+
+}        

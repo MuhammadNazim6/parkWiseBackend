@@ -27,16 +27,17 @@ const providerSchema: Schema = new Schema<IParkingProviderReady & Document>({
     type: String,
     default: 'false'   //false,true,rejected,pending
   },
-  isBlocked:{
-    type:Boolean,
-    default:false
+  isBlocked: {
+    type: Boolean,
+    default: false
   },
   notifications: [{
     message: { type: String },
     sentAt: { type: Date },
   }],
   endTime: { type: String },
-  addressId: { type: Schema.Types.ObjectId }
+  addressId: { type: Schema.Types.ObjectId, ref: 'Address' },
+  requestDate: { type: Date }
 });
 
 

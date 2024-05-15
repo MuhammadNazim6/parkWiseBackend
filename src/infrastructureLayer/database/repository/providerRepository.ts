@@ -3,12 +3,13 @@ import { IProviderRepository } from "../../../usecaseLayer/interface/repository/
 import { StoreData } from "../../../usecaseLayer/interface/services/IResponses";
 import ParkingProviderModel from "../model/providerModel";
 import { createProvider } from "./provider/createProvider";
-import { findProvider } from "./provider/findProvider";
+import { findProvider,findProviderWithId } from "./provider/findProvider";
 import { changePassword } from "./provider/changePassword";
 import { updateProviderWithSlots } from "./provider/updateProviderWithSlots";
 import { getProviderRequests } from "./provider/getProviderRequests";
 import { getApprovedProviders } from "./provider/getApprovedProviders";
 import { blockUnblockProvider } from "./provider/blockUnblockProvider";
+import { manageRequest } from "./provider/manageRequest";
 
 export class ProviderRepository implements IProviderRepository {
   constructor(private readonly providerModel: typeof ParkingProviderModel) { }
@@ -21,6 +22,10 @@ export class ProviderRepository implements IProviderRepository {
   //  Check if a user exists using email
   async findProvider(email: string): Promise<IParkingProvider | null> {
     return findProvider(email, this.providerModel);
+  }
+
+  async findProviderWithId(id: string): Promise<IParkingProvider | null> {
+    return findProviderWithId(id, this.providerModel);
   }
 
   async changePassword(email: string, password: string): Promise<boolean> {
@@ -70,6 +75,14 @@ export class ProviderRepository implements IProviderRepository {
     return blockUnblockProvider(
       email,
       state,
+      this.providerModel
+    )
+  }
+
+  async manageRequest(id:string,action:string):Promise<boolean>{
+    return manageRequest(
+      id,
+      action,
       this.providerModel
     )
   }

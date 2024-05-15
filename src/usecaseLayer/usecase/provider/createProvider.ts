@@ -46,7 +46,8 @@ export const createProvider = async (
         data: {
           name: provider.name,
           role: 'provider',
-          email: provider.email
+          email: provider.email,
+          id:provider._id as string
         }
       };
     }

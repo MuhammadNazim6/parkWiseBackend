@@ -54,7 +54,8 @@ export const commonLogin = async (
         data: {
           name: user.name,
           role: 'user',
-          email: email
+          email: email,
+          id:user._id as string
         }
       };
     }
@@ -82,7 +83,8 @@ export const commonLogin = async (
           name: provider.name,
           role: 'provider',
           email: email,
-          approvalStatus: provider.approvalStatus
+          approvalStatus: provider.approvalStatus,
+          id:provider._id as string
         }
       };
     }
@@ -108,7 +110,8 @@ export const commonLogin = async (
         data: {
           name: admin.name,
           role: 'admin',
-          email: email
+          email: email,
+          id:admin._id as string
         }
       };
     }

@@ -87,15 +87,12 @@ export class ProviderAdapter {
     }
   }
 
-
-
   // @desc sending Lot For Approval
   // route POST api/user/sendLotForApproval
   // @access Private
   async sendLotForApproval(req: Req, res: Res, next: Next) {
     try {
       const matched = await this.providerUseCase.sendLotForApproval(req.body);
-
       res.status(matched.status).json({
         success: matched.success,
         message: matched.message

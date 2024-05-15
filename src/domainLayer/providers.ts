@@ -6,7 +6,7 @@ export interface IParkingProvider {
   password: string;
   mobile: number | null;
   email: string;
-  approvalStatus?: string;
+  approvalStatus?: "pending" | 'true' | 'false' | 'rejected';
   isBlocked?:Boolean;
 }
 
@@ -29,4 +29,5 @@ export interface IParkingProviderReady extends IParkingProvider {
   }[];
   endTime: string;
   addressId:ObjectId;
+  requestDate:Date;
 }

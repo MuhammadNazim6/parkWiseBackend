@@ -37,7 +37,8 @@ export const signGoogleUser = async (
         data: {
           name: user.name,
           role: 'user',
-          email: user.email
+          email: user.email,
+          id:user._id as string
         }
       };
     } else {
@@ -59,7 +60,8 @@ export const signGoogleUser = async (
         data: {
           name: createnewUser.name,
           role: 'user',
-          email: createnewUser.email
+          email: createnewUser.email,
+          id:createnewUser._id as string
         }
       };
     }

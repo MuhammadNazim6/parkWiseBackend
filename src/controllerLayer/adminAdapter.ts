@@ -54,6 +54,7 @@ export class AdminAdapter {
       next(err);
     }
   }
+
   async getApprovedProviders(req: Req, res: Res, next: Next) {
     try {
       const providers = await this.providerUsecase.getApprovedProviders();
@@ -89,6 +90,7 @@ export class AdminAdapter {
       next(err);
     }
   }
+
   async blockUnblockUser(req: Req, res: Res, next: Next) {
     try {      
       const blockedUnblockedResponse = await this.userUseCase.blockUnblockUser(req.body);
@@ -96,7 +98,6 @@ export class AdminAdapter {
         res.status(200).json({
           success: blockedUnblockedResponse.success,
           message: blockedUnblockedResponse.message
-
         })
       } else {
         res.status(404).json({
@@ -116,12 +117,51 @@ export class AdminAdapter {
         res.status(200).json({
           success: blockedUnblockedResponse.success,
           message: blockedUnblockedResponse.message
-
         })
       } else {
         res.status(404).json({
           success: false,
           message: 'Unable to block/unblock'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async acceptRequest(req: Req, res: Res, next: Next) {
+    try {      
+      const accepted = await this.providerUsecase.acceptRequest(req.body);
+      if (accepted.success) {
+        res.status(200).json({
+          success: accepted.success,
+          message: accepted.message
+
+        })
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'Unable to accept the provider request'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async rejectRequest(req: Req, res: Res, next: Next) {
+    try {      
+      const accepted = await this.providerUsecase.rejectRequest(req.body);
+      if (accepted.success) {
+        res.status(200).json({
+          success: accepted.success,
+          message: accepted.message
+
+        })
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'Unable to reject the provider request'
         });
       }
     } catch (err) {
