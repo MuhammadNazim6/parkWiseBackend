@@ -1,5 +1,6 @@
 import { UserAdapter } from "../../../controllerLayer/userAdapter";
 import { UserUseCase } from "../../../usecaseLayer/usecase/userUseCase";
+import { ProviderUseCase } from "../../../usecaseLayer/usecase/providerUseCase";
 import OtpModel from "../../database/model/otpModel";
 import ParkingProviderModel from "../../database/model/providerModel";
 import UserModel from "../../database/model/userModel";
@@ -10,6 +11,8 @@ import Encrypt from "../../services/bcrypt";
 import JwtPassword from "../../services/jwt";
 import Nodemailer from "../../services/nodemailer";
 import RequestValidator from "../../services/validateRepository";
+import { AddressRepository } from "../../database/repository/addressRepository";
+import AddressModel from "../../database/model/addressModel";
 
 
 const userRepository = new UserRepository(UserModel);
@@ -18,16 +21,27 @@ const jwt = new JwtPassword();
 const nodemailer = new Nodemailer();
 const requestValidator = new RequestValidator();
 const otpRepository = new OtpRepository(OtpModel);
+const addressRepository = new AddressRepository(AddressModel);
 const providerRepository = new ProviderRepository(ParkingProviderModel)
 const userusecase = new UserUseCase(
   userRepository,
   bcrypt,
-  jwt,  
+  jwt,
   nodemailer,
   requestValidator,
   otpRepository,
   providerRepository
 );
-const userAdapter = new UserAdapter(userusecase);
+
+const providerUseCase = new ProviderUseCase(
+  providerRepository,
+  bcrypt,
+  jwt,
+  nodemailer,
+  requestValidator,
+  otpRepository,
+  addressRepository
+)
+const userAdapter = new UserAdapter(userusecase, providerUseCase);
 
 export { userAdapter, userRepository };

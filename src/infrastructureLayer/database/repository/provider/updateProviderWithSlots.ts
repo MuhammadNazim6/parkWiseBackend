@@ -32,12 +32,12 @@ export const updateProviderWithSlots = async (
           parkingName,
           pricePerHour: oneHourParkingAmount,
           location: {
-            lat: latitude,
-            lng: longitude
+            type: 'Point',
+            coordinates: [longitude, latitude]
           },
           addressId,
           approvalStatus,
-          requestDate:date    
+          requestDate: date
         },
       }
     );

@@ -1,26 +1,24 @@
-import { Req, Res, Next } from "../infrastructureLayer/types/expressTypes";
-import { AdminUseCase } from "../usecaseLayer/usecase/adminUseCase";
-import { ProviderUseCase } from "../usecaseLayer/usecase/providerUseCase";
-import { UserUseCase } from "../usecaseLayer/usecase/userUseCase";
+import type { Req, Res, Next } from '../infrastructureLayer/types/expressTypes'
+import type { AdminUseCase } from '../usecaseLayer/usecase/adminUseCase'
+import type { ProviderUseCase } from '../usecaseLayer/usecase/providerUseCase'
+import type { UserUseCase } from '../usecaseLayer/usecase/userUseCase'
 
 export class AdminAdapter {
-  private readonly adminUsecase: AdminUseCase;
-  private readonly providerUsecase: ProviderUseCase;
-  private readonly userUseCase: UserUseCase;
+  private readonly adminUsecase: AdminUseCase
+  private readonly providerUsecase: ProviderUseCase
+  private readonly userUseCase: UserUseCase
 
-  constructor(adminUsecase: AdminUseCase, providerUsecase: ProviderUseCase, userUseCase: UserUseCase) {
-    this.adminUsecase = adminUsecase; // using dependency injection to call the adminUsecase
-    this.providerUsecase = providerUsecase;
-    this.userUseCase = userUseCase;
+  constructor (adminUsecase: AdminUseCase, providerUsecase: ProviderUseCase, userUseCase: UserUseCase) {
+    this.adminUsecase = adminUsecase // using dependency injection to call the adminUsecase
+    this.providerUsecase = providerUsecase
+    this.userUseCase = userUseCase
   }
 
-
-  // @desc Admin logout 
+  // @desc Admin logout
   // route POST api/admin/logout
   // @access Private
   async logoutAdmin(req: Req, res: Res, next: Next) {
     try {
-
       res.cookie('refreshToken', '', {
         httpOnly: false,
         expires: new Date(0)
@@ -28,10 +26,10 @@ export class AdminAdapter {
 
       res.status(200).json({
         success: true,
-        message: 'Admin logged out',
-      });
+        message: 'Admin logged out'
+      })
     } catch (err) {
-      next(err);
+      next(err)
     }
   }
   // @desc Admin fetch providers requests 
@@ -39,7 +37,7 @@ export class AdminAdapter {
   // @access Private
   async getProvidersRequests(req: Req, res: Res, next: Next) {
     try {
-      const requests = await this.providerUsecase.getRequests();
+      const requests = await this.providerUsecase.getRequests()
       if (requests) {
         res.status(200).json({
           data: requests
@@ -92,7 +90,7 @@ export class AdminAdapter {
   }
 
   async blockUnblockUser(req: Req, res: Res, next: Next) {
-    try {      
+    try {
       const blockedUnblockedResponse = await this.userUseCase.blockUnblockUser(req.body);
       if (blockedUnblockedResponse.success) {
         res.status(200).json({
@@ -111,7 +109,7 @@ export class AdminAdapter {
   }
 
   async blockUnblockProvider(req: Req, res: Res, next: Next) {
-    try {      
+    try {
       const blockedUnblockedResponse = await this.providerUsecase.blockUnblockProvider(req.body);
       if (blockedUnblockedResponse.success) {
         res.status(200).json({
@@ -130,7 +128,7 @@ export class AdminAdapter {
   }
 
   async acceptRequest(req: Req, res: Res, next: Next) {
-    try {      
+    try {
       const accepted = await this.providerUsecase.acceptRequest(req.body);
       if (accepted.success) {
         res.status(200).json({
@@ -150,7 +148,7 @@ export class AdminAdapter {
   }
 
   async rejectRequest(req: Req, res: Res, next: Next) {
-    try {      
+    try {
       const accepted = await this.providerUsecase.rejectRequest(req.body);
       if (accepted.success) {
         res.status(200).json({

@@ -16,11 +16,15 @@ const providerSchema: Schema = new Schema<IParkingProviderReady & Document>({
   parkingName: { type: String },
   pricePerHour: { type: Number },
   location: {
-    lng: {
-      type: Number
+    type: {
+      type: String,
+      enum: ['Point'],
+      default: 'Point',
+      required: false
     },
-    lat: {
-      type: Number
+    coordinates: {
+      type: [Number],
+      required: false
     }
   },
   approvalStatus: {
@@ -40,12 +44,12 @@ const providerSchema: Schema = new Schema<IParkingProviderReady & Document>({
   requestDate: { type: Date }
 });
 
-
+providerSchema.index({ location: '2dsphere' })
 
 const ParkingProviderModel: Model<IParkingProviderReady & Document> = mongoose.model<IParkingProviderReady & Document>(
   "Provider",
   providerSchema
-);
+); 
 
 export default ParkingProviderModel;
 

@@ -1,4 +1,4 @@
-import { IParkingProvider, IParkingProviderReady } from "../../../domainLayer/providers";
+import { IFetchParkingLot, IParkingProvider, IParkingProviderReady } from "../../../domainLayer/providers";
 import { IProviderRepository } from "../../../usecaseLayer/interface/repository/IProviderRepository";
 import { StoreData } from "../../../usecaseLayer/interface/services/IResponses";
 import ParkingProviderModel from "../model/providerModel";
@@ -10,6 +10,7 @@ import { getProviderRequests } from "./provider/getProviderRequests";
 import { getApprovedProviders } from "./provider/getApprovedProviders";
 import { blockUnblockProvider } from "./provider/blockUnblockProvider";
 import { manageRequest } from "./provider/manageRequest";
+import { getParkingLotsForHome } from "./provider/getParkingLotsForHome";
 
 export class ProviderRepository implements IProviderRepository {
   constructor(private readonly providerModel: typeof ParkingProviderModel) { }
@@ -85,6 +86,9 @@ export class ProviderRepository implements IProviderRepository {
       action,
       this.providerModel
     )
+  }
+  async getParkingLotsForHome(searchQuery:IFetchParkingLot):Promise<{}[]>{
+    return getParkingLotsForHome(searchQuery, this.providerModel);
   }
 
 }

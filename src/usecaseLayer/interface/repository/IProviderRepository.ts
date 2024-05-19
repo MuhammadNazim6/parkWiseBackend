@@ -1,4 +1,4 @@
-import { IParkingProvider } from "../../../domainLayer/providers";
+import { IParkingProvider, IFetchParkingLot } from "../../../domainLayer/providers";
 import { StoreData } from "../services/IResponses";
 
 export interface IProviderRepository {
@@ -22,7 +22,8 @@ export interface IProviderRepository {
   getProviderRequests(): Promise<{}[]>;
   getApprovedProviders(): Promise<{}[]>;
   blockUnblockProvider(email: string, status: boolean): Promise<boolean>;
-  manageRequest(id: string,action:string): Promise<boolean>;
+  manageRequest(id: string, action: string): Promise<boolean>;
+  getParkingLotsForHome(searchQuery: IFetchParkingLot): Promise<{}[]>
 
 
 }

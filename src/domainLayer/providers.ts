@@ -1,33 +1,44 @@
 import { ObjectId, Document } from "mongoose";
+import { ParsedQs } from 'qs';
 
 export interface IParkingProvider {
-  _id?: string;
+  _id?: string
   name: string;
   password: string;
   mobile: number | null;
   email: string;
   approvalStatus?: "pending" | 'true' | 'false' | 'rejected';
-  isBlocked?:Boolean;
+  isBlocked?: Boolean;
 }
 
 export interface IParkingProviderReady extends IParkingProvider {
-  waterServicePrice:number;
-  airPressureCheckPrice:number;
-  evChargeFacilityPrice:number;
+  waterServicePrice: number;
+  airPressureCheckPrice: number;
+  evChargeFacilityPrice: number;
   startTime: string;
   availableSpace: number;
   feedbacks: ObjectId[];
   parkingName: string;
   pricePerHour: number;
-  location: {
-   lng:number,
-   lat:number
+  location?: {
+    type?: string,
+    coordinates: number[];
   };
   notifications: {
     message: string;
     sentAt: Date;
   }[];
   endTime: string;
-  addressId:ObjectId;
-  requestDate:Date;
+  addressId: ObjectId;
+  requestDate: Date;
+}
+
+export interface IFetchParkingLot extends ParsedQs {
+  coordinates: string;
+  price: string;
+  hasAirPressureCheck: string;
+  hasEvCharging: string;
+  hasWaterService: string;
+  page: string;
+  limit: string;
 }

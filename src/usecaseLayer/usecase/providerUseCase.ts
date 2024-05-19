@@ -13,6 +13,8 @@ import { getRequests } from "./provider/getRequests";
 import { getApprovedProviders } from "./provider/getApprovedProviders";
 import { blockUnblockProvider } from "./provider/blockUnblockProvider";
 import { acceptRequest, declineRequest } from "./provider/manageRequest";
+import { fetchParkingLots } from "./provider/fetchParkingLots";
+import { IFetchParkingLot } from "../../domainLayer/providers";
 
 export class ProviderUseCase {
   private readonly providerRepository: IProviderRepository;
@@ -207,6 +209,23 @@ export class ProviderUseCase {
     return declineRequest(
       this.providerRepository,
       id
+    )
+  }
+
+  async fetchParkingLots({ coordinates, price, hasAirPressureCheck, hasEvCharging, hasWaterService, page, limit}: IFetchParkingLot) {
+
+    console.log('coordinates here');
+    console.log(coordinates);
+    
+    return fetchParkingLots(
+      this.providerRepository,
+      {coordinates,
+      price,
+      hasAirPressureCheck,
+      hasEvCharging,
+      hasWaterService,
+      page,
+      limit}
     )
   }
 
