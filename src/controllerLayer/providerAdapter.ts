@@ -14,6 +14,7 @@ export class ProviderAdapter {
   async createProvider(req: Req, res: Res, next: Next) {
     try {
       const newProvider = await this.providerUseCase.createProvider(req.body);
+
       if (newProvider && newProvider.token) {
         res.cookie('refreshToken', newProvider.refreshToken, {
           httpOnly: true,
@@ -26,7 +27,8 @@ export class ProviderAdapter {
         success: newProvider.success,
         user: newProvider.data,
         token: newProvider.token,
-        data: newProvider.data
+        data: newProvider.data,
+        
       });
     } catch (err) {
       next(err);

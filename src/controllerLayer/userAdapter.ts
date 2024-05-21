@@ -146,8 +146,6 @@ export class UserAdapter {
 
   async fetchParkingLotsInHome(req: Req, res: Res, next: Next) {
     try {
-      console.log('Hello');
-            
       const query: IFetchParkingLot = req.query as IFetchParkingLot;
       const parkingLots = await this.providerUsecase.fetchParkingLots(query);
 
@@ -156,6 +154,29 @@ export class UserAdapter {
           data: parkingLots
         })
       } else {
+        res.status(404).json({
+          success: false,
+          message: 'No results found'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async fetchLotDetails(req: Req, res: Res, next: Next) {
+    try {
+      const { lotId } = req.params
+      const details = await this.providerUsecase.fetchLotDetails(lotId);
+
+      if (details) {
+        console.log(details);
+
+        res.status(200).json({
+          success: true,
+          data: details[0],
+        })
+      } else { 
         res.status(404).json({
           success: false,
           message: 'No results found'

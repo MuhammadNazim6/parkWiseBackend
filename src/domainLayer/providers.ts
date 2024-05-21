@@ -22,7 +22,7 @@ export interface IParkingProviderReady extends IParkingProvider {
   pricePerHour: number;
   location?: {
     type?: string,
-    coordinates: number[];
+    coordinates?: number[];
   };
   notifications: {
     message: string;

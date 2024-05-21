@@ -19,8 +19,6 @@ const providerSchema: Schema = new Schema<IParkingProviderReady & Document>({
     type: {
       type: String,
       enum: ['Point'],
-      default: 'Point',
-      required: false
     },
     coordinates: {
       type: [Number],

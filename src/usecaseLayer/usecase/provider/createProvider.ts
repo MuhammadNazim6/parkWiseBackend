@@ -3,7 +3,7 @@ import { IProviderRepository } from '../../interface/repository/IProviderReposit
 import { IRequestValidator } from '../../interface/repository/IvalidateRepository';
 import IHashpassword from '../../interface/services/IHashpassword';
 import { Ijwt } from '../../interface/services/Ijwt';
-import { ILoginResponse } from '../../interface/services/IResponses';
+import { ILoginResponse, IProviderLoginResponse } from '../../interface/services/IResponses';
 
 export const createProvider = async (
   requestValidator: IRequestValidator,
@@ -14,7 +14,7 @@ export const createProvider = async (
   mobile: number,
   email: string,
   password: string
-): Promise<ILoginResponse> => {
+): Promise<ILoginResponse | IProviderLoginResponse> => {
   try {
     const validation = requestValidator.validateRequiredFields(
       { name, mobile, email, password },
@@ -35,6 +35,7 @@ export const createProvider = async (
         password: hashedPassword,
       };
       const provider = await providerRepository.createProvider(newProvider);
+
       const token = jwt.createJWT(provider._id as string, provider.email, "provider", provider.name);
       const refreshToken = jwt.createRefreshToken(provider._id as string, provider.email, "provider", provider.name);
 
@@ -47,7 +48,8 @@ export const createProvider = async (
           name: provider.name,
           role: 'provider',
           email: provider.email,
-          id:provider._id as string
+          approvalStatus: provider.approvalStatus,
+          id: provider._id as string
         }
       };
     }

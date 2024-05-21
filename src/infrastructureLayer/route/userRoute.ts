@@ -39,5 +39,8 @@ router.post('/changePassword', (req: Req, res: Res, next: Next) => {
 router.get('/parking-lots', (req: Req, res: Res, next: Next) => {
   userAdapter.fetchParkingLotsInHome(req, res, next)
 })
+router.get('/lot-details/:lotId', (req: Req, res: Res, next: Next) => {
+  userAdapter.fetchLotDetails(req, res, next)
+})
 
 export default router;  

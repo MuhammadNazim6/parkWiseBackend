@@ -15,6 +15,7 @@ import { blockUnblockProvider } from "./provider/blockUnblockProvider";
 import { acceptRequest, declineRequest } from "./provider/manageRequest";
 import { fetchParkingLots } from "./provider/fetchParkingLots";
 import { IFetchParkingLot } from "../../domainLayer/providers";
+import { fetchLotDetails } from "./provider/fetchLotDetails";
 
 export class ProviderUseCase {
   private readonly providerRepository: IProviderRepository;
@@ -94,6 +95,8 @@ export class ProviderUseCase {
     email: string,
     enteredOtp: string
   }) {
+    console.log(enteredOtp);
+    
     return checkOtpCommon(
       this.requestValidator,
       this.otpRepository,
@@ -213,10 +216,6 @@ export class ProviderUseCase {
   }
 
   async fetchParkingLots({ coordinates, price, hasAirPressureCheck, hasEvCharging, hasWaterService, page, limit}: IFetchParkingLot) {
-
-    console.log('coordinates here');
-    console.log(coordinates);
-    
     return fetchParkingLots(
       this.providerRepository,
       {coordinates,
@@ -228,5 +227,12 @@ export class ProviderUseCase {
       limit}
     )
   }
+
+  async fetchLotDetails(lotId: string) {
+    return fetchLotDetails(
+      this.providerRepository,
+      lotId
+    )
+  } 
 
 }        

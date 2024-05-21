@@ -1,4 +1,3 @@
-import { log } from "console";
 import { IFetchParkingLot } from "../../../../domainLayer/providers";
 import ParkingProviderModel from "../../model/providerModel";
 
@@ -7,17 +6,7 @@ export const getParkingLotsForHome = async (
   provModel: typeof ParkingProviderModel
 ): Promise<{}[]> => {
   const { price, hasAirPressureCheck, hasEvCharging, hasWaterService, coordinates, page = '1', limit = '10' } = searchQuery;
-  console.log('In get parking file');
-
-  console.log(price);
-  console.log(hasEvCharging);
-  console.log(coordinates);
-  console.log(hasWaterService);
-  console.log(hasAirPressureCheck);
-  console.log(page);
-  console.log(limit);
   const coordinatesObj = JSON.parse(coordinates)
-  console.log(coordinatesObj);
 
   let query: {
     pricePerHour?: {};
@@ -68,9 +57,7 @@ export const getParkingLotsForHome = async (
         $limit: parseInt(limit)
       }
     ])
-
-    console.log(parkingLotsPaginated);
-
+    
     return parkingLotsPaginated
 
   } catch (error) {

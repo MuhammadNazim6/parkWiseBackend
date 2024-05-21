@@ -1,9 +1,9 @@
 import { IFetchParkingLot, IParkingProvider, IParkingProviderReady } from "../../../domainLayer/providers";
 import { IProviderRepository } from "../../../usecaseLayer/interface/repository/IProviderRepository";
-import { StoreData } from "../../../usecaseLayer/interface/services/IResponses";
+import { IProviderLoginResponse, StoreData } from "../../../usecaseLayer/interface/services/IResponses";
 import ParkingProviderModel from "../model/providerModel";
 import { createProvider } from "./provider/createProvider";
-import { findProvider,findProviderWithId } from "./provider/findProvider";
+import { findProvider, findProviderWithId } from "./provider/findProvider";
 import { changePassword } from "./provider/changePassword";
 import { updateProviderWithSlots } from "./provider/updateProviderWithSlots";
 import { getProviderRequests } from "./provider/getProviderRequests";
@@ -11,12 +11,13 @@ import { getApprovedProviders } from "./provider/getApprovedProviders";
 import { blockUnblockProvider } from "./provider/blockUnblockProvider";
 import { manageRequest } from "./provider/manageRequest";
 import { getParkingLotsForHome } from "./provider/getParkingLotsForHome";
+import { getLotDetails } from "./provider/getLotDetails";
 
 export class ProviderRepository implements IProviderRepository {
   constructor(private readonly providerModel: typeof ParkingProviderModel) { }
 
   // Create new user
-  async createProvider(newProvider: IParkingProvider): Promise<StoreData> {
+  async createProvider(newProvider: IParkingProvider) {
     return createProvider(newProvider, this.providerModel);
   }
 
@@ -35,41 +36,41 @@ export class ProviderRepository implements IProviderRepository {
 
   async updateProviderWithSlots(
     addressId: string,
-    email:string,
+    email: string,
     parkingName: string,
     parkingCount: number,
     waterServicePrice: number,
     evChargeFacilityPrice: number,
     airPressureCheckPrice: number,
     oneHourParkingAmount: number,
-    latitude:number,
-    longitude:number,
+    latitude: number,
+    longitude: number,
     startEndTime: string): Promise<boolean> {
     return updateProviderWithSlots(
-        addressId,
-        email,
-        parkingName,
-        parkingCount,
-        waterServicePrice,
-        evChargeFacilityPrice,
-        airPressureCheckPrice,
-        oneHourParkingAmount,
-        latitude,
-        longitude,
-        startEndTime,
-        this.providerModel)
+      addressId,
+      email,
+      parkingName,
+      parkingCount,
+      waterServicePrice,
+      evChargeFacilityPrice,
+      airPressureCheckPrice,
+      oneHourParkingAmount,
+      latitude,
+      longitude,
+      startEndTime,
+      this.providerModel)
   }
 
-  async getProviderRequests():Promise<{}[]>{
+  async getProviderRequests(): Promise<{}[]> {
     return getProviderRequests(
       this.providerModel
     )
   }
 
-  async getApprovedProviders():Promise<{}[]>{
+  async getApprovedProviders(): Promise<{}[]> {
     return getApprovedProviders(
       this.providerModel
-    )    
+    )
   }
 
   async blockUnblockProvider(email: string, state: boolean): Promise<boolean> {
@@ -80,15 +81,19 @@ export class ProviderRepository implements IProviderRepository {
     )
   }
 
-  async manageRequest(id:string,action:string):Promise<boolean>{
+  async manageRequest(id: string, action: string): Promise<boolean> {
     return manageRequest(
       id,
       action,
       this.providerModel
     )
   }
-  async getParkingLotsForHome(searchQuery:IFetchParkingLot):Promise<{}[]>{
+  async getParkingLotsForHome(searchQuery: IFetchParkingLot): Promise<{}[]> {
     return getParkingLotsForHome(searchQuery, this.providerModel);
+  }
+
+  async getLotDetails(lotId: string): Promise<{}[]> {
+    return getLotDetails(lotId, this.providerModel);
   }
 
 }
