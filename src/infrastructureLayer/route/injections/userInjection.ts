@@ -13,6 +13,8 @@ import Nodemailer from "../../services/nodemailer";
 import RequestValidator from "../../services/validateRepository";
 import { AddressRepository } from "../../database/repository/addressRepository";
 import AddressModel from "../../database/model/addressModel";
+import { BookingRepository } from "../../database/repository/bookingRepository";
+import BookingModel from "../../database/model/bookingModel";
 
 
 const userRepository = new UserRepository(UserModel);
@@ -23,6 +25,7 @@ const requestValidator = new RequestValidator();
 const otpRepository = new OtpRepository(OtpModel);
 const addressRepository = new AddressRepository(AddressModel);
 const providerRepository = new ProviderRepository(ParkingProviderModel)
+const bookingRepository = new BookingRepository(BookingModel)
 const userusecase = new UserUseCase(
   userRepository,
   bcrypt,
@@ -40,7 +43,9 @@ const providerUseCase = new ProviderUseCase(
   nodemailer,
   requestValidator,
   otpRepository,
-  addressRepository
+  addressRepository,
+  bookingRepository
+
 )
 const userAdapter = new UserAdapter(userusecase, providerUseCase);
 

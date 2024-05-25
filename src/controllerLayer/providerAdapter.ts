@@ -28,7 +28,7 @@ export class ProviderAdapter {
         user: newProvider.data,
         token: newProvider.token,
         data: newProvider.data,
-        
+
       });
     } catch (err) {
       next(err);
@@ -94,16 +94,47 @@ export class ProviderAdapter {
   // @access Private
   async sendLotForApproval(req: Req, res: Res, next: Next) {
     try {
-      const matched = await this.providerUseCase.sendLotForApproval(req.body);
-      res.status(matched.status).json({
-        success: matched.success,
-        message: matched.message
-      });
+      const lotSent = await this.providerUseCase.sendLotForApproval(req.body);
+      console.log(req.body);
+      console.log(req.file?.buffer);
 
+
+      res.status(lotSent.status).json({
+        success: lotSent.success,
+        message: lotSent.message,
+      });
     } catch (err) {
       next(err);
     }
   }
+
+  // @desc getting provider details
+  // route GET api/provider/getProviderDetails
+  // @access Private
+  async getProviderDetails(req: Req, res: Res, next: Next) {
+    try {
+      const { lotId } = req.params
+      console.log('kkkkk');
+      
+      const details = await this.providerUseCase.fetchLotDetails(lotId);
+      console.log(details);
+      
+      if (details) {
+        res.status(200).json({
+          success: true,
+          data: details[0],
+        })
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'No results found'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
 
 
 }

@@ -168,15 +168,12 @@ export class UserAdapter {
     try {
       const { lotId } = req.params
       const details = await this.providerUsecase.fetchLotDetails(lotId);
-
-      if (details) {
-        console.log(details);
-
+      if (details) {        
         res.status(200).json({
           success: true,
           data: details[0],
         })
-      } else { 
+      } else {
         res.status(404).json({
           success: false,
           message: 'No results found'
@@ -186,4 +183,46 @@ export class UserAdapter {
       next(err);
     }
   }
+
+  async getBookedSlots(req: Req, res: Res, next: Next) {
+    try {
+      const bookedSlots = await this.providerUsecase.getBookedSlots(req.body);
+      
+      if (bookedSlots) {
+        res.status(200).json({
+          success: true,
+          data: bookedSlots
+        })
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'No results found'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async bookSlot(req: Req, res: Res, next: Next) {
+    try {
+      const slotBooked = await this.providerUsecase.bookSlot(req.body);
+
+      if (slotBooked) {
+        res.status(200).json({
+          success: true,
+          // data: bookedSlots
+        })
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'No results found'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+
 }

@@ -16,6 +16,8 @@ import Encrypt from "../../services/bcrypt";
 import JwtPassword from "../../services/jwt";
 import Nodemailer from "../../services/nodemailer";
 import RequestValidator from "../../services/validateRepository";
+import { BookingRepository } from "../../database/repository/bookingRepository";
+import BookingModel from "../../database/model/bookingModel";
 
 
 const adminRepository = new AdminRepository(AdminModel);
@@ -27,11 +29,13 @@ const bcrypt = new Encrypt();
 const jwt = new JwtPassword();
 const requestValidator = new RequestValidator();
 const nodemailer = new Nodemailer();
+const bookingRepository = new BookingRepository(BookingModel)
+
 const adminUseCase = new AdminUseCase(
   adminRepository,
   bcrypt,
   jwt,
-  requestValidator
+  requestValidator,
 );
 
 const providerUseCase = new ProviderUseCase(
@@ -41,7 +45,8 @@ const providerUseCase = new ProviderUseCase(
   nodemailer,
   requestValidator,
   otpRepository,
-  addressRepository
+  addressRepository,
+  bookingRepository
 )
 
 const userUseCase = new UserUseCase(

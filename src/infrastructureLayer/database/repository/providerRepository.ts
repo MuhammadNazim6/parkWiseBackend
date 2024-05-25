@@ -12,6 +12,7 @@ import { blockUnblockProvider } from "./provider/blockUnblockProvider";
 import { manageRequest } from "./provider/manageRequest";
 import { getParkingLotsForHome } from "./provider/getParkingLotsForHome";
 import { getLotDetails } from "./provider/getLotDetails";
+import { getBookedSlots } from "./booking/getBookedSlots";
 
 export class ProviderRepository implements IProviderRepository {
   constructor(private readonly providerModel: typeof ParkingProviderModel) { }
@@ -95,5 +96,6 @@ export class ProviderRepository implements IProviderRepository {
   async getLotDetails(lotId: string): Promise<{}[]> {
     return getLotDetails(lotId, this.providerModel);
   }
+  
 
 }

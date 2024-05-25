@@ -38,7 +38,7 @@ export const signGoogleUser = async (
           name: user.name,
           role: 'user',
           email: user.email,
-          id:user._id as string
+          id: user._id as string
         }
       };
     } else {
@@ -53,15 +53,18 @@ export const signGoogleUser = async (
       };
       const createnewUser = await userRepository.createGoogleUser(newUser);
       const token = jwt.createJWT(createnewUser._id as string, createnewUser.email, "user", createnewUser.name);
+      const refreshToken = jwt.createRefreshToken(createnewUser._id as string, createnewUser.email, "user", createnewUser.name);
+
       return {
         status: 200,
         success: true,
         token: token,
+        refreshToken,
         data: {
           name: createnewUser.name,
           role: 'user',
           email: createnewUser.email,
-          id:createnewUser._id as string
+          id: createnewUser._id as string
         }
       };
     }

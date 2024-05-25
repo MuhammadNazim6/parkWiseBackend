@@ -42,5 +42,11 @@ router.get('/parking-lots', (req: Req, res: Res, next: Next) => {
 router.get('/lot-details/:lotId', (req: Req, res: Res, next: Next) => {
   userAdapter.fetchLotDetails(req, res, next)
 })
+router.post('/getBookedSlots',(req:Req,res:Res,next:Next)=>{
+  userAdapter.getBookedSlots(req,res,next)
+})
+router.post('/bookSlot',(req:Req,res:Res,next:Next)=>{
+  userAdapter.bookSlot(req,res,next)
+})
 
 export default router;  

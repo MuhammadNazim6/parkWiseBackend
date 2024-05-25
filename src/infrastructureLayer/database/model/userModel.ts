@@ -32,7 +32,6 @@ const userSchema: Schema = new Schema<IUser & Document>({
   }]
 });
 
-
 const UserModel: Model<IUser & Document> = mongoose.model<IUser & Document>(
   "User",
   userSchema

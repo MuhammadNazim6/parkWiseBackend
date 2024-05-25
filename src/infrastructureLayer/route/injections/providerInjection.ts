@@ -10,6 +10,8 @@ import JwtPassword from "../../services/jwt";
 import Nodemailer from "../../services/nodemailer";
 import RequestValidator from "../../services/validateRepository";
 import AddressModel from "../../database/model/addressModel";
+import { BookingRepository } from "../../database/repository/bookingRepository";
+import BookingModel from "../../database/model/bookingModel";
 
 
 const providerRepository = new ProviderRepository(ParkingProviderModel);
@@ -19,14 +21,16 @@ const nodemailer = new Nodemailer();
 const requestValidator = new RequestValidator();
 const otpRepository = new OtpRepository(OtpModel);
 const addressRepository = new AddressRepository(AddressModel);
+const bookingRepository = new BookingRepository(BookingModel);
 const providerUseCase = new ProviderUseCase(
   providerRepository,
   bcrypt,
-  jwt,  
+  jwt,
   nodemailer,
   requestValidator,
   otpRepository,
-  addressRepository
+  addressRepository,
+  bookingRepository
 );
 const providerAdapter = new ProviderAdapter(providerUseCase);
 
