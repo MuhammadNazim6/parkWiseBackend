@@ -39,7 +39,8 @@ const providerSchema: Schema = new Schema<IParkingProviderReady & Document>({
   }],
   endTime: { type: String },
   addressId: { type: Schema.Types.ObjectId, ref: 'Address' },
-  requestDate: { type: Date }
+  requestDate: { type: Date },
+  images: { type: [String] }
 });
 
 providerSchema.index({ location: '2dsphere' })
@@ -47,7 +48,7 @@ providerSchema.index({ location: '2dsphere' })
 const ParkingProviderModel: Model<IParkingProviderReady & Document> = mongoose.model<IParkingProviderReady & Document>(
   "Provider",
   providerSchema
-); 
+);
 
 export default ParkingProviderModel;
 

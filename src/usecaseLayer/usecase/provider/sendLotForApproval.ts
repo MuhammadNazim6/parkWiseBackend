@@ -23,6 +23,7 @@ export const sendLotForApproval = async (
   landmark: string,
   country: string,
   pinNumber: number,
+  uploadedImageNames:string[]   
 
 ): Promise<ISuccessResponse> => {
   try {
@@ -57,6 +58,7 @@ export const sendLotForApproval = async (
       latitude,
       longitude,
       startEndTime,
+      uploadedImageNames
     )
     if (updatedProvider) {
       return {

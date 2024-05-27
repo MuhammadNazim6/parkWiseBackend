@@ -133,6 +133,7 @@ export class ProviderUseCase {
     landmark,
     country,
     pinNumber,
+    uploadedImageNames
 
   }: {
     email: string,
@@ -152,6 +153,7 @@ export class ProviderUseCase {
     landmark: string;
     country: string;
     pinNumber: number;
+    uploadedImageNames:string[];
   }) {
     return sendLotForApproval(
       this.providerRepository,
@@ -173,6 +175,7 @@ export class ProviderUseCase {
       landmark,
       country,
       pinNumber,
+      uploadedImageNames
     )
   }
 

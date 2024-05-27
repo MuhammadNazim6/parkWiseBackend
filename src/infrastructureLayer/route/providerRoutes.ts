@@ -29,8 +29,6 @@ router.post('/sendLotForApproval',
 
 router.get('/providerDetails/:lotId',
   (req: Req, res: Res, next: Next) => {
-    console.log('jjjjjjjjjjjj');
-    
     providerAdapter.getProviderDetails(req, res, next)
   })
 

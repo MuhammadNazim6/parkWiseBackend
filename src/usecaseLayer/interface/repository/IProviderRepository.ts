@@ -17,7 +17,8 @@ export interface IProviderRepository {
     oneHourParkingAmount: number,
     latitude: number,
     longitude: number,
-    startEndTime: string
+    startEndTime: string,
+    uploadedImageNames:string[]
   ): Promise<boolean>;
   getProviderRequests(): Promise<{}[]>;
   getApprovedProviders(): Promise<{}[]>;

@@ -3,6 +3,8 @@ import ErrorResponse from "./errorResponse";
 
 const errorHandler = (error: any, req: Req, res: Res, next: Next) => {
 
+  console.error(error);
+
   if (error instanceof ErrorResponse) {
     return res.status(error.status).json({
       success: false,

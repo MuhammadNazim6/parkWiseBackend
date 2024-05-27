@@ -1,3 +1,5 @@
+import { IFile } from "../infrastructureLayer/middleware/multer";
+import { uploadArrayOfImagesToS3, uploadToS3 } from "../infrastructureLayer/services/s3Bucket";
 import { Req, Res, Next } from "../infrastructureLayer/types/expressTypes";
 import { ProviderUseCase } from "../usecaseLayer/usecase/providerUseCase";
 
@@ -94,11 +96,15 @@ export class ProviderAdapter {
   // @access Private
   async sendLotForApproval(req: Req, res: Res, next: Next) {
     try {
+      const files = req.files as IFile[];
+      const uploadedImageNames = await uploadArrayOfImagesToS3(files)
+      
+      req.body.uploadedImageNames = uploadedImageNames
+
       const lotSent = await this.providerUseCase.sendLotForApproval(req.body);
-      console.log(req.body);
-      console.log(req.file?.buffer);
+      
 
-
+  
       res.status(lotSent.status).json({
         success: lotSent.success,
         message: lotSent.message,
@@ -108,17 +114,15 @@ export class ProviderAdapter {
     }
   }
 
+
   // @desc getting provider details
   // route GET api/provider/getProviderDetails
   // @access Private
   async getProviderDetails(req: Req, res: Res, next: Next) {
     try {
       const { lotId } = req.params
-      console.log('kkkkk');
-      
       const details = await this.providerUseCase.fetchLotDetails(lotId);
-      console.log(details);
-      
+
       if (details) {
         res.status(200).json({
           success: true,

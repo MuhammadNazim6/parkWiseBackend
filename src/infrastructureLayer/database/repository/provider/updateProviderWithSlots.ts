@@ -12,6 +12,7 @@ export const updateProviderWithSlots = async (
   latitude: number,
   longitude: number,
   startEndTime: string,
+  uploadedImageNames:string[],
   provModel: typeof ParkingProviderModel
 ): Promise<boolean> => {
   try {
@@ -19,7 +20,7 @@ export const updateProviderWithSlots = async (
     const endTime = startEndTime === "HALF" ? "20:00" : "00:00";
     const approvalStatus = 'pending';
     const date = new Date();
-    const updatedProvider = await ParkingProviderModel.updateOne(
+    const updatedProvider = await provModel.updateOne(
       { email: email },
       {
         $set: {
@@ -37,7 +38,8 @@ export const updateProviderWithSlots = async (
           },
           addressId,
           approvalStatus,
-          requestDate: date
+          requestDate: date,
+          images:uploadedImageNames
         },
       }
     );

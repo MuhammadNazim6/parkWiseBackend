@@ -37,7 +37,7 @@ export class ProviderRepository implements IProviderRepository {
 
   async updateProviderWithSlots(
     addressId: string,
-    email: string,
+    email: string,     
     parkingName: string,
     parkingCount: number,
     waterServicePrice: number,
@@ -46,7 +46,8 @@ export class ProviderRepository implements IProviderRepository {
     oneHourParkingAmount: number,
     latitude: number,
     longitude: number,
-    startEndTime: string): Promise<boolean> {
+    startEndTime: string,
+    uploadedImageNames:string[]): Promise<boolean> {
     return updateProviderWithSlots(
       addressId,
       email,
@@ -59,6 +60,7 @@ export class ProviderRepository implements IProviderRepository {
       latitude,
       longitude,
       startEndTime,
+      uploadedImageNames,
       this.providerModel)
   }
 

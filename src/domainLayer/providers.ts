@@ -31,6 +31,7 @@ export interface IParkingProviderReady extends IParkingProvider {
   endTime: string;
   addressId: ObjectId;
   requestDate: Date;
+  images:string[];
 }
 
 export interface IFetchParkingLot extends ParsedQs {
