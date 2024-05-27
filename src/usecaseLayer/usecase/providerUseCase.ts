@@ -20,6 +20,8 @@ import { fetchLotDetails } from "./provider/fetchLotDetails";
 import { getBookedSlots } from "./provider/getBookedSlots";
 import { ISlotBooking } from "../interface/repository/ICommonInterfaces";
 import { bookSlot } from "./provider/bookSlot";
+import { IS3Bucket } from "../interface/services/IS3Bucket";
+import { IFile } from "../../infrastructureLayer/middleware/multer";
 
 export class ProviderUseCase {
   private readonly providerRepository: IProviderRepository;
@@ -30,6 +32,7 @@ export class ProviderUseCase {
   private readonly otpRepository: IOtpRepository;
   private readonly addressRepository: IAddressRepository;
   private readonly bookingRepository: IBookingRepository;
+  private readonly s3Bucket: IS3Bucket;
 
   constructor(
     providerRepository: IProviderRepository,
@@ -39,7 +42,9 @@ export class ProviderUseCase {
     requestValidator: IRequestValidator,
     otpRepository: IOtpRepository,
     addressRepository: IAddressRepository,
-    bookingRepository: IBookingRepository
+    bookingRepository: IBookingRepository,
+    s3Bucket: IS3Bucket
+
   ) {
     this.providerRepository = providerRepository;
     this.bcrypt = bcrypt;
@@ -47,8 +52,9 @@ export class ProviderUseCase {
     this.nodemailer = nodemailer;
     this.requestValidator = requestValidator;
     this.otpRepository = otpRepository;
-    this.addressRepository = addressRepository
-    this.bookingRepository = bookingRepository
+    this.addressRepository = addressRepository;
+    this.bookingRepository = bookingRepository;
+    this.s3Bucket = s3Bucket;
   }
 
   // provider register
@@ -133,8 +139,6 @@ export class ProviderUseCase {
     landmark,
     country,
     pinNumber,
-    uploadedImageNames
-
   }: {
     email: string,
     parkingName: string;
@@ -153,11 +157,11 @@ export class ProviderUseCase {
     landmark: string;
     country: string;
     pinNumber: number;
-    uploadedImageNames:string[];
-  }) {
+  }, files: IFile[]) {
     return sendLotForApproval(
       this.providerRepository,
       this.addressRepository,
+      this.s3Bucket,
       email,
       parkingName,
       parkingCount,
@@ -175,7 +179,7 @@ export class ProviderUseCase {
       landmark,
       country,
       pinNumber,
-      uploadedImageNames
+      files
     )
   }
 
@@ -243,12 +247,12 @@ export class ProviderUseCase {
   async fetchLotDetails(lotId: string) {
     return fetchLotDetails(
       this.providerRepository,
+      this.s3Bucket,
       lotId
     )
   }
 
   async getBookedSlots({ date, lotId }: { date: string, lotId: string }) {
-    console.log('DAte', date);
 
     return getBookedSlots(
       this.bookingRepository,

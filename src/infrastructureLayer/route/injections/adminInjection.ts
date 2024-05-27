@@ -18,6 +18,7 @@ import Nodemailer from "../../services/nodemailer";
 import RequestValidator from "../../services/validateRepository";
 import { BookingRepository } from "../../database/repository/bookingRepository";
 import BookingModel from "../../database/model/bookingModel";
+import S3Bucket from "../../services/s3BucketAws";
 
 
 const adminRepository = new AdminRepository(AdminModel);
@@ -26,6 +27,7 @@ const userRepository = new UserRepository(UserModel);
 const otpRepository = new OtpRepository(OtpModel);
 const addressRepository = new AddressRepository(AddressModel);
 const bcrypt = new Encrypt();
+const s3Bucket = new S3Bucket();
 const jwt = new JwtPassword();
 const requestValidator = new RequestValidator();
 const nodemailer = new Nodemailer();
@@ -46,7 +48,8 @@ const providerUseCase = new ProviderUseCase(
   requestValidator,
   otpRepository,
   addressRepository,
-  bookingRepository
+  bookingRepository,
+  s3Bucket
 )
 
 const userUseCase = new UserUseCase(

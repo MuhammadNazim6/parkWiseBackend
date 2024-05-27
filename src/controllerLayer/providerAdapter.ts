@@ -1,5 +1,4 @@
 import { IFile } from "../infrastructureLayer/middleware/multer";
-import { uploadArrayOfImagesToS3, uploadToS3 } from "../infrastructureLayer/services/s3Bucket";
 import { Req, Res, Next } from "../infrastructureLayer/types/expressTypes";
 import { ProviderUseCase } from "../usecaseLayer/usecase/providerUseCase";
 
@@ -97,13 +96,7 @@ export class ProviderAdapter {
   async sendLotForApproval(req: Req, res: Res, next: Next) {
     try {
       const files = req.files as IFile[];
-      const uploadedImageNames = await uploadArrayOfImagesToS3(files)
-      
-      req.body.uploadedImageNames = uploadedImageNames
-
-      const lotSent = await this.providerUseCase.sendLotForApproval(req.body);
-      
-
+      const lotSent = await this.providerUseCase.sendLotForApproval(req.body,files);
   
       res.status(lotSent.status).json({
         success: lotSent.success,

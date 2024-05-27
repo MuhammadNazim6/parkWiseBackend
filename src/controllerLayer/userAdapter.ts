@@ -150,6 +150,8 @@ export class UserAdapter {
       const parkingLots = await this.providerUsecase.fetchParkingLots(query);
 
       if (parkingLots) {
+        console.log(parkingLots);
+        
         res.status(200).json({
           data: parkingLots
         })

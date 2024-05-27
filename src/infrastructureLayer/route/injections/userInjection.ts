@@ -15,17 +15,20 @@ import { AddressRepository } from "../../database/repository/addressRepository";
 import AddressModel from "../../database/model/addressModel";
 import { BookingRepository } from "../../database/repository/bookingRepository";
 import BookingModel from "../../database/model/bookingModel";
+import S3Bucket from "../../services/s3BucketAws";
 
 
 const userRepository = new UserRepository(UserModel);
 const bcrypt = new Encrypt();
 const jwt = new JwtPassword();
 const nodemailer = new Nodemailer();
+const s3Bucket = new S3Bucket();
 const requestValidator = new RequestValidator();
 const otpRepository = new OtpRepository(OtpModel);
 const addressRepository = new AddressRepository(AddressModel);
 const providerRepository = new ProviderRepository(ParkingProviderModel)
 const bookingRepository = new BookingRepository(BookingModel)
+
 const userusecase = new UserUseCase(
   userRepository,
   bcrypt,
@@ -44,8 +47,8 @@ const providerUseCase = new ProviderUseCase(
   requestValidator,
   otpRepository,
   addressRepository,
-  bookingRepository
-
+  bookingRepository,
+  s3Bucket
 )
 const userAdapter = new UserAdapter(userusecase, providerUseCase);
 

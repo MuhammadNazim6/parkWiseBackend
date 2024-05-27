@@ -1,11 +1,14 @@
 import { IProviderRepository } from "../../interface/repository/IProviderRepository"
 import { IAddressRepository } from "../../interface/repository/IAddressRepository"
 import { ISuccessResponse } from "../../interface/services/IResponses"
+import { IS3Bucket } from "../../interface/services/IS3Bucket"
+import { IFile } from "../../../infrastructureLayer/middleware/multer"
 
 
 export const sendLotForApproval = async (
   providerRepository: IProviderRepository,
   addressRepository: IAddressRepository,
+  s3Bucket:IS3Bucket,
   email: string,
   parkingName: string,
   parkingCount: number,
@@ -23,10 +26,13 @@ export const sendLotForApproval = async (
   landmark: string,
   country: string,
   pinNumber: number,
-  uploadedImageNames:string[]   
+  files:IFile[] 
 
 ): Promise<ISuccessResponse> => {
   try {
+
+    const uploadedImageNames = await s3Bucket.uploadArrayOfImagesToS3(files)
+
     const newAddress = await addressRepository.createAddress({
       buildingOrAreaName,
       street,

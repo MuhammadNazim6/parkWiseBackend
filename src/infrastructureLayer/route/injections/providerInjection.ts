@@ -12,12 +12,14 @@ import RequestValidator from "../../services/validateRepository";
 import AddressModel from "../../database/model/addressModel";
 import { BookingRepository } from "../../database/repository/bookingRepository";
 import BookingModel from "../../database/model/bookingModel";
+import S3Bucket from "../../services/s3BucketAws";
 
 
 const providerRepository = new ProviderRepository(ParkingProviderModel);
 const bcrypt = new Encrypt();
 const jwt = new JwtPassword();
 const nodemailer = new Nodemailer();
+const s3Bucket = new S3Bucket();
 const requestValidator = new RequestValidator();
 const otpRepository = new OtpRepository(OtpModel);
 const addressRepository = new AddressRepository(AddressModel);
@@ -30,7 +32,8 @@ const providerUseCase = new ProviderUseCase(
   requestValidator,
   otpRepository,
   addressRepository,
-  bookingRepository
+  bookingRepository,
+  s3Bucket
 );
 const providerAdapter = new ProviderAdapter(providerUseCase);
 
