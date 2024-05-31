@@ -13,6 +13,8 @@ import { manageRequest } from "./provider/manageRequest";
 import { getParkingLotsForHome } from "./provider/getParkingLotsForHome";
 import { getLotDetails } from "./provider/getLotDetails";
 import { getBookedSlots } from "./booking/getBookedSlots";
+import { IProvUpdateProfile } from "../../types/providerTypes";
+import { updateProfile } from "./provider/updateProfile";
 
 export class ProviderRepository implements IProviderRepository {
   constructor(private readonly providerModel: typeof ParkingProviderModel) { }
@@ -37,7 +39,7 @@ export class ProviderRepository implements IProviderRepository {
 
   async updateProviderWithSlots(
     addressId: string,
-    email: string,     
+    email: string,
     parkingName: string,
     parkingCount: number,
     waterServicePrice: number,
@@ -47,7 +49,7 @@ export class ProviderRepository implements IProviderRepository {
     latitude: number,
     longitude: number,
     startEndTime: string,
-    uploadedImageNames:string[]): Promise<boolean> {
+    uploadedImageNames: string[]): Promise<boolean> {
     return updateProviderWithSlots(
       addressId,
       email,
@@ -98,6 +100,10 @@ export class ProviderRepository implements IProviderRepository {
   async getLotDetails(lotId: string): Promise<{}[]> {
     return getLotDetails(lotId, this.providerModel);
   }
-  
+
+  async updateProfile(lotId: string, toUpdate: IProvUpdateProfile): Promise<{}> {    
+    return updateProfile(lotId, toUpdate, this.providerModel);
+  }
+
 
 }

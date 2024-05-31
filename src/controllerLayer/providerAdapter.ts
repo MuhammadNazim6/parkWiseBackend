@@ -96,8 +96,8 @@ export class ProviderAdapter {
   async sendLotForApproval(req: Req, res: Res, next: Next) {
     try {
       const files = req.files as IFile[];
-      const lotSent = await this.providerUseCase.sendLotForApproval(req.body,files);
-  
+      const lotSent = await this.providerUseCase.sendLotForApproval(req.body, files);
+
       res.status(lotSent.status).json({
         success: lotSent.success,
         message: lotSent.message,
@@ -125,6 +125,33 @@ export class ProviderAdapter {
         res.status(404).json({
           success: false,
           message: 'No results found'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async updateProvProfile(req: Req, res: Res, next: Next) {
+    try {
+      console.log('kokokokok');
+      
+      const { lotId } = req.params
+
+      console.log( typeof lotId);
+      console.log(typeof req.body.mobile);
+      
+      const updated = await this.providerUseCase.updateProvProfile(lotId, req.body);
+
+      if (updated) {
+        res.status(200).json({
+          success: true,
+          data: updated
+        })
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'Unable to update'
         });
       }
     } catch (err) {

@@ -22,6 +22,8 @@ import { ISlotBooking } from "../interface/repository/ICommonInterfaces";
 import { bookSlot } from "./provider/bookSlot";
 import { IS3Bucket } from "../interface/services/IS3Bucket";
 import { IFile } from "../../infrastructureLayer/middleware/multer";
+import { IProvUpdateProfile } from "../../infrastructureLayer/types/providerTypes";
+import { updateProvProfile } from "./provider/updateProvProfile";
 
 export class ProviderUseCase {
   private readonly providerRepository: IProviderRepository;
@@ -266,6 +268,14 @@ export class ProviderUseCase {
     return bookSlot(
       this.bookingRepository,
       { lotId, userId, servicesChecked, fromTime, toTime, amount }
+    )
+  }
+
+  async updateProvProfile(lotId: string, toUpdate: IProvUpdateProfile) {
+    return updateProvProfile(
+      this.providerRepository,
+      lotId,
+      toUpdate
     )
   }
 

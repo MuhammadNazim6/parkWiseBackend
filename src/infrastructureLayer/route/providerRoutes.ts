@@ -32,5 +32,11 @@ router.get('/providerDetails/:lotId',
     providerAdapter.getProviderDetails(req, res, next)
   })
 
+router.patch('/updateProfile/:lotId',
+  (req: Req, res: Res, next: Next) => {
+    providerAdapter.updateProvProfile(req, res, next)
+  })
+
+
 
 export default router; 

@@ -1,4 +1,5 @@
 import { IParkingProvider, IFetchParkingLot } from "../../../domainLayer/providers";
+import { IProvUpdateProfile } from "../../../infrastructureLayer/types/providerTypes";
 import { StoreData } from "../services/IResponses";
 
 export interface IProviderRepository {
@@ -18,7 +19,7 @@ export interface IProviderRepository {
     latitude: number,
     longitude: number,
     startEndTime: string,
-    uploadedImageNames:string[]
+    uploadedImageNames: string[]
   ): Promise<boolean>;
   getProviderRequests(): Promise<{}[]>;
   getApprovedProviders(): Promise<{}[]>;
@@ -26,5 +27,6 @@ export interface IProviderRepository {
   manageRequest(id: string, action: string): Promise<boolean>;
   getParkingLotsForHome(searchQuery: IFetchParkingLot): Promise<{}[]>
   getLotDetails(lotId: string): Promise<{}[]>
+  updateProfile(lotId: string, toUpdate: IProvUpdateProfile): Promise<{}>
 
 }
