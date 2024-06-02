@@ -5,10 +5,9 @@ export interface IBooking {
   userId: ObjectId;
   amount: number;
   createdAt: Date;
-  fromTime: string;
-  toTime: string;
-  servicesUsed: string[];
-  paymentMethod: string;
-
+  bookingDate: Date;
+  selectedSlots:string[]
+  servicesUsed: { [service: string]: boolean };
 }
 
+   

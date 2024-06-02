@@ -151,7 +151,7 @@ export class UserAdapter {
 
       if (parkingLots) {
         console.log(parkingLots);
-        
+
         res.status(200).json({
           data: parkingLots
         })
@@ -170,7 +170,7 @@ export class UserAdapter {
     try {
       const { lotId } = req.params
       const details = await this.providerUsecase.fetchLotDetails(lotId);
-      if (details) {        
+      if (details) {
         res.status(200).json({
           success: true,
           data: details[0],
@@ -189,7 +189,7 @@ export class UserAdapter {
   async getBookedSlots(req: Req, res: Res, next: Next) {
     try {
       const bookedSlots = await this.providerUsecase.getBookedSlots(req.body);
-      
+
       if (bookedSlots) {
         res.status(200).json({
           success: true,
@@ -209,16 +209,15 @@ export class UserAdapter {
   async bookSlot(req: Req, res: Res, next: Next) {
     try {
       const slotBooked = await this.providerUsecase.bookSlot(req.body);
-
       if (slotBooked) {
         res.status(200).json({
           success: true,
-          // data: bookedSlots
+          data: slotBooked
         })
       } else {
         res.status(404).json({
           success: false,
-          message: 'No results found'
+          message: 'Unable to book'
         });
       }
     } catch (err) {

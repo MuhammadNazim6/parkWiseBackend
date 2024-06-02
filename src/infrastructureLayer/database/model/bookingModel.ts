@@ -6,10 +6,13 @@ const BookingSchema: Schema = new Schema<IBooking & Document>({
   userId: { type: Schema.Types.ObjectId, ref: 'User' },
   amount: { type: Number },
   createdAt: { type: Date, default: Date.now },
-  fromTime: { type: String },
-  toTime: { type: String },
-  servicesUsed: { type: [String], default: [] },
-  // paymentMethod: { type: String }
+  selectedSlots: { type: [String], required: true },
+  servicesUsed: {
+    type: Map,
+    of: Boolean,
+    required: true
+  },
+  bookingDate: { type: Date, required: true },
 })
 
 const BookingModel: Model<IBooking & Document> = mongoose.model<IBooking & Document>(

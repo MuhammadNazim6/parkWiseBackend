@@ -11,7 +11,7 @@ export class BookingRepository implements IBookingRepository {
   async getBookedSlots(date: string, lotId: string): Promise<{}[]> {
     return getBookedSlots(this.bookingModel, date, lotId,);
   }
-  async bookSlot(bookingData: ISlotBooking): Promise<boolean> {
+  async bookSlot(bookingData: ISlotBooking): Promise<{}> {
     return bookSlot(this.bookingModel, bookingData);
   }
 }

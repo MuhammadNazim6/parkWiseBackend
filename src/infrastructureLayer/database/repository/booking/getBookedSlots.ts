@@ -23,7 +23,7 @@ export const getBookedSlots = async (
     {
       $match: {
         parkingLotId: lotObjectId,
-        createdAt: {
+        bookingDate: {
           $gte: startOfDay,
           $lt: endOfDay,
         },
@@ -40,9 +40,11 @@ export const getBookedSlots = async (
     {
       $unwind: '$provider'
     },
+    { $unwind: "$selectedSlots" },
+
     {
       $group: {
-        _id: { fromTime: "$fromTime", toTime: "$toTime" },
+        _id: { time: "$selectedSlots" },
         count: { $sum: 1 },
         availableSpace: { $first: "$provider.availableSpace" }
       },
@@ -53,13 +55,15 @@ export const getBookedSlots = async (
       },
     },
     {
-      $sort: { "_id.fromTime": 1 },
+      $sort: { "_id.time": 1 },
     },
 
   ]);
-  const bookedSlotsObject = bookedSlots.map((x) => { return x._id.fromTime.slice(0, 2) + '-' + x._id.toTime.slice(0, 2) }).map(time => ({ time }))
-  console.log(bookedSlotsObject);
-  
+  const bookedSlotsObject = bookedSlots.map((x) => {
+    const time = x._id.time
+    return parseInt(time.slice(0, 2)) + '-' + (parseInt(time.slice(0, 2)) + 1).toString()
+  }).map(time => ({ time }))
+
   return bookedSlotsObject
 }
 

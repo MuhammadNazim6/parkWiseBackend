@@ -3,5 +3,5 @@ import { ISlotBooking } from "./ICommonInterfaces";
 
 export interface IBookingRepository {
   getBookedSlots(date: string, lotId: string): Promise<{}[]>
-  bookSlot(bookingData: ISlotBooking): Promise<boolean>
+  bookSlot(bookingData: ISlotBooking): Promise<{}>
 }

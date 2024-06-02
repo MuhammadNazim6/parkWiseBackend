@@ -264,10 +264,12 @@ export class ProviderUseCase {
     )
   }
 
-  async bookSlot({ lotId, userId, servicesChecked, fromTime, toTime, amount }: ISlotBooking) {
+  async bookSlot({ lotId, userId, services, selectedSlots, amount, bookingDate }: ISlotBooking) {
+    console.log(selectedSlots);
+    
     return bookSlot(
       this.bookingRepository,
-      { lotId, userId, servicesChecked, fromTime, toTime, amount }
+      { lotId, userId, services, selectedSlots, amount, bookingDate }
     )
   }
 
