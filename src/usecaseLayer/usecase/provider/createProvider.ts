@@ -49,7 +49,8 @@ export const createProvider = async (
           role: 'provider',
           email: provider.email,
           approvalStatus: provider.approvalStatus,
-          id: provider._id as string
+          id: provider._id as string,
+          mobile: provider.mobile as number
         }
       };
     }

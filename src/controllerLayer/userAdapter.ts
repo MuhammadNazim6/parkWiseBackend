@@ -2,6 +2,7 @@ import { Req, Res, Next } from "../infrastructureLayer/types/expressTypes";
 import { UserUseCase } from "../usecaseLayer/usecase/userUseCase";
 import type { ProviderUseCase } from '../usecaseLayer/usecase/providerUseCase'
 import { IFetchParkingLot } from "../domainLayer/providers";
+import { IFile } from "../infrastructureLayer/middleware/multer";
 
 export class UserAdapter {
   private readonly userusecase: UserUseCase;
@@ -218,6 +219,46 @@ export class UserAdapter {
         res.status(404).json({
           success: false,
           message: 'Unable to book'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async updateUserProfile(req: Req, res: Res, next: Next) {
+    try {
+      const files = req.files as IFile[];
+      const updatedProfile = await this.userusecase.updateUserProfile(req.body, files)
+      if (updatedProfile) {
+        res.status(200).json({
+          success: true,
+          message:'User profile updated successfully'
+        })
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'Unable to update profile'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async getUserProfilePic(req: Req, res: Res, next: Next) {
+    try {
+      const {id} = req.params
+      const profilePic = await this.userusecase.getUserProfilePic(id)
+      if (profilePic) {
+        res.status(200).json({
+          success: true,
+          data: profilePic
+        })
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'No profile pic for the user'
         });
       }
     } catch (err) {

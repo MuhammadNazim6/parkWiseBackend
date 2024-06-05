@@ -59,9 +59,10 @@ const userUseCase = new UserUseCase(
   nodemailer,
   requestValidator,
   otpRepository,
-  providerRepository
+  providerRepository,
+  s3Bucket
 )
 
 const adminAdapter = new AdminAdapter(adminUseCase, providerUseCase, userUseCase);
 
-export { adminAdapter, adminRepository };
+export { adminAdapter, adminRepository };    

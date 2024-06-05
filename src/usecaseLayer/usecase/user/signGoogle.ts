@@ -38,7 +38,8 @@ export const signGoogleUser = async (
           name: user.name,
           role: 'user',
           email: user.email,
-          id: user._id as string
+          id: user._id as string,
+          mobile: user.mobile
         }
       };
     } else {
@@ -64,7 +65,8 @@ export const signGoogleUser = async (
           name: createnewUser.name,
           role: 'user',
           email: createnewUser.email,
-          id: createnewUser._id as string
+          id: createnewUser._id as string,
+          mobile: createnewUser.mobile as number
         }
       };
     }

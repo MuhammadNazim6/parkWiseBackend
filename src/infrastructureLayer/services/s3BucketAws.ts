@@ -73,6 +73,15 @@ class S3Bucket implements IS3Bucket {
     return Promise.all(lotUrlsPromises)
   }
 
+  getImageUrl = async (profilePic:string):Promise<string> => {
+    const getObjectParams = {
+      Bucket: this.bucketName,
+      Key: profilePic
+    }
+    const command = new GetObjectCommand(getObjectParams)
+    const url = await getSignedUrl(this.s3Client, command, { expiresIn: 3600 })
+    return url
+  }
 }
 
 export default S3Bucket;

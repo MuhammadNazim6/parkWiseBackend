@@ -9,6 +9,8 @@ import { createGoogleUser } from "./user/createGoogleUser";
 import { changePassword } from "./user/changePassword";
 import { getUsers } from "./user/getUsers";
 import { blockUnblockUser } from "./user/blockUnblockUser";
+import { updateUserProfile, updateUserProfileWithoutImage } from "./user/updateUserProfile";
+import { findUserById } from "./user/findUserById";
 
 
 export class UserRepository implements IUserRepository {
@@ -22,6 +24,11 @@ export class UserRepository implements IUserRepository {
   //  Check if a user exists using email
   async findUser(email: string): Promise<IUser | null> {
     return findUser(email, this.usersModel);
+  }
+
+  //  Check if a user exists using email
+  async findUserById(id: string): Promise<IUser> {
+    return findUserById(id, this.usersModel);
   }
 
   // logging in user
@@ -45,6 +52,26 @@ export class UserRepository implements IUserRepository {
     return blockUnblockUser(
       email,
       state,
+      this.usersModel
+    )
+  }
+
+  async updateUserProfile(id: string, email: string, name: string, mobile: number, uploadedImageName: string): Promise<{}> {
+    return updateUserProfile(
+      id,
+      email,
+      name,
+      mobile,
+      uploadedImageName,
+      this.usersModel
+    )
+  }
+  async updateUserProfileWithoutImage(id: string, email: string, name: string, mobile: number): Promise<{}> {
+    return updateUserProfileWithoutImage(
+      id,
+      email,
+      name,
+      mobile,
       this.usersModel
     )
   }

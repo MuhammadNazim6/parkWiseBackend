@@ -49,7 +49,8 @@ export const createUser = async (
           name: user.name,
           role: 'user',
           email: user.email,
-          id:user._id as string
+          id:user._id as string,
+          mobile:user.mobile as number
         }
       };
     } else {

@@ -255,7 +255,6 @@ export class ProviderUseCase {
   }
 
   async getBookedSlots({ date, lotId }: { date: string, lotId: string }) {
-
     return getBookedSlots(
       this.bookingRepository,
       this.providerRepository,

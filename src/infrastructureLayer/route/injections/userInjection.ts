@@ -29,6 +29,7 @@ const addressRepository = new AddressRepository(AddressModel);
 const providerRepository = new ProviderRepository(ParkingProviderModel)
 const bookingRepository = new BookingRepository(BookingModel)
 
+
 const userusecase = new UserUseCase(
   userRepository,
   bcrypt,
@@ -36,7 +37,8 @@ const userusecase = new UserUseCase(
   nodemailer,
   requestValidator,
   otpRepository,
-  providerRepository
+  providerRepository,
+  s3Bucket
 );
 
 const providerUseCase = new ProviderUseCase(

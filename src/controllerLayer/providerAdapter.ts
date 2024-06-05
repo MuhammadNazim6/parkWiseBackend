@@ -133,14 +133,8 @@ export class ProviderAdapter {
   }
 
   async updateProvProfile(req: Req, res: Res, next: Next) {
-    try {
-      console.log('kokokokok');
-      
+    try {      
       const { lotId } = req.params
-
-      console.log( typeof lotId);
-      console.log(typeof req.body.mobile);
-      
       const updated = await this.providerUseCase.updateProvProfile(lotId, req.body);
 
       if (updated) {

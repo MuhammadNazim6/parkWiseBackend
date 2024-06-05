@@ -6,6 +6,7 @@ export interface StoreData {
   _id: string;
   name: string;
   email: string;
+  mobile:number;
 }
 
 
@@ -21,6 +22,7 @@ export interface ILoginResponse<T = IUser | string | IAdmin | IParkingProvider> 
     role:string;
     email:string;
     id:string;
+    mobile?:number;
     
   } ;
 }
@@ -38,6 +40,8 @@ export interface IProviderLoginResponse {
     email:string;
     approvalStatus:string;
     id:string;
+    mobile:number;
+
 }
 }
 

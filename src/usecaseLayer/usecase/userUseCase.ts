@@ -14,6 +14,11 @@ import { sendForgotPassword } from "./user/sendForgotPassword";
 import { changePassword } from "./user/changePassword"
 import { getUsers } from "./user/getUsers";
 import { blockUnblockUser } from "./user/blockUnblockUser";
+import { IFile } from "../../infrastructureLayer/middleware/multer";
+import { updateUserProfile } from "./user/updateUserProfile";
+import { IS3Bucket } from "../interface/services/IS3Bucket";
+import { getUserProfilePic } from "./user/getUserProfilePic";
+
 
 export class UserUseCase {
   private readonly userRepository: IUserRepository;
@@ -23,6 +28,7 @@ export class UserUseCase {
   private readonly requestValidator: IRequestValidator
   private readonly otpRepository: IOtpRepository
   private readonly providerRepository: IProviderRepository
+  private readonly s3Bucket: IS3Bucket;
 
   constructor(
     userRepository: IUserRepository,
@@ -31,7 +37,9 @@ export class UserUseCase {
     nodemailer: INodemailer,
     requestValidator: IRequestValidator,
     otpRepository: IOtpRepository,
-    providerRepository: IProviderRepository
+    providerRepository: IProviderRepository,
+    s3Bucket: IS3Bucket
+
   ) {
     this.userRepository = userRepository;
     this.bcrypt = bcrypt;
@@ -39,7 +47,8 @@ export class UserUseCase {
     this.nodemailer = nodemailer;
     this.requestValidator = requestValidator;
     this.otpRepository = otpRepository;
-    this.providerRepository = providerRepository
+    this.providerRepository = providerRepository;
+    this.s3Bucket = s3Bucket;
   }
 
   // creating user
@@ -190,6 +199,38 @@ export class UserUseCase {
     return blockUnblockUser(
       this.userRepository,
       email
+    )
+  }
+
+  async updateUserProfile({
+    id,
+    name,
+    email,
+    mobile
+  }: {
+    id: string,
+    name: string,
+    email: string,
+    mobile: number
+  },
+    files: IFile[]) {
+    return updateUserProfile(
+      this.userRepository,
+      this.s3Bucket,
+      id,
+      name,
+      email,
+      mobile,
+      files
+    )
+  }
+
+  async getUserProfilePic(id: string
+  ) {
+    return getUserProfilePic(
+      this.userRepository,
+      this.s3Bucket,
+      id,
     )
   }
 }

@@ -13,6 +13,7 @@ export const createGoogleUser = async (
       _id: user._id,
       name: user.name,
       email: user.email,
+      mobile: user.mobile
 
     };
     return responseData;
