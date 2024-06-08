@@ -40,8 +40,9 @@ export const getBookedSlots = async (
     {
       $unwind: '$provider'
     },
-    { $unwind: "$selectedSlots" },
-
+    {
+      $unwind: "$selectedSlots"
+    },
     {
       $group: {
         _id: { time: "$selectedSlots" },

@@ -18,6 +18,10 @@ import { IFile } from "../../infrastructureLayer/middleware/multer";
 import { updateUserProfile } from "./user/updateUserProfile";
 import { IS3Bucket } from "../interface/services/IS3Bucket";
 import { getUserProfilePic } from "./user/getUserProfilePic";
+import { checkUserPassword } from "./user/checkUserPassword";
+import { IBookingRepository } from "../interface/repository/IBookingRepository";
+import { fetchUserBookings } from "./user/fetchUserBookings";
+import { cancelBooking } from "./user/cancelBooking";
 
 
 export class UserUseCase {
@@ -29,6 +33,8 @@ export class UserUseCase {
   private readonly otpRepository: IOtpRepository
   private readonly providerRepository: IProviderRepository
   private readonly s3Bucket: IS3Bucket;
+  private readonly bookingRepository: IBookingRepository;
+
 
   constructor(
     userRepository: IUserRepository,
@@ -38,7 +44,8 @@ export class UserUseCase {
     requestValidator: IRequestValidator,
     otpRepository: IOtpRepository,
     providerRepository: IProviderRepository,
-    s3Bucket: IS3Bucket
+    s3Bucket: IS3Bucket,
+    bookingRepository: IBookingRepository,
 
   ) {
     this.userRepository = userRepository;
@@ -49,6 +56,8 @@ export class UserUseCase {
     this.otpRepository = otpRepository;
     this.providerRepository = providerRepository;
     this.s3Bucket = s3Bucket;
+    this.bookingRepository = bookingRepository;
+
   }
 
   // creating user
@@ -233,4 +242,30 @@ export class UserUseCase {
       id,
     )
   }
+
+  async checkUserPassword(userId: string, password: string) {
+    return checkUserPassword(
+      this.userRepository,
+      this.bcrypt,
+      userId,
+      password
+    )
+  }
+
+  async fetchUserBookings(userId: string, page: string) {
+    return fetchUserBookings(
+      this.bookingRepository,
+      userId,
+      page
+    )
+  }
+
+  async cancelBooking(bookingId: string) {
+    return cancelBooking(
+      this.bookingRepository,
+      this.userRepository,
+      bookingId
+    )
+  }
+
 }

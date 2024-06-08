@@ -133,7 +133,7 @@ export class ProviderAdapter {
   }
 
   async updateProvProfile(req: Req, res: Res, next: Next) {
-    try {      
+    try {
       const { lotId } = req.params
       const updated = await this.providerUseCase.updateProvProfile(lotId, req.body);
 
@@ -153,6 +153,45 @@ export class ProviderAdapter {
     }
   }
 
+  async fetchLotsBookings(req: Req, res: Res, next: Next) {
+    try {
+      const { lotId } = req.params
+      const bookings = await this.providerUseCase.fetchLotsBookings(lotId);
+      if (bookings) {
+        res.status(200).json({
+          success: true,
+          data: bookings
+        })
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'Unable to fetch data'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async checkProvPassword(req: Req, res: Res, next: Next) {
+    try {
+      const { provId, password } = req.body;
+      const checked = await this.providerUseCase.checkProvPassword(provId, password);
+      if (checked) {
+        res.status(200).json({
+          success: true,
+          message: 'Password is correct'
+        })
+      } else {
+        res.status(200).json({
+          success: false,
+          message: 'Incorrect password entered'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
 
 
 }

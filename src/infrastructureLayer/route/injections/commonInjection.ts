@@ -1,10 +1,12 @@
 import { CommonAdapter } from "../../../controllerLayer/commonAdapter";
 import { CommonUseCase } from "../../../usecaseLayer/usecase/commonUseCase";
 import AdminModel from "../../database/model/adminModel";
+import BookingModel from "../../database/model/bookingModel";
 import OtpModel from "../../database/model/otpModel";
 import ParkingProviderModel from "../../database/model/providerModel";
 import UserModel from "../../database/model/userModel";
 import { AdminRepository } from "../../database/repository/adminRepository";
+import { BookingRepository } from "../../database/repository/bookingRepository";
 import { OtpRepository } from "../../database/repository/otpRepository";
 import { ProviderRepository } from "../../database/repository/providerRepository";
 import { UserRepository } from "../../database/repository/userRepository";
@@ -22,6 +24,7 @@ const requestValidator = new RequestValidator();
 const otpRepository = new OtpRepository(OtpModel);
 const providerRepository = new ProviderRepository(ParkingProviderModel)
 const adminRepository = new AdminRepository(AdminModel)
+const bookingRepository = new BookingRepository(BookingModel);
 const userusecase = new CommonUseCase(
   userRepository,
   bcrypt,
@@ -30,7 +33,8 @@ const userusecase = new CommonUseCase(
   requestValidator,
   otpRepository,
   providerRepository,
-  adminRepository
+  adminRepository,
+  bookingRepository
 );
 
 const commonAdapter = new CommonAdapter(userusecase);

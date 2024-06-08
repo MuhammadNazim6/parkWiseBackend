@@ -37,6 +37,16 @@ router.patch('/updateProfile/:lotId',
     providerAdapter.updateProvProfile(req, res, next)
   })
 
+router.get('/lotsBookings/:lotId',
+  (req: Req, res: Res, next: Next) => {
+    providerAdapter.fetchLotsBookings(req, res, next)
+  })
+
+router.post('/checkProvPassword',
+  (req: Req, res: Res, next: Next) => {
+    providerAdapter.checkProvPassword(req, res, next)
+  })
+
 
 
 export default router; 

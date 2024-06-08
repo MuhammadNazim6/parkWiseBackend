@@ -8,15 +8,18 @@ const router = express();
 router.post('/login', (req: Req, res: Res, next: Next) => {
   commonAdapter.commonLogin(req, res, next)
 })
-
 // For changing password 
 router.post('/resend-otp', (req: Req, res: Res, next: Next) => {
   commonAdapter.resendOtp(req, res, next)
 })
-
 // For refresh token 
 router.post('/refreshToken', (req: Req, res: Res, next: Next) => {
   commonAdapter.refreshToken(req, res, next)
 })
+router.get('/bookingDetails/:bookingId',
+  (req: Req, res: Res, next: Next) => {
+    commonAdapter.getBookingDetails(req, res, next)
+  })
+
 
 export default router;    

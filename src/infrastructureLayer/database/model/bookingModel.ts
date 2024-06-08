@@ -13,6 +13,7 @@ const BookingSchema: Schema = new Schema<IBooking & Document>({
     required: true
   },
   bookingDate: { type: Date, required: true },
+  bookingStatus: { type: String, default: 'booked' }
 })
 
 const BookingModel: Model<IBooking & Document> = mongoose.model<IBooking & Document>(

@@ -6,8 +6,8 @@ export interface IBooking {
   amount: number;
   createdAt: Date;
   bookingDate: Date;
-  selectedSlots:string[]
+  selectedSlots: string[]
   servicesUsed: { [service: string]: boolean };
+  bookingStatus: string;
 }
 
-   

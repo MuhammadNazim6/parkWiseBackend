@@ -14,12 +14,7 @@ export const updateToken = async (
     }
   }
   try {
-    console.log('Rweacihng in here');
-    
-
-    const decoded = jwt.decodeJWT(refreshToken);
-    console.log('DECODED ',decoded);
-    
+    const decoded = jwt.decodeJWT(refreshToken);    
     const accessToken = jwt.createJWT(decoded.id, decoded.email, decoded.role, decoded.name);
 
     return {

@@ -60,7 +60,8 @@ const userUseCase = new UserUseCase(
   requestValidator,
   otpRepository,
   providerRepository,
-  s3Bucket
+  s3Bucket,
+  bookingRepository
 )
 
 const adminAdapter = new AdminAdapter(adminUseCase, providerUseCase, userUseCase);

@@ -1,3 +1,4 @@
+import { ObjectId } from "mongoose";
 import { IUser } from "../../../domainLayer/users";
 import { IFile } from "../../../infrastructureLayer/middleware/multer";
 import { StoreData } from "../services/IResponses";
@@ -13,6 +14,6 @@ export interface IUserRepository {
   getUsers(): Promise<{}[]>;
   blockUnblockUser(email: string, status: boolean): Promise<boolean>;
   updateUserProfile(id: string, email: string, name: string, mobile: number, uploadedImageName: string): Promise<{}>;
-  updateUserProfileWithoutImage(id:string, email: string, name: string, mobile: number): Promise<{}>;
-
+  updateUserProfileWithoutImage(id: string, email: string, name: string, mobile: number): Promise<{}>;
+  refundCashToUser(userId: ObjectId,amount:number): Promise<{}>;
 }  

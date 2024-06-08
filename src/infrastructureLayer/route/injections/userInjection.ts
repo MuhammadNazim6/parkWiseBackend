@@ -38,7 +38,8 @@ const userusecase = new UserUseCase(
   requestValidator,
   otpRepository,
   providerRepository,
-  s3Bucket
+  s3Bucket,
+  bookingRepository
 );
 
 const providerUseCase = new ProviderUseCase(

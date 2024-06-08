@@ -67,4 +67,26 @@ export class CommonAdapter {
     }
   }
 
+  async getBookingDetails(req: Req, res: Res, next: Next) {
+    try {
+      const { bookingId } = req.params
+      const bookingDetail = await this.commonUsecase.getBookingDetails(bookingId);
+
+      if (bookingDetail) {
+        res.status(200).json({
+          success: true,
+          data: bookingDetail
+        })
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'Unable to fetch details'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+
 }

@@ -25,7 +25,7 @@ export interface IProviderRepository {
   getApprovedProviders(): Promise<{}[]>;
   blockUnblockProvider(email: string, status: boolean): Promise<boolean>;
   manageRequest(id: string, action: string): Promise<boolean>;
-  getParkingLotsForHome(searchQuery: IFetchParkingLot): Promise<{}[]>
+  getParkingLotsForHome(searchQuery: IFetchParkingLot): Promise<{}>
   getLotDetails(lotId: string): Promise<{}[]>
   updateProfile(lotId: string, toUpdate: IProvUpdateProfile): Promise<{}>
 

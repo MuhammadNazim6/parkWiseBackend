@@ -11,6 +11,8 @@ import { getUsers } from "./user/getUsers";
 import { blockUnblockUser } from "./user/blockUnblockUser";
 import { updateUserProfile, updateUserProfileWithoutImage } from "./user/updateUserProfile";
 import { findUserById } from "./user/findUserById";
+import { ObjectId } from "mongoose";
+import { refundCashToUser } from "./user/refundCashToUser";
 
 
 export class UserRepository implements IUserRepository {
@@ -72,6 +74,14 @@ export class UserRepository implements IUserRepository {
       email,
       name,
       mobile,
+      this.usersModel
+    )
+  }
+
+  async refundCashToUser(userId: ObjectId, amount: number): Promise<{}> {
+    return refundCashToUser(
+      userId,
+      amount,
       this.usersModel
     )
   }

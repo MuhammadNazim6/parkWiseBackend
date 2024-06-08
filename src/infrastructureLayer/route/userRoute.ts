@@ -6,11 +6,9 @@ import { upload } from '../middleware/multer';
 
 const router = express.Router();
 
-// User register route
 router.post("/signup", (req: Req, res: Res, next: Next) =>
   userAdapter.createUser(req, res, next)
 );
-// User logout route
 router.post('/logout',
   userAuth,
   (req: Req, res: Res, next: Next) => {
@@ -55,5 +53,15 @@ router.patch('/updateProfile', upload.array('profile'), (req: Req, res: Res, nex
 router.get('/profilePicUser/:id', (req: Req, res: Res, next: Next) => {
   userAdapter.getUserProfilePic(req, res, next)
 })
+router.post('/checkUserPassword', (req: Req, res: Res, next: Next) => {
+  userAdapter.checkUserPassword(req, res, next)
+})
+router.get('/fetchUserBookings', (req: Req, res: Res, next: Next) => {
+  userAdapter.fetchUserBookings(req, res, next)
+})
+router.patch('/cancelBooking/:bookingId', (req: Req, res: Res, next: Next) => {
+  userAdapter.cancelBooking(req, res, next)
+})
 
-export default router;             
+
+export default router;              

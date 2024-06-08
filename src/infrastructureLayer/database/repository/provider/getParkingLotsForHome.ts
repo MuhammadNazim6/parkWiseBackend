@@ -4,7 +4,7 @@ import ParkingProviderModel from "../../model/providerModel";
 export const getParkingLotsForHome = async (
   searchQuery: IFetchParkingLot,
   provModel: typeof ParkingProviderModel
-): Promise<{}[]> => {
+): Promise<{}> => {
   const { price, hasAirPressureCheck, hasEvCharging, hasWaterService, coordinates, page = '1', limit = '10' } = searchQuery;
   const coordinatesObj = JSON.parse(coordinates)
 
@@ -29,7 +29,7 @@ export const getParkingLotsForHome = async (
   }
 
   try {
-    const parkingLotsPaginated = await provModel.aggregate([
+    const results = await provModel.aggregate([
       {
         $geoNear: {
           near: { type: 'Point', coordinates: [coordinatesObj[0], coordinatesObj[1]] },
@@ -40,25 +40,35 @@ export const getParkingLotsForHome = async (
       },
       { $match: query },
       {
-        $lookup: {
-          from: 'addresses',
-          localField: 'addressId',
-          foreignField: '_id',
-          as: 'address'
+        $facet: {
+          totalCount: [{ $count: "count" }],
+          paginatedResults: [{
+            $lookup: {
+              from: 'addresses',
+              localField: 'addressId',
+              foreignField: '_id',
+              as: 'address'
+            }
+          },
+          {
+            $unwind: '$address'
+          },
+          {
+            $skip: (parseInt(page) - 1) * parseInt(limit)
+          },
+          {
+            $limit: parseInt(limit)
+          }
+          ]
         }
-      },
-      {
-        $unwind: '$address'
-      },
-      {
-        $skip: (parseInt(page) - 1) * parseInt(limit)
-      },
-      {
-        $limit: parseInt(limit)
       }
-    ])
-    
-    return parkingLotsPaginated
+    ]);
+
+    const totalCount = results[0].totalCount.length > 0 ? results[0].totalCount[0].count : 0;
+    const totalPages = Math.ceil(totalCount / parseInt(limit));
+    const parkingLotsPaginated = results[0].paginatedResults;
+
+    return { parkingLotsPaginated, totalPages, totalCount };
 
   } catch (error) {
     console.log(error);

@@ -233,7 +233,7 @@ export class UserAdapter {
       if (updatedProfile) {
         res.status(200).json({
           success: true,
-          message:'User profile updated successfully'
+          message: 'User profile updated successfully'
         })
       } else {
         res.status(404).json({
@@ -248,7 +248,7 @@ export class UserAdapter {
 
   async getUserProfilePic(req: Req, res: Res, next: Next) {
     try {
-      const {id} = req.params
+      const { id } = req.params
       const profilePic = await this.userusecase.getUserProfilePic(id)
       if (profilePic) {
         res.status(200).json({
@@ -259,6 +259,73 @@ export class UserAdapter {
         res.status(404).json({
           success: false,
           message: 'No profile pic for the user'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+
+  async checkUserPassword(req: Req, res: Res, next: Next) {
+    try {
+      const { userId, password } = req.body;
+      const checked = await this.userusecase.checkUserPassword(userId, password);
+      if (checked) {
+        res.status(200).json({
+          success: true,
+          message: 'Password is correct'
+        })
+      } else {
+        res.status(200).json({
+          success: false,
+          message: 'Incorrect password entered'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async fetchUserBookings(req: Req, res: Res, next: Next) {
+    try {
+      const { userId, page } = req.query
+      const bookings = await this.userusecase.fetchUserBookings(userId as string, page as string);
+ 
+      if (bookings) {
+        console.log(bookings);
+
+        res.status(200).json({
+          success: true,
+          data: bookings
+        })
+      } else {
+        res.status(200).json({
+          success: false,
+          message: 'Unable to fetch data'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async cancelBooking(req: Req, res: Res, next: Next) {
+    try {
+      const { bookingId } = req.params
+      const cancelled = await this.userusecase.cancelBooking(bookingId);
+
+      if (cancelled) {
+        console.log(cancelled);
+
+        res.status(200).json({
+          success: true,
+          data: cancelled
+        })
+      } else {
+        res.status(200).json({
+          success: false,
+          message: 'Unable to fetch data'
         });
       }
     } catch (err) {

@@ -24,6 +24,8 @@ import { IS3Bucket } from "../interface/services/IS3Bucket";
 import { IFile } from "../../infrastructureLayer/middleware/multer";
 import { IProvUpdateProfile } from "../../infrastructureLayer/types/providerTypes";
 import { updateProvProfile } from "./provider/updateProvProfile";
+import { fetchLotsBookings } from "./provider/fetchLotsBookings";
+import { checkProvPassword } from "./provider/checkProvPassword";
 
 export class ProviderUseCase {
   private readonly providerRepository: IProviderRepository;
@@ -110,8 +112,6 @@ export class ProviderUseCase {
     email: string,
     enteredOtp: string
   }) {
-    console.log(enteredOtp);
-
     return checkOtpCommon(
       this.requestValidator,
       this.otpRepository,
@@ -250,7 +250,7 @@ export class ProviderUseCase {
     return fetchLotDetails(
       this.providerRepository,
       this.s3Bucket,
-      lotId
+      lotId  
     )
   }
 
@@ -264,8 +264,6 @@ export class ProviderUseCase {
   }
 
   async bookSlot({ lotId, userId, services, selectedSlots, amount, bookingDate }: ISlotBooking) {
-    console.log(selectedSlots);
-    
     return bookSlot(
       this.bookingRepository,
       { lotId, userId, services, selectedSlots, amount, bookingDate }
@@ -279,6 +277,20 @@ export class ProviderUseCase {
       toUpdate
     )
   }
+  async fetchLotsBookings(lotId: string) {
+    return fetchLotsBookings(
+      this.bookingRepository,
+      lotId
+    )
+  }
 
+  async checkProvPassword(provId: string, password: string) {
+    return checkProvPassword(
+      this.providerRepository,
+      this.bcrypt,
+      provId,
+      password
+    )
+  }
 
 }        

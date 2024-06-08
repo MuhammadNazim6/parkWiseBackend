@@ -6,10 +6,11 @@ import { IOtpRepository } from "../interface/repository/IOtpRepository";
 import IHashpassword from "../interface/services/IHashpassword";
 import { Ijwt } from "../interface/services/Ijwt";
 import { INodemailer } from "../interface/services/INodemailer";
-
 import { resendOtp } from "./common/resendOtp";
 import { commonLogin } from "./common/commonLogin";
 import { updateToken } from "./common/updateToken";
+import { IBookingRepository } from "../interface/repository/IBookingRepository";
+import { getBookingDetails } from "./common/getBookingDetails";
 
 export class CommonUseCase {
   private readonly userRepository: IUserRepository;
@@ -20,6 +21,7 @@ export class CommonUseCase {
   private readonly otpRepository: IOtpRepository;
   private readonly providerRepository: IProviderRepository;
   private readonly adminRepository: IAdminRepsitory;
+  private readonly bookingRepository: IBookingRepository;
   constructor(
     userRepository: IUserRepository,
     bcrypt: IHashpassword,
@@ -28,7 +30,8 @@ export class CommonUseCase {
     requestValidator: IRequestValidator,
     otpRepository: IOtpRepository,
     providerRepository: IProviderRepository,
-    adminRepository: IAdminRepsitory
+    adminRepository: IAdminRepsitory,
+    bookingRepository: IBookingRepository
   ) {
     this.userRepository = userRepository;
     this.bcrypt = bcrypt;
@@ -38,10 +41,11 @@ export class CommonUseCase {
     this.otpRepository = otpRepository;
     this.providerRepository = providerRepository;
     this.adminRepository = adminRepository;
+    this.bookingRepository = bookingRepository;
   }
 
   // For logging in user,admin,provider
-  async commonLogin({email,password}: {email: string,password: string}) {
+  async commonLogin({ email, password }: { email: string, password: string }) {
     return commonLogin(
       this.userRepository,
       this.providerRepository,
@@ -58,7 +62,7 @@ export class CommonUseCase {
 
 
   // For password changing
-  async resendOtp({email}: {email: string}) {
+  async resendOtp({ email }: { email: string }) {
     return resendOtp(
       this.userRepository,
       this.providerRepository,
@@ -68,8 +72,6 @@ export class CommonUseCase {
       email,
     )
   }
-
-
   // For refreshing expired token
   async updateToken(refreshToken: string) {
     return updateToken(
@@ -77,6 +79,9 @@ export class CommonUseCase {
       this.jwt,
     )
   }
-
-
+  async getBookingDetails(bookingId: string) {
+    return getBookingDetails(
+      bookingId,
+      this.bookingRepository)
+  }
 }

@@ -9,10 +9,7 @@ export const getUserProfilePic = async (
 ): Promise<string> => {
   try {
     const user = await userRepository.findUserById(id)
-    console.log('Reachihng in the user usercasse', user);
-
     const imageUrl = await s3Bucket.getImageUrl(user.profilePic as string)
-    console.log(imageUrl);
     return imageUrl
   } catch (error) {
     throw error

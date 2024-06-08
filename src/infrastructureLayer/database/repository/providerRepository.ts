@@ -93,7 +93,7 @@ export class ProviderRepository implements IProviderRepository {
       this.providerModel
     )
   }
-  async getParkingLotsForHome(searchQuery: IFetchParkingLot): Promise<{}[]> {
+  async getParkingLotsForHome(searchQuery: IFetchParkingLot): Promise<{}> {
     return getParkingLotsForHome(searchQuery, this.providerModel);
   }
 
