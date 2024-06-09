@@ -71,7 +71,6 @@ export class CommonAdapter {
     try {
       const { bookingId } = req.params
       const bookingDetail = await this.commonUsecase.getBookingDetails(bookingId);
-
       if (bookingDetail) {
         res.status(200).json({
           success: true,

@@ -1,4 +1,3 @@
-import { IParkingProvider, IParkingProviderReady } from "../../../../domainLayer/providers";
 import { IProvUpdateProfile } from "../../../types/providerTypes";
 import ParkingProviderModel from "../../model/providerModel";
 import mongoose from "mongoose";

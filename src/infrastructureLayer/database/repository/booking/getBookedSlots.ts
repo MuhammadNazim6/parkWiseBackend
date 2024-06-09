@@ -18,7 +18,7 @@ export const getBookedSlots = async (
   endOfDay.setUTCHours(23, 59, 59, 999);
 
   const lotObjectId = new ObjectId(lotId);
-
+  
   const bookedSlots = await bookingModel.aggregate([
     {
       $match: {
@@ -27,6 +27,7 @@ export const getBookedSlots = async (
           $gte: startOfDay,
           $lt: endOfDay,
         },
+        bookingStatus: 'booked'
       },
     },
     {

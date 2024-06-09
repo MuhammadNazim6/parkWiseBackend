@@ -24,6 +24,8 @@ import { fetchUserBookings } from "./user/fetchUserBookings";
 import { cancelBooking } from "./user/cancelBooking";
 import { IConfirmAvailablityOfSlots } from "../interface/repository/ICommonInterfaces";
 import { confirmSlot } from "./user/confirmSlot";
+import { getFilledSlots } from "./user/getFilledSlots";
+import { rescheduleSlots } from "./user/rescheduleSlots";
 
 
 export class UserUseCase {
@@ -276,6 +278,21 @@ export class UserUseCase {
       slots,
       lotId,
       date
+    )
+  }
+
+  async getFilledSlots(bookingId:string) {
+    return getFilledSlots(
+      this.bookingRepository,
+      bookingId
+    )
+  }
+
+  async rescheduleSlots(bookingId:string,slots:Array<string>) {
+    return rescheduleSlots(
+      this.bookingRepository,
+      bookingId,
+      slots
     )
   }
 

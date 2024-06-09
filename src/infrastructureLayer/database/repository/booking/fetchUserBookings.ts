@@ -9,7 +9,7 @@ export const fetchUserBookings = async (
   console.log(page);
   const pageInt = parseInt(page)
   const limit = 4;
-  const skip = pageInt
+  const skip = (pageInt - 1) * limit
   const userObjId = new ObjectId(userId);
 
   const result = await bookingModel.aggregate([
@@ -31,6 +31,9 @@ export const fetchUserBookings = async (
           },
           {
             $unwind: '$provider'
+          },
+          {
+            $sort: { '_id': -1 }
           },
           {
             $skip: skip

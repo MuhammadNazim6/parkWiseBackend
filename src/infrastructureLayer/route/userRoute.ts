@@ -65,6 +65,12 @@ router.patch('/cancelBooking/:bookingId', (req: Req, res: Res, next: Next) => {
 router.post('/confirmSlot', (req: Req, res: Res, next: Next) => {
   userAdapter.confirmSlot(req, res, next)
 })
+router.get('/getFilledSlots/:bookingId', (req: Req, res: Res, next: Next) => {
+  userAdapter.getFilledSlots(req, res, next)
+})
+router.patch('/rescheduleSlots', (req: Req, res: Res, next: Next) => {
+  userAdapter.rescheduleSlots(req, res, next)
+})
 
   
 export default router;              

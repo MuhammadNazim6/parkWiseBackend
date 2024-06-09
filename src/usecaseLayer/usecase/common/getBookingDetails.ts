@@ -8,8 +8,6 @@ export const getBookingDetails = async (
 ): Promise<{}> => {
   try {
     const bookingDetails = await bookingRepository.getBookingDetails(bookingId)
-    console.log(bookingDetails);
-    console.log('in common/getBookingDetails file');
     return bookingDetails
   } catch (error) {
     throw error

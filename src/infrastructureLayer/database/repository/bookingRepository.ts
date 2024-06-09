@@ -8,6 +8,7 @@ import { fetchUserBookings } from "./booking/fetchUserBookings";
 import { getBookedSlots } from "./booking/getBookedSlots";
 import { getBookingDetails } from "./booking/getBookingDetails";
 import { getParkingLotBookings } from "./booking/getParkingLotBookings";
+import { rescheduleBooking } from "./booking/rescheduleBooking";
 
 export class BookingRepository implements IBookingRepository {
   constructor(private readonly bookingModel: typeof BookingModel) {
@@ -26,9 +27,12 @@ export class BookingRepository implements IBookingRepository {
   }
   async fetchUserBookings(userId: string, page: string): Promise<{}> {
     return fetchUserBookings(this.bookingModel, userId, page);
-  }   
+  }
   async cancelBooking(bookingId: string): Promise<IBooking | null> {
     return cancelBooking(this.bookingModel, bookingId);
   }
+  async rescheduleBooking(bookingId: string, slots: Array<string>): Promise<IBooking | null> {
+    return rescheduleBooking(this.bookingModel, bookingId, slots);
+  }
 }
- 
+

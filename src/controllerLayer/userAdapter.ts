@@ -291,8 +291,6 @@ export class UserAdapter {
       const bookings = await this.userusecase.fetchUserBookings(userId as string, page as string);
 
       if (bookings) {
-        console.log(bookings);
-
         res.status(200).json({
           success: true,
           data: bookings
@@ -341,6 +339,45 @@ export class UserAdapter {
         res.status(200).json({
           success: false,
           message: 'Unable to fetch data'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async getFilledSlots(req: Req, res: Res, next: Next) {
+    try {
+      const { bookingId } = req.params
+      const alreadyFilledSlots = await this.userusecase.getFilledSlots(bookingId);
+      if (alreadyFilledSlots) {
+        res.status(200).json({
+          success: true,
+          data: alreadyFilledSlots
+        })
+      } else {
+        res.status(200).json({
+          success: false,
+          message: 'Unable to fetch data'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+  async rescheduleSlots(req: Req, res: Res, next: Next) {
+    try {
+      const { bookingId, slots } = req.body
+      const rescheduled = await this.userusecase.rescheduleSlots(bookingId, slots);
+      if (rescheduled) {
+        res.status(200).json({
+          success: true,
+          message: 'Booking have been rescheduled'
+        })
+      } else {
+        res.status(200).json({
+          success: false,
+          message: 'Unable to reschedule booking'
         });
       }
     } catch (err) {

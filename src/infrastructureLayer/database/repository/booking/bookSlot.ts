@@ -26,5 +26,3 @@ export const bookSlot = async (
 
   }
 }
-
-// To be changed after createing a new booking
