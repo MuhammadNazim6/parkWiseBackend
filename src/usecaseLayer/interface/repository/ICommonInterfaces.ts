@@ -9,5 +9,9 @@ export interface ISlotBooking {
   };
   selectedSlots: Set<string>;
   amount: number;
-  bookingDate:Date
+  bookingDate: Date
+}
+
+export interface IConfirmAvailablityOfSlots {
+  slots: Array<string>, lotId: string, date: string
 }

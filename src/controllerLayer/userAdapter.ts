@@ -151,8 +151,6 @@ export class UserAdapter {
       const parkingLots = await this.providerUsecase.fetchParkingLots(query);
 
       if (parkingLots) {
-        console.log(parkingLots);
-
         res.status(200).json({
           data: parkingLots
         })
@@ -291,7 +289,7 @@ export class UserAdapter {
     try {
       const { userId, page } = req.query
       const bookings = await this.userusecase.fetchUserBookings(userId as string, page as string);
- 
+
       if (bookings) {
         console.log(bookings);
 
@@ -316,11 +314,28 @@ export class UserAdapter {
       const cancelled = await this.userusecase.cancelBooking(bookingId);
 
       if (cancelled) {
-        console.log(cancelled);
-
         res.status(200).json({
           success: true,
           data: cancelled
+        })
+      } else {
+        res.status(200).json({
+          success: false,
+          message: 'Unable to cancel booking'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async confirmSlot(req: Req, res: Res, next: Next) {
+    try {
+      const alreadyFilledSlots = await this.userusecase.confirmSlot(req.body);
+      if (alreadyFilledSlots) {
+        res.status(200).json({
+          success: true,
+          data: alreadyFilledSlots
         })
       } else {
         res.status(200).json({

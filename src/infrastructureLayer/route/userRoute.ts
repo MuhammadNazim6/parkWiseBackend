@@ -62,6 +62,9 @@ router.get('/fetchUserBookings', (req: Req, res: Res, next: Next) => {
 router.patch('/cancelBooking/:bookingId', (req: Req, res: Res, next: Next) => {
   userAdapter.cancelBooking(req, res, next)
 })
+router.post('/confirmSlot', (req: Req, res: Res, next: Next) => {
+  userAdapter.confirmSlot(req, res, next)
+})
 
-
+  
 export default router;              

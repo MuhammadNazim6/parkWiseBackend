@@ -24,11 +24,11 @@ export class BookingRepository implements IBookingRepository {
   async getParkingLotBookings(lotId: string): Promise<{}[]> {
     return getParkingLotBookings(this.bookingModel, lotId);
   }
-  async fetchUserBookings(userId: string, page: string): Promise<{}[]> {
+  async fetchUserBookings(userId: string, page: string): Promise<{}> {
     return fetchUserBookings(this.bookingModel, userId, page);
   }   
   async cancelBooking(bookingId: string): Promise<IBooking | null> {
     return cancelBooking(this.bookingModel, bookingId);
   }
 }
-
+ 

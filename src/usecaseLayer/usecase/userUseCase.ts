@@ -22,6 +22,8 @@ import { checkUserPassword } from "./user/checkUserPassword";
 import { IBookingRepository } from "../interface/repository/IBookingRepository";
 import { fetchUserBookings } from "./user/fetchUserBookings";
 import { cancelBooking } from "./user/cancelBooking";
+import { IConfirmAvailablityOfSlots } from "../interface/repository/ICommonInterfaces";
+import { confirmSlot } from "./user/confirmSlot";
 
 
 export class UserUseCase {
@@ -265,6 +267,15 @@ export class UserUseCase {
       this.bookingRepository,
       this.userRepository,
       bookingId
+    )
+  }
+
+  async confirmSlot({slots,lotId,date}:IConfirmAvailablityOfSlots) {
+    return confirmSlot(
+      this.bookingRepository,
+      slots,
+      lotId,
+      date
     )
   }
 
