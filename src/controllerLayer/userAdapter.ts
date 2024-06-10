@@ -385,5 +385,25 @@ export class UserAdapter {
     }
   }
 
+  async getUserDetails(req: Req, res: Res, next: Next) {
+    try {
+      const { userId } = req.params
+      const userDetails = await this.userusecase.getUserDetails(userId);
+      if (userDetails) {
+        res.status(200).json({
+          success: true,
+          data: userDetails
+        })
+      } else {
+        res.status(200).json({
+          success: false,
+          message: 'Unable to get user details'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
 
 }

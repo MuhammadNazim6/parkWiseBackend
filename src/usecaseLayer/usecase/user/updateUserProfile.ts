@@ -11,13 +11,11 @@ export const updateUserProfile = async (
   mobile: number,
   files: IFile[]
 ): Promise<{}> => {
-  console.log('HELLO');
   if (files.length) {
     const uploadedImageName = await s3Bucket.uploadArrayOfImagesToS3(files)
     const updatedProfile = await userRepository.updateUserProfile(id, email, name, mobile, uploadedImageName[0])
   } else {
     const updatedProfile = await userRepository.updateUserProfileWithoutImage(id, email, name, mobile)
-    console.log('Withot');
   }
   return updateUserProfile
 }

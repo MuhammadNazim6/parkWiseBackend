@@ -26,6 +26,7 @@ import { IConfirmAvailablityOfSlots } from "../interface/repository/ICommonInter
 import { confirmSlot } from "./user/confirmSlot";
 import { getFilledSlots } from "./user/getFilledSlots";
 import { rescheduleSlots } from "./user/rescheduleSlots";
+import { getUserDetails } from "./user/getUserDetails";
 
 
 export class UserUseCase {
@@ -272,7 +273,7 @@ export class UserUseCase {
     )
   }
 
-  async confirmSlot({slots,lotId,date}:IConfirmAvailablityOfSlots) {
+  async confirmSlot({ slots, lotId, date }: IConfirmAvailablityOfSlots) {
     return confirmSlot(
       this.bookingRepository,
       slots,
@@ -281,18 +282,25 @@ export class UserUseCase {
     )
   }
 
-  async getFilledSlots(bookingId:string) {
+  async getFilledSlots(bookingId: string) {
     return getFilledSlots(
       this.bookingRepository,
       bookingId
     )
   }
 
-  async rescheduleSlots(bookingId:string,slots:Array<string>) {
+  async rescheduleSlots(bookingId: string, slots: Array<string>) {
     return rescheduleSlots(
       this.bookingRepository,
       bookingId,
       slots
+    )
+  }
+
+  async getUserDetails(userId: string) {
+    return getUserDetails(
+      this.userRepository,
+      userId
     )
   }
 

@@ -71,6 +71,9 @@ router.get('/getFilledSlots/:bookingId', (req: Req, res: Res, next: Next) => {
 router.patch('/rescheduleSlots', (req: Req, res: Res, next: Next) => {
   userAdapter.rescheduleSlots(req, res, next)
 })
+router.get('/userDetails/:userId', (req: Req, res: Res, next: Next) => {
+  userAdapter.getUserDetails(req, res, next)
+})
 
   
 export default router;              
