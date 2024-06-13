@@ -1,4 +1,5 @@
 import {app} from '../src/infrastructureLayer/config/app'
+import { httpServer } from '../src/infrastructureLayer/config/app'
 import connectDB from './infrastructureLayer/config/db'
 
 const startServer = ()=>{
@@ -7,7 +8,7 @@ const startServer = ()=>{
     res.send('Hello world')
   })
 
-  app.listen(port,()=>{
+  httpServer.listen(port,()=>{
     console.log(`server running  at ${port}`);
     connectDB()
   })

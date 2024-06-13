@@ -87,5 +87,25 @@ export class CommonAdapter {
     }
   }
 
+  async getConnections(req: Req, res: Res, next: Next) {
+    try {
+      const { id } = req.params
+      const conversations = await this.commonUsecase.getConnections(id);
+      if (conversations) {
+        res.status(200).json({
+          success: true,
+          data: conversations
+        })  
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'Unable to fetch connections'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
 
 }

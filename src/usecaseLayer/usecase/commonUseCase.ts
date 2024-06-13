@@ -11,6 +11,8 @@ import { commonLogin } from "./common/commonLogin";
 import { updateToken } from "./common/updateToken";
 import { IBookingRepository } from "../interface/repository/IBookingRepository";
 import { getBookingDetails } from "./common/getBookingDetails";
+import { IConversationRepository } from "../interface/repository/IConversationRepository";
+import { getConnections } from "./common/getConnections";
 
 export class CommonUseCase {
   private readonly userRepository: IUserRepository;
@@ -22,6 +24,7 @@ export class CommonUseCase {
   private readonly providerRepository: IProviderRepository;
   private readonly adminRepository: IAdminRepsitory;
   private readonly bookingRepository: IBookingRepository;
+  private readonly conversationRepository: IConversationRepository;
   constructor(
     userRepository: IUserRepository,
     bcrypt: IHashpassword,
@@ -31,7 +34,8 @@ export class CommonUseCase {
     otpRepository: IOtpRepository,
     providerRepository: IProviderRepository,
     adminRepository: IAdminRepsitory,
-    bookingRepository: IBookingRepository
+    bookingRepository: IBookingRepository,
+    conversationRepository: IConversationRepository
   ) {
     this.userRepository = userRepository;
     this.bcrypt = bcrypt;
@@ -42,6 +46,7 @@ export class CommonUseCase {
     this.providerRepository = providerRepository;
     this.adminRepository = adminRepository;
     this.bookingRepository = bookingRepository;
+    this.conversationRepository = conversationRepository;
   }
 
   // For logging in user,admin,provider
@@ -82,6 +87,14 @@ export class CommonUseCase {
   async getBookingDetails(bookingId: string) {
     return getBookingDetails(
       bookingId,
-      this.bookingRepository)
+      this.bookingRepository
+    )
+  }
+
+  async getConnections(id: string) {
+    return getConnections(
+      id,
+      this.conversationRepository,
+    )
   }
 }
