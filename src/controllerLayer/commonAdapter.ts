@@ -3,7 +3,7 @@ import { CommonUseCase } from "../usecaseLayer/usecase/commonUseCase";
 
 export class CommonAdapter {
   private readonly commonUsecase: CommonUseCase;
-  constructor(commonUsecase: CommonUseCase){
+  constructor(commonUsecase: CommonUseCase) {
     this.commonUsecase = commonUsecase;
   }
 
@@ -14,13 +14,13 @@ export class CommonAdapter {
       const loggedInAccount = await this.commonUsecase.commonLogin(req.body);
       if (loggedInAccount) {
         const jwtKey = 'refreshToken'
-  
+
         res.cookie(jwtKey, loggedInAccount.refreshToken, {
           httpOnly: true,
-          sameSite: "strict", 
+          sameSite: "strict",
           maxAge: 30 * 24 * 60 * 60 * 1000,
         });
-  
+
         res.status(loggedInAccount.status).json({
           success: loggedInAccount.success,
           message: loggedInAccount.message,
@@ -32,7 +32,7 @@ export class CommonAdapter {
       next(err);
     }
   }
-  
+
 
 
   // @desc Resending otp to user and provider
@@ -40,7 +40,7 @@ export class CommonAdapter {
   async resendOtp(req: Req, res: Res, next: Next) {
     try {
       const resentOtp = await this.commonUsecase.resendOtp(req.body)
-      
+
       res.status(resentOtp.status).json({
         success: resentOtp.success,
         message: resentOtp.message,
@@ -55,11 +55,11 @@ export class CommonAdapter {
   async refreshToken(req: Req, res: Res, next: Next) {
     try {
       const refreshToken = await this.commonUsecase.updateToken(req.cookies.refreshToken)
-      
+
       res.status(refreshToken.status).json({
         success: refreshToken.success,
         message: refreshToken.message,
-        accessToken:refreshToken.accessToken
+        accessToken: refreshToken.accessToken
       });
 
     } catch (err) {
@@ -95,7 +95,48 @@ export class CommonAdapter {
         res.status(200).json({
           success: true,
           data: conversations
-        })  
+        })
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'Unable to fetch connections'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async getMessages(req: Req, res: Res, next: Next) {
+    try {
+      const { senderId, receiverId } = req.query;
+      console.log(1);
+      
+      const messages = await this.commonUsecase.getMessages(senderId as string, receiverId as string);
+      if (messages) {
+        res.status(200).json({
+          success: true,
+          data: messages
+        })
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'Unable to fetch connections'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async saveMessage(req: Req, res: Res, next: Next) {
+    try {
+      const saved = await this.commonUsecase.saveMessage(req.body);
+      if (saved) {
+        res.status(200).json({
+          success: true,
+          message: 'messages saved'
+        })
       } else {
         res.status(404).json({
           success: false,

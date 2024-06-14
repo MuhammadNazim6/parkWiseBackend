@@ -29,7 +29,7 @@ class SocketServer {
       console.log(`⚡: ${socket.id} user or provider just connected!`);
 
       socket.on('register', (id: string) => {
-        this.userSocketMap .set(id, { socketId: socket.id, inChat: false })
+        this.userSocketMap.set(id, { socketId: socket.id, inChat: false })
         console.log(`User or provider ${id} registered with socket ID ${socket.id}`);
       })
 
@@ -62,7 +62,7 @@ class SocketServer {
           } else {
             this.io.to(recipientData.socketId).emit('notification', data)
             console.log('The recipent is not in chat, sending notification');
-          }
+          } 
         }else{
           console.log(`Recipient ${data.recipient} not found in userSocketMap`);
         }

@@ -15,3 +15,12 @@ export interface ISlotBooking {
 export interface IConfirmAvailablityOfSlots {
   slots: Array<string>, lotId: string, date: string
 }
+
+export interface IMessage {
+  senderId: string;
+  receiverId: string;
+  senderType: string;
+  receiverType: string;
+  message: string;
+  messageType: string;
+}

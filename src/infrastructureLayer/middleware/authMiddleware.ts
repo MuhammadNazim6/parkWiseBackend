@@ -12,13 +12,9 @@ export const userAuth = async (req: Request, res: Response, next: NextFunction) 
   }
 
   const token = authHeader.split(' ')[1];
-
   const userRepository = new UserRepository(UserModel);
+
   if (token) {
-    console.log('Inside token');
-    console.log(token);
-    console.log(process.env.JWT_KEY);
-        
     try {
       const decodedToken = jwt.verify(token, process.env.JWT_KEY as string) as JwtPayload;
       console.log('DECODE', decodedToken);
@@ -36,7 +32,6 @@ export const userAuth = async (req: Request, res: Response, next: NextFunction) 
 
     } catch (error) {
       console.log('Error in user jwt matching');
-      console.log('Checked token NOT FINE SO SENDING ERROR TO RESPONE AXIOS SEE YOU THERE');
       res.status(401).send('User not found')
     }
   }
@@ -49,27 +44,20 @@ export const providerAuth = async (req: Request, res: Response, next: NextFuncti
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res.status(401).json({ message: 'Authorization header missing or invalid' });
   }
-
   const token = authHeader.split(' ')[1];
-
-  const userRepository = new UserRepository(UserModel);
   if (token) {
-    console.log('Inside token');
-    console.log(token);
-    console.log(process.env.JWT_KEY);
         
     try {
       const decodedToken = jwt.verify(token, process.env.JWT_KEY as string) as JwtPayload;
-      console.log('DECODE', decodedToken);
       if (decodedToken.role !== 'provider') {
         return res.status(403).json({ message: 'Unauthorized access' });
+        console.log('Checked the token and is Unauthorized access for provider');
       }
-      console.log('Checked the token and is fine in auth middleware');
+      console.log('Checked the token and is fine in provider auth middleware');
       next()
 
     } catch (error) {
       console.log('Error in user jwt matching');
-      console.log('Checked token NOT FINE SO SENDING ERROR TO RESPONE AXIOS SEE YOU THERE');
       res.status(401).send('User not found')
     }
   }
@@ -82,18 +70,10 @@ export const adminAuth = async (req: Request, res: Response, next: NextFunction)
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res.status(401).json({ message: 'Authorization header missing or invalid' });
   }
-
   const token = authHeader.split(' ')[1];
-
-  const userRepository = new UserRepository(UserModel);
   if (token) {
-    console.log('Inside token');
-    console.log(token);
-    console.log(process.env.JWT_KEY);
-        
     try {
       const decodedToken = jwt.verify(token, process.env.JWT_KEY as string) as JwtPayload;
-      console.log('DECODE', decodedToken);
       if (decodedToken.role !== 'admin') {
         return res.status(403).json({ message: 'Unauthorized access' });
       }
@@ -102,7 +82,6 @@ export const adminAuth = async (req: Request, res: Response, next: NextFunction)
 
     } catch (error) {
       console.log('Error in user jwt matching');
-      console.log('Checked token NOT FINE SO SENDING ERROR TO RESPONE AXIOS SEE YOU THERE');
       res.status(401).send('User not found')
     }
   }

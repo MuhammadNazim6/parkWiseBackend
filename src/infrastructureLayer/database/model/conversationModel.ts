@@ -6,9 +6,9 @@ const ConversationSchema: Schema = new Schema<IConversation & Document>({
   firstPersonType: { type: String, enum: ['User', 'Provider'], required: true },
   connections: [
     {
-      secondPersonId: { type: Schema.Types.ObjectId, required: true, refPath: 'connections.secondPersonType' },
+      secondPersonId: { type:Schema.Types.ObjectId, refPath: 'connections.secondPersonType' },
       lastMessage: { type: String, trim: true },
-      secondPersonType: { type: String, enum: ['User', 'Provider'], required: true },
+      secondPersonType: { type: String, enum: ['User', 'Provider']},
       updatedAt: { type: Date }
     }],
   unreadMessages: { type: Number, default: 0 }

@@ -13,6 +13,10 @@ import { IBookingRepository } from "../interface/repository/IBookingRepository";
 import { getBookingDetails } from "./common/getBookingDetails";
 import { IConversationRepository } from "../interface/repository/IConversationRepository";
 import { getConnections } from "./common/getConnections";
+import { getMessages } from "./common/getMessages";
+import { IChatRepository } from "../interface/repository/IChatRepository";
+import { IMessage } from "../interface/repository/ICommonInterfaces";
+import { saveMessage } from "./common/saveMessage";
 
 export class CommonUseCase {
   private readonly userRepository: IUserRepository;
@@ -25,6 +29,7 @@ export class CommonUseCase {
   private readonly adminRepository: IAdminRepsitory;
   private readonly bookingRepository: IBookingRepository;
   private readonly conversationRepository: IConversationRepository;
+  private readonly chatRepository: IChatRepository;
   constructor(
     userRepository: IUserRepository,
     bcrypt: IHashpassword,
@@ -35,7 +40,8 @@ export class CommonUseCase {
     providerRepository: IProviderRepository,
     adminRepository: IAdminRepsitory,
     bookingRepository: IBookingRepository,
-    conversationRepository: IConversationRepository
+    conversationRepository: IConversationRepository,
+    chatRepository: IChatRepository
   ) {
     this.userRepository = userRepository;
     this.bcrypt = bcrypt;
@@ -47,6 +53,7 @@ export class CommonUseCase {
     this.adminRepository = adminRepository;
     this.bookingRepository = bookingRepository;
     this.conversationRepository = conversationRepository;
+    this.chatRepository = chatRepository;
   }
 
   // For logging in user,admin,provider
@@ -95,6 +102,22 @@ export class CommonUseCase {
     return getConnections(
       id,
       this.conversationRepository,
+    )
+  }
+  async getMessages(senderId: string, receiverId: string) {
+    console.log(2);
+
+    return getMessages(
+      senderId,
+      receiverId,
+      this.chatRepository
+    )
+  }
+  async saveMessage(messageData: IMessage) {
+    return saveMessage(
+      messageData,
+      this.chatRepository,
+      this.conversationRepository
     )
   }
 }

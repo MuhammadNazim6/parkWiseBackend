@@ -6,4 +6,7 @@ export interface IChat {
   receiverId: ObjectId;
   receiverType: string;
   message: string;
+  messageType:string;
+  createdAt:Date;
+  updatedAt:Date;
 } 

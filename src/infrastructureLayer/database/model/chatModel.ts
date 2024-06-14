@@ -6,7 +6,8 @@ const ChatSchema: Schema = new Schema<IChat & Document>({
   senderType: { type: String, enum: ['User', 'Provider'], required: true },
   receiverId: { type: Schema.Types.ObjectId, required: true, refPath: 'receiverType' },
   receiverType: { type: String, enum: ['User', 'Provider'], required: true },
-  message: { type: String, required: true }
+  message: { type: String, required: true },
+  messageType: { type: String, enum: ['text', 'image'], required: true }
 }, { timestamps: true })
 
 const ChatModel: Model<IChat & Document> = mongoose.model<IChat & Document>(

@@ -21,6 +21,13 @@ router.get('/getConnections/:id',
   (req: Req, res: Res, next: Next) => {
     commonAdapter.getConnections(req, res, next)
   })
-
+  router.get('/getMessages',
+    (req: Req, res: Res, next: Next) => {
+      commonAdapter.getMessages(req, res, next)
+    })
+  router.post('/saveMessage',
+    (req: Req, res: Res, next: Next) => {
+      commonAdapter.saveMessage(req, res, next)
+    })
 
 export default router;    

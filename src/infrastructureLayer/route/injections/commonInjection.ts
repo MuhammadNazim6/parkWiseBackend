@@ -2,12 +2,14 @@ import { CommonAdapter } from "../../../controllerLayer/commonAdapter";
 import { CommonUseCase } from "../../../usecaseLayer/usecase/commonUseCase";
 import AdminModel from "../../database/model/adminModel";
 import BookingModel from "../../database/model/bookingModel";
+import ChatModel from "../../database/model/chatModel";
 import ConversationModel from "../../database/model/conversationModel";
 import OtpModel from "../../database/model/otpModel";
 import ParkingProviderModel from "../../database/model/providerModel";
 import UserModel from "../../database/model/userModel";
 import { AdminRepository } from "../../database/repository/adminRepository";
 import { BookingRepository } from "../../database/repository/bookingRepository";
+import { ChatRepository } from "../../database/repository/chatRepository";
 import { ConversationRepository } from "../../database/repository/conversationRepository";
 import { OtpRepository } from "../../database/repository/otpRepository";
 import { ProviderRepository } from "../../database/repository/providerRepository";
@@ -28,6 +30,7 @@ const providerRepository = new ProviderRepository(ParkingProviderModel)
 const adminRepository = new AdminRepository(AdminModel)
 const bookingRepository = new BookingRepository(BookingModel);
 const conversationRepository = new ConversationRepository(ConversationModel);
+const chatRepository = new ChatRepository(ChatModel);
 const userusecase = new CommonUseCase(
   userRepository,
   bcrypt,
@@ -38,7 +41,8 @@ const userusecase = new CommonUseCase(
   providerRepository,
   adminRepository,
   bookingRepository,
-  conversationRepository
+  conversationRepository,
+  chatRepository
 );
 
 const commonAdapter = new CommonAdapter(userusecase);

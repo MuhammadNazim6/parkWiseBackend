@@ -38,42 +38,76 @@ router.post('/changePassword', (req: Req, res: Res, next: Next) => {
 router.get('/parking-lots', (req: Req, res: Res, next: Next) => {
   userAdapter.fetchParkingLotsInHome(req, res, next)
 })
+
 router.get('/lot-details/:lotId', (req: Req, res: Res, next: Next) => {
   userAdapter.fetchLotDetails(req, res, next)
 })
+
 router.post('/getBookedSlots', (req: Req, res: Res, next: Next) => {
   userAdapter.getBookedSlots(req, res, next)
 })
-router.post('/bookSlot', (req: Req, res: Res, next: Next) => {
-  userAdapter.bookSlot(req, res, next)
-})
-router.patch('/updateProfile', upload.array('profile'), (req: Req, res: Res, next: Next) => {
-  userAdapter.updateUserProfile(req, res, next)
-})
-router.get('/profilePicUser/:id', (req: Req, res: Res, next: Next) => {
-  userAdapter.getUserProfilePic(req, res, next)
-})
-router.post('/checkUserPassword', (req: Req, res: Res, next: Next) => {
-  userAdapter.checkUserPassword(req, res, next)
-})
-router.get('/fetchUserBookings', (req: Req, res: Res, next: Next) => {
-  userAdapter.fetchUserBookings(req, res, next)
-})
-router.patch('/cancelBooking/:bookingId', (req: Req, res: Res, next: Next) => {
-  userAdapter.cancelBooking(req, res, next)
-})
-router.post('/confirmSlot', (req: Req, res: Res, next: Next) => {
-  userAdapter.confirmSlot(req, res, next)
-})
-router.get('/getFilledSlots/:bookingId', (req: Req, res: Res, next: Next) => {
-  userAdapter.getFilledSlots(req, res, next)
-})
-router.patch('/rescheduleSlots', (req: Req, res: Res, next: Next) => {
-  userAdapter.rescheduleSlots(req, res, next)
-})
-router.get('/userDetails/:userId', (req: Req, res: Res, next: Next) => {
-  userAdapter.getUserDetails(req, res, next)
-})
+
+router.post('/bookSlot',
+  userAuth,
+  (req: Req, res: Res, next: Next) => {
+    userAdapter.bookSlot(req, res, next)
+  })
+
+router.patch('/updateProfile',
+  userAuth,
+  upload.array('profile'),
+  (req: Req, res: Res, next: Next) => {
+    userAdapter.updateUserProfile(req, res, next)
+  })
+
+router.get('/profilePicUser/:id',
+  userAuth,
+  (req: Req, res: Res, next: Next) => {
+    userAdapter.getUserProfilePic(req, res, next)
+  })
+
+router.post('/checkUserPassword',
+  userAuth,
+  (req: Req, res: Res, next: Next) => {
+    userAdapter.checkUserPassword(req, res, next)
+  })
+
+router.get('/fetchUserBookings',
+  userAuth,
+  (req: Req, res: Res, next: Next) => {
+    userAdapter.fetchUserBookings(req, res, next)
+  })
+
+router.patch('/cancelBooking/:bookingId',
+  userAuth,
+  (req: Req, res: Res, next: Next) => {
+    userAdapter.cancelBooking(req, res, next)
+  })
+
+router.post('/confirmSlot',
+  userAuth,
+  (req: Req, res: Res, next: Next) => {
+    userAdapter.confirmSlot(req, res, next)
+  })
+
+router.get('/getFilledSlots/:bookingId',
+  userAuth,
+  (req: Req, res: Res, next: Next) => {
+    userAdapter.getFilledSlots(req, res, next)
+  })
+
+router.patch('/rescheduleSlots',
+  userAuth,
+  (req: Req, res: Res, next: Next) => {
+    userAdapter.rescheduleSlots(req, res, next)
+  })
+
+router.get('/userDetails/:userId',
+  userAuth,
+  (req: Req, res: Res, next: Next) => {
+    userAdapter.getUserDetails(req, res, next)
+  })
 
   
+
 export default router;              

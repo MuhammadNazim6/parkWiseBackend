@@ -6,7 +6,7 @@ export const getConversation = async (
   firstPersonId: string,
 ): Promise<IConversation | null> => {
   try {
-    const result = await conversationModel.findOne({firstPersonId}).populate('connections.secondPersonId')
+    const result = await conversationModel.findOne({firstPersonId}).populate('connections.secondPersonId') //needed
     return result
   } catch (error) {
     console.error('Error fetching conversation:', error);
