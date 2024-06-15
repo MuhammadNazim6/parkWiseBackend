@@ -11,7 +11,6 @@ class Nodemailer implements INodemailer {
     for (let i = 0; i < 6; i++) {
       otp += digits[Math.floor(Math.random() * 10)];
     }
-    console.log(`OTP GENERATED ${otp}`);
     return otp;
   }
 

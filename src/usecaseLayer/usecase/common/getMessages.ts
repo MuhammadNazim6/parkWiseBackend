@@ -6,8 +6,6 @@ export const getMessages = async (
   chatRepository: IChatRepository
 ): Promise<{}[]> => {
   try {
-    console.log(3);
-
     const messages = await chatRepository.getMessages(senderId,receiverId)
     messages.sort((a,b)=>{
       const dateA = new Date(a.createdAt)

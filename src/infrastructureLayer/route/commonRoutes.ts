@@ -29,5 +29,9 @@ router.get('/getConnections/:id',
     (req: Req, res: Res, next: Next) => {
       commonAdapter.saveMessage(req, res, next)
     })
+  router.get('/getSender/:id',
+    (req: Req, res: Res, next: Next) => {
+      commonAdapter.getSenderName(req, res, next)
+    })
 
 export default router;    

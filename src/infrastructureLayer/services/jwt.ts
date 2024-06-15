@@ -42,11 +42,9 @@ class JwtPassword implements Ijwt {
     console.log(jwtKey);
     
     if (jwtKey) {
-      console.log('Entered if clause in jwtKey');
       console.log('refreshToken ',refreshToken);
       
       const decoded = jwt.verify(refreshToken, jwtKey) as JwtPayload
-      console.log('DECODED ',decoded );
       
       return decoded
     }

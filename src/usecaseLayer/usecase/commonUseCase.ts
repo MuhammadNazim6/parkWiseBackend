@@ -17,6 +17,7 @@ import { getMessages } from "./common/getMessages";
 import { IChatRepository } from "../interface/repository/IChatRepository";
 import { IMessage } from "../interface/repository/ICommonInterfaces";
 import { saveMessage } from "./common/saveMessage";
+import { getSenderName } from "./common/getSenderName";
 
 export class CommonUseCase {
   private readonly userRepository: IUserRepository;
@@ -105,7 +106,6 @@ export class CommonUseCase {
     )
   }
   async getMessages(senderId: string, receiverId: string) {
-    console.log(2);
 
     return getMessages(
       senderId,
@@ -120,4 +120,11 @@ export class CommonUseCase {
       this.conversationRepository
     )
   }
+  async getSenderName(id: string) {
+    return getSenderName(
+    this.userRepository,
+    this.providerRepository,
+    id
+    )
+  } 
 }

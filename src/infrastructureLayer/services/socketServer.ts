@@ -29,21 +29,27 @@ class SocketServer {
       console.log(`⚡: ${socket.id} user or provider just connected!`);
 
       socket.on('register', (id: string) => {
-        this.userSocketMap.set(id, { socketId: socket.id, inChat: false })
-        console.log(`User or provider ${id} registered with socket ID ${socket.id}`);
+        const user = this.userSocketMap.get(id)
+        if(!user){
+          this.userSocketMap.set(id, { socketId: socket.id, inChat: false })
+          console.log(`User or provider ${id} registered with socket ID ${socket.id}`);
+        }
       })
 
       socket.on('enterChat', (id: string) => {
         console.log('Sender entered the chat');
-        const user = this.userSocketMap .get(id)
+        const user = this.userSocketMap.get(id)
         if (user) {
           user.inChat = true;
+        }else{
+          console.log('No user');
+          
         }
       })
 
       socket.on('exitChat', (id: string) => {
         console.log('Sender exited the chat');
-        const user = this.userSocketMap .get(id)
+        const user = this.userSocketMap.get(id)
         if (user) {
           user.inChat = false;
         }
@@ -51,10 +57,11 @@ class SocketServer {
 
 
       socket.on('chatMessage', (data: MessageData) => {
-        console.log(`Message from ${data.sender}: ${data.message}`);
+        console.log(`Message from ${data.sender}: ${data.message} to ${data.recipient}`);
 
         const recipientData = this.userSocketMap.get(data.recipient)
         if (recipientData) {
+          // this.io.to(recipientData.socketId).emit('chatMessage', data)
           if (recipientData.inChat) {
             this.io.to(recipientData.socketId).emit('chatMessage', data)
             console.log('The recipent is in chat, sending message');

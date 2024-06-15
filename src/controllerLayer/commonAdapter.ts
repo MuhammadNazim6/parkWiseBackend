@@ -109,9 +109,7 @@ export class CommonAdapter {
 
   async getMessages(req: Req, res: Res, next: Next) {
     try {
-      const { senderId, receiverId } = req.query;
-      console.log(1);
-      
+      const { senderId, receiverId } = req.query;      
       const messages = await this.commonUsecase.getMessages(senderId as string, receiverId as string);
       if (messages) {
         res.status(200).json({
@@ -141,6 +139,26 @@ export class CommonAdapter {
         res.status(404).json({
           success: false,
           message: 'Unable to fetch connections'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async getSenderName(req: Req, res: Res, next: Next) {
+    try {
+      const {id} = req.params
+      const sender = await this.commonUsecase.getSenderName(id);
+      if (sender) {
+        res.status(200).json({
+          success: true,
+          data: sender
+        })
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'Unable to fetch sender name'
         });
       }
     } catch (err) {

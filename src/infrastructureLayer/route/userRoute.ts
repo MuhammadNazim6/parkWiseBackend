@@ -103,7 +103,7 @@ router.patch('/rescheduleSlots',
   })
 
 router.get('/userDetails/:userId',
-  userAuth,
+  // needed by both user and provider
   (req: Req, res: Res, next: Next) => {
     userAdapter.getUserDetails(req, res, next)
   })

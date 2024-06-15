@@ -10,7 +10,6 @@ export const fetchLotDetails = async (
   try {
     const lotDetails = await providerRepository.getLotDetails(lotId)
     const imageUrlAdded = await s3Bucket.getParkingLotsArrayImageUrls(lotDetails as IParkingProviderReady[])
-    console.log(imageUrlAdded);
     return imageUrlAdded
   } catch (error) {
     throw error
