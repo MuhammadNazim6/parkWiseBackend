@@ -2,16 +2,16 @@ import { Req, Res, Next } from "../infrastructureLayer/types/expressTypes";
 import { CommonUseCase } from "../usecaseLayer/usecase/commonUseCase";
 
 export class CommonAdapter {
-  private readonly commonUsecase: CommonUseCase;
+  private readonly _commonUsecase: CommonUseCase;
   constructor(commonUsecase: CommonUseCase) {
-    this.commonUsecase = commonUsecase;
+    this._commonUsecase = commonUsecase;
   }
 
   // @desc Common login function for user, provider and admin
   // @access Public
   async commonLogin(req: Req, res: Res, next: Next) {
     try {
-      const loggedInAccount = await this.commonUsecase.commonLogin(req.body);
+      const loggedInAccount = await this._commonUsecase.commonLogin(req.body);
       if (loggedInAccount) {
         const jwtKey = 'refreshToken'
 
@@ -39,7 +39,7 @@ export class CommonAdapter {
   // @access Public
   async resendOtp(req: Req, res: Res, next: Next) {
     try {
-      const resentOtp = await this.commonUsecase.resendOtp(req.body)
+      const resentOtp = await this._commonUsecase.resendOtp(req.body)
 
       res.status(resentOtp.status).json({
         success: resentOtp.success,
@@ -54,7 +54,7 @@ export class CommonAdapter {
   // @access Private
   async refreshToken(req: Req, res: Res, next: Next) {
     try {
-      const refreshToken = await this.commonUsecase.updateToken(req.cookies.refreshToken)
+      const refreshToken = await this._commonUsecase.updateToken(req.cookies.refreshToken)
 
       res.status(refreshToken.status).json({
         success: refreshToken.success,
@@ -70,7 +70,7 @@ export class CommonAdapter {
   async getBookingDetails(req: Req, res: Res, next: Next) {
     try {
       const { bookingId } = req.params
-      const bookingDetail = await this.commonUsecase.getBookingDetails(bookingId);
+      const bookingDetail = await this._commonUsecase.getBookingDetails(bookingId);
       if (bookingDetail) {
         res.status(200).json({
           success: true,
@@ -90,7 +90,7 @@ export class CommonAdapter {
   async getConnections(req: Req, res: Res, next: Next) {
     try {
       const { id } = req.params
-      const conversations = await this.commonUsecase.getConnections(id);
+      const conversations = await this._commonUsecase.getConnections(id);
       if (conversations) {
         res.status(200).json({
           success: true,
@@ -109,8 +109,8 @@ export class CommonAdapter {
 
   async getMessages(req: Req, res: Res, next: Next) {
     try {
-      const { senderId, receiverId } = req.query;      
-      const messages = await this.commonUsecase.getMessages(senderId as string, receiverId as string);
+      const { senderId, receiverId } = req.query;
+      const messages = await this._commonUsecase.getMessages(senderId as string, receiverId as string);
       if (messages) {
         res.status(200).json({
           success: true,
@@ -129,7 +129,7 @@ export class CommonAdapter {
 
   async saveMessage(req: Req, res: Res, next: Next) {
     try {
-      const saved = await this.commonUsecase.saveMessage(req.body);
+      const saved = await this._commonUsecase.saveMessage(req.body);
       if (saved) {
         res.status(200).json({
           success: true,
@@ -148,8 +148,8 @@ export class CommonAdapter {
 
   async getSenderName(req: Req, res: Res, next: Next) {
     try {
-      const {id} = req.params
-      const sender = await this.commonUsecase.getSenderName(id);
+      const { id } = req.params
+      const sender = await this._commonUsecase.getSenderName(id);
       if (sender) {
         res.status(200).json({
           success: true,

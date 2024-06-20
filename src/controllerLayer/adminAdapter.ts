@@ -4,14 +4,14 @@ import type { ProviderUseCase } from '../usecaseLayer/usecase/providerUseCase'
 import type { UserUseCase } from '../usecaseLayer/usecase/userUseCase'
 
 export class AdminAdapter {
-  private readonly adminUsecase: AdminUseCase
-  private readonly providerUsecase: ProviderUseCase
-  private readonly userUseCase: UserUseCase
+  private readonly _adminUsecase: AdminUseCase
+  private readonly _providerUsecase: ProviderUseCase
+  private readonly _userUseCase: UserUseCase
 
   constructor (adminUsecase: AdminUseCase, providerUsecase: ProviderUseCase, userUseCase: UserUseCase) {
-    this.adminUsecase = adminUsecase // using dependency injection to call the adminUsecase
-    this.providerUsecase = providerUsecase
-    this.userUseCase = userUseCase
+    this._adminUsecase = adminUsecase // using dependency injection to call the adminUsecase
+    this._providerUsecase = providerUsecase
+    this._userUseCase = userUseCase
   }
 
   // @desc Admin logout
@@ -37,7 +37,7 @@ export class AdminAdapter {
   // @access Private
   async getProvidersRequests(req: Req, res: Res, next: Next) {
     try {
-      const requests = await this.providerUsecase.getRequests()
+      const requests = await this._providerUsecase.getRequests()
       if (requests) {
         res.status(200).json({
           data: requests
@@ -55,7 +55,7 @@ export class AdminAdapter {
 
   async getApprovedProviders(req: Req, res: Res, next: Next) {
     try {
-      const providers = await this.providerUsecase.getApprovedProviders();
+      const providers = await this._providerUsecase.getApprovedProviders();
       if (providers) {
         res.status(200).json({
           data: providers
@@ -73,7 +73,7 @@ export class AdminAdapter {
 
   async getUsers(req: Req, res: Res, next: Next) {
     try {
-      const requests = await this.userUseCase.getUsers();
+      const requests = await this._userUseCase.getUsers();
       if (requests) {
         res.status(200).json({
           data: requests
@@ -91,7 +91,7 @@ export class AdminAdapter {
 
   async blockUnblockUser(req: Req, res: Res, next: Next) {
     try {
-      const blockedUnblockedResponse = await this.userUseCase.blockUnblockUser(req.body);
+      const blockedUnblockedResponse = await this._userUseCase.blockUnblockUser(req.body);
       if (blockedUnblockedResponse.success) {
         res.status(200).json({
           success: blockedUnblockedResponse.success,
@@ -110,7 +110,7 @@ export class AdminAdapter {
 
   async blockUnblockProvider(req: Req, res: Res, next: Next) {
     try {
-      const blockedUnblockedResponse = await this.providerUsecase.blockUnblockProvider(req.body);
+      const blockedUnblockedResponse = await this._providerUsecase.blockUnblockProvider(req.body);
       if (blockedUnblockedResponse.success) {
         res.status(200).json({
           success: blockedUnblockedResponse.success,
@@ -129,7 +129,7 @@ export class AdminAdapter {
 
   async acceptRequest(req: Req, res: Res, next: Next) {
     try {
-      const accepted = await this.providerUsecase.acceptRequest(req.body);
+      const accepted = await this._providerUsecase.acceptRequest(req.body);
       if (accepted.success) {
         res.status(200).json({
           success: accepted.success,
@@ -149,7 +149,7 @@ export class AdminAdapter {
 
   async rejectRequest(req: Req, res: Res, next: Next) {
     try {
-      const accepted = await this.providerUsecase.rejectRequest(req.body);
+      const accepted = await this._providerUsecase.rejectRequest(req.body);
       if (accepted.success) {
         res.status(200).json({
           success: accepted.success,

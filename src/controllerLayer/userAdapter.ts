@@ -5,12 +5,12 @@ import { IFetchParkingLot } from "../domainLayer/providers";
 import { IFile } from "../infrastructureLayer/middleware/multer";
 
 export class UserAdapter {
-  private readonly userusecase: UserUseCase;
-  private readonly providerUsecase: ProviderUseCase
+  private readonly _userusecase: UserUseCase;
+  private readonly _providerUsecase: ProviderUseCase
 
   constructor(userusecase: UserUseCase, providerUsecase: ProviderUseCase) {
-    this.userusecase = userusecase;
-    this.providerUsecase = providerUsecase
+    this._userusecase = userusecase;
+    this._providerUsecase = providerUsecase
   }
 
   // @desc  Register new user
@@ -18,7 +18,7 @@ export class UserAdapter {
   //@access   Public
   async createUser(req: Req, res: Res, next: Next) {
     try {
-      const newUser = await this.userusecase.createUser(req.body);
+      const newUser = await this._userusecase.createUser(req.body);
       if (newUser && newUser.token) {
         res.cookie('refreshToken', newUser.refreshToken, {
           httpOnly: true,
@@ -48,7 +48,7 @@ export class UserAdapter {
         httpOnly: false,
         expires: new Date(0),
       });
-      const user = await this.userusecase.logoutUser();
+      const user = await this._userusecase.logoutUser();
       res.status(user.status).json({
         success: user.success,
         message: user.message,
@@ -63,7 +63,7 @@ export class UserAdapter {
   // @access Public
   async sendOtp(req: Req, res: Res, next: Next) {
     try {
-      const otpSentResponse = await this.userusecase.sendOtpUser(req.body);
+      const otpSentResponse = await this._userusecase.sendOtpUser(req.body);
 
       res.status(otpSentResponse.status).json({
         success: otpSentResponse.success,
@@ -79,7 +79,7 @@ export class UserAdapter {
   // @access Public
   async checkOtp(req: Req, res: Res, next: Next) {
     try {
-      const matched = await this.userusecase.checkOtpUser(req.body);
+      const matched = await this._userusecase.checkOtpUser(req.body);
 
       res.status(matched.status).json({
         success: matched.success,
@@ -95,7 +95,7 @@ export class UserAdapter {
   // @access Public
   async signGoogle(req: Req, res: Res, next: Next) {
     try {
-      const signed = await this.userusecase.signGoogleUser(req.body);
+      const signed = await this._userusecase.signGoogleUser(req.body);
 
       if (signed && signed.token) {
         res.cookie('refreshToken', signed.refreshToken, {
@@ -120,7 +120,7 @@ export class UserAdapter {
   // @access Public
   async forgotPassword(req: Req, res: Res, next: Next) {
     try {
-      const otpSentForForgotpass = await this.userusecase.sendForgotPassword(req.body)
+      const otpSentForForgotpass = await this._userusecase.sendForgotPassword(req.body)
 
       res.status(otpSentForForgotpass.status).json({
         success: otpSentForForgotpass.success,
@@ -135,7 +135,7 @@ export class UserAdapter {
   // @access Public
   async changePassword(req: Req, res: Res, next: Next) {
     try {
-      const passwordChanged = await this.userusecase.changePassword(req.body)
+      const passwordChanged = await this._userusecase.changePassword(req.body)
       res.status(passwordChanged.status).json({
         success: passwordChanged.success,
         message: passwordChanged.message,
@@ -148,7 +148,7 @@ export class UserAdapter {
   async fetchParkingLotsInHome(req: Req, res: Res, next: Next) {
     try {
       const query: IFetchParkingLot = req.query as IFetchParkingLot;
-      const parkingLots = await this.providerUsecase.fetchParkingLots(query);
+      const parkingLots = await this._providerUsecase.fetchParkingLots(query);
 
       if (parkingLots) {
         res.status(200).json({
@@ -168,7 +168,7 @@ export class UserAdapter {
   async fetchLotDetails(req: Req, res: Res, next: Next) {
     try {
       const { lotId } = req.params
-      const details = await this.providerUsecase.fetchLotDetails(lotId);
+      const details = await this._providerUsecase.fetchLotDetails(lotId);
       if (details) {
         res.status(200).json({
           success: true,
@@ -187,7 +187,7 @@ export class UserAdapter {
 
   async getBookedSlots(req: Req, res: Res, next: Next) {
     try {
-      const bookedSlots = await this.providerUsecase.getBookedSlots(req.body);
+      const bookedSlots = await this._providerUsecase.getBookedSlots(req.body);
 
       if (bookedSlots) {
         res.status(200).json({
@@ -207,7 +207,7 @@ export class UserAdapter {
 
   async bookSlot(req: Req, res: Res, next: Next) {
     try {
-      const slotBooked = await this.providerUsecase.bookSlot(req.body);
+      const slotBooked = await this._providerUsecase.bookSlot(req.body);
       if (slotBooked) {
         res.status(200).json({
           success: true,
@@ -227,7 +227,7 @@ export class UserAdapter {
   async updateUserProfile(req: Req, res: Res, next: Next) {
     try {
       const files = req.files as IFile[];
-      const updatedProfile = await this.userusecase.updateUserProfile(req.body, files)
+      const updatedProfile = await this._userusecase.updateUserProfile(req.body, files)
       if (updatedProfile) {
         res.status(200).json({
           success: true,
@@ -247,7 +247,7 @@ export class UserAdapter {
   async getUserProfilePic(req: Req, res: Res, next: Next) {
     try {
       const { id } = req.params
-      const profilePic = await this.userusecase.getUserProfilePic(id)
+      const profilePic = await this._userusecase.getUserProfilePic(id)
       if (profilePic) {
         res.status(200).json({
           success: true,
@@ -268,7 +268,7 @@ export class UserAdapter {
   async checkUserPassword(req: Req, res: Res, next: Next) {
     try {
       const { userId, password } = req.body;
-      const checked = await this.userusecase.checkUserPassword(userId, password);
+      const checked = await this._userusecase.checkUserPassword(userId, password);
       if (checked) {
         res.status(200).json({
           success: true,
@@ -288,7 +288,7 @@ export class UserAdapter {
   async fetchUserBookings(req: Req, res: Res, next: Next) {
     try {
       const { userId, page } = req.query
-      const bookings = await this.userusecase.fetchUserBookings(userId as string, page as string);
+      const bookings = await this._userusecase.fetchUserBookings(userId as string, page as string);
 
       if (bookings) {
         res.status(200).json({
@@ -309,7 +309,7 @@ export class UserAdapter {
   async cancelBooking(req: Req, res: Res, next: Next) {
     try {
       const { bookingId } = req.params
-      const cancelled = await this.userusecase.cancelBooking(bookingId);
+      const cancelled = await this._userusecase.cancelBooking(bookingId);
 
       if (cancelled) {
         res.status(200).json({
@@ -329,7 +329,7 @@ export class UserAdapter {
 
   async confirmSlot(req: Req, res: Res, next: Next) {
     try {
-      const alreadyFilledSlots = await this.userusecase.confirmSlot(req.body);
+      const alreadyFilledSlots = await this._userusecase.confirmSlot(req.body);
       if (alreadyFilledSlots) {
         res.status(200).json({
           success: true,
@@ -349,7 +349,7 @@ export class UserAdapter {
   async getFilledSlots(req: Req, res: Res, next: Next) {
     try {
       const { bookingId } = req.params
-      const alreadyFilledSlots = await this.userusecase.getFilledSlots(bookingId);
+      const alreadyFilledSlots = await this._userusecase.getFilledSlots(bookingId);
       if (alreadyFilledSlots) {
         res.status(200).json({
           success: true,
@@ -368,7 +368,7 @@ export class UserAdapter {
   async rescheduleSlots(req: Req, res: Res, next: Next) {
     try {
       const { bookingId, slots } = req.body
-      const rescheduled = await this.userusecase.rescheduleSlots(bookingId, slots);
+      const rescheduled = await this._userusecase.rescheduleSlots(bookingId, slots);
       if (rescheduled) {
         res.status(200).json({
           success: true,
@@ -388,7 +388,7 @@ export class UserAdapter {
   async getUserDetails(req: Req, res: Res, next: Next) {
     try {
       const { userId } = req.params
-      const userDetails = await this.userusecase.getUserDetails(userId);
+      const userDetails = await this._userusecase.getUserDetails(userId);
       if (userDetails) {
         res.status(200).json({
           success: true,

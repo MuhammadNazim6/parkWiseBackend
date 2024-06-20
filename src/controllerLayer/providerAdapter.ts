@@ -3,10 +3,10 @@ import { Req, Res, Next } from "../infrastructureLayer/types/expressTypes";
 import { ProviderUseCase } from "../usecaseLayer/usecase/providerUseCase";
 
 export class ProviderAdapter {
-  private readonly providerUseCase: ProviderUseCase;
+  private readonly _providerUseCase: ProviderUseCase;
 
   constructor(providerUseCase: ProviderUseCase) {
-    this.providerUseCase = providerUseCase;  // using dependency injection to call the providerUseCase
+    this._providerUseCase = providerUseCase;  // using dependency injection to call the providerUseCase
   }
 
   // @desc  Register new provider
@@ -14,7 +14,7 @@ export class ProviderAdapter {
   //@access   Public
   async createProvider(req: Req, res: Res, next: Next) {
     try {
-      const newProvider = await this.providerUseCase.createProvider(req.body);
+      const newProvider = await this._providerUseCase.createProvider(req.body);
 
       if (newProvider && newProvider.token) {
         res.cookie('refreshToken', newProvider.refreshToken, {
@@ -61,7 +61,7 @@ export class ProviderAdapter {
   // @access Public
   async sendOtp(req: Req, res: Res, next: Next) {
     try {
-      const otpSentResponse = await this.providerUseCase.sendOtpProvider(req.body);
+      const otpSentResponse = await this._providerUseCase.sendOtpProvider(req.body);
       res.status(otpSentResponse.status).json({
         success: otpSentResponse.success,
         message: otpSentResponse.message
@@ -78,7 +78,7 @@ export class ProviderAdapter {
   // @access Public
   async checkOtp(req: Req, res: Res, next: Next) {
     try {
-      const matched = await this.providerUseCase.checkOtpProvider(req.body);
+      const matched = await this._providerUseCase.checkOtpProvider(req.body);
 
       res.status(matched.status).json({
         success: matched.success,
@@ -96,7 +96,7 @@ export class ProviderAdapter {
   async sendLotForApproval(req: Req, res: Res, next: Next) {
     try {
       const files = req.files as IFile[];
-      const lotSent = await this.providerUseCase.sendLotForApproval(req.body, files);
+      const lotSent = await this._providerUseCase.sendLotForApproval(req.body, files);
 
       res.status(lotSent.status).json({
         success: lotSent.success,
@@ -114,7 +114,7 @@ export class ProviderAdapter {
   async getProviderDetails(req: Req, res: Res, next: Next) {
     try {
       const { lotId } = req.params
-      const details = await this.providerUseCase.fetchLotDetails(lotId);
+      const details = await this._providerUseCase.fetchLotDetails(lotId);
 
       if (details) {
         res.status(200).json({
@@ -135,7 +135,7 @@ export class ProviderAdapter {
   async updateProvProfile(req: Req, res: Res, next: Next) {
     try {
       const { lotId } = req.params
-      const updated = await this.providerUseCase.updateProvProfile(lotId, req.body);
+      const updated = await this._providerUseCase.updateProvProfile(lotId, req.body);
 
       if (updated) {
         res.status(200).json({
@@ -156,7 +156,7 @@ export class ProviderAdapter {
   async fetchLotsBookings(req: Req, res: Res, next: Next) {
     try {
       const { lotId } = req.params
-      const bookings = await this.providerUseCase.fetchLotsBookings(lotId);
+      const bookings = await this._providerUseCase.fetchLotsBookings(lotId);
       if (bookings) {
         res.status(200).json({
           success: true,
@@ -176,7 +176,7 @@ export class ProviderAdapter {
   async checkProvPassword(req: Req, res: Res, next: Next) {
     try {
       const { provId, password } = req.body;
-      const checked = await this.providerUseCase.checkProvPassword(provId, password);
+      const checked = await this._providerUseCase.checkProvPassword(provId, password);
       if (checked) {
         res.status(200).json({
           success: true,
