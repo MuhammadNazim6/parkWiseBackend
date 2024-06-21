@@ -18,7 +18,7 @@ import { fetchParkingLots } from "./provider/fetchParkingLots";
 import { IFetchParkingLot } from "../../domainLayer/providers";
 import { fetchLotDetails } from "./provider/fetchLotDetails";
 import { getBookedSlots } from "./provider/getBookedSlots";
-import { ISlotBooking } from "../interface/repository/ICommonInterfaces";
+import { ISlotBooking, IUpdateParkingLot } from "../interface/repository/ICommonInterfaces";
 import { bookSlot } from "./provider/bookSlot";
 import { IS3Bucket } from "../interface/services/IS3Bucket";
 import { IFile } from "../../infrastructureLayer/middleware/multer";
@@ -26,6 +26,7 @@ import { IProvUpdateProfile } from "../../infrastructureLayer/types/providerType
 import { updateProvProfile } from "./provider/updateProvProfile";
 import { fetchLotsBookings } from "./provider/fetchLotsBookings";
 import { checkProvPassword } from "./provider/checkProvPassword";
+import { updateParkingLotDetails } from "./provider/updateParkingLotDetails";
 
 export class ProviderUseCase {
   private readonly providerRepository: IProviderRepository;
@@ -250,7 +251,7 @@ export class ProviderUseCase {
     return fetchLotDetails(
       this.providerRepository,
       this.s3Bucket,
-      lotId  
+      lotId
     )
   }
 
@@ -290,6 +291,15 @@ export class ProviderUseCase {
       this.bcrypt,
       provId,
       password
+    )
+  }
+
+  async updateParkingLotDetails(body: IUpdateParkingLot, files: IFile[]) {
+    return updateParkingLotDetails(
+      this.providerRepository,
+      this.s3Bucket,
+      body,
+      files
     )
   }
 

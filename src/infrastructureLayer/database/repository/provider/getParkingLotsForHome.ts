@@ -13,6 +13,7 @@ export const getParkingLotsForHome = async (
     airPressureCheckPrice?: {};
     evChargeFacilityPrice?: {};
     waterServicePrice?: {};
+    approvalStatus?:string;
   } = {}
 
   if (price) {
@@ -27,6 +28,8 @@ export const getParkingLotsForHome = async (
   if (hasWaterService === 'true') {
     query.waterServicePrice = { $gte: 1 }
   }
+  query.approvalStatus = 'true'
+  
 
   try {
     const results = await provModel.aggregate([

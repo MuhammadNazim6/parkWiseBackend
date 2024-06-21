@@ -18,11 +18,9 @@ export const bookSlot = async (
       .populate('parkingLotId');
 
     if (populatedBooking) return populatedBooking;
-
     return false;
   } catch (error) {
     console.log(error);
     throw error
-
   }
 }

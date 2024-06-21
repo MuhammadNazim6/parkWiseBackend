@@ -24,3 +24,18 @@ export interface IMessage {
   message: string;
   messageType: string;
 }
+
+export interface IAddFeedback {
+  userId: string;
+  parkingLotId: string;
+  rating: number;
+  review: string;
+}
+
+export interface IUpdateParkingLot {
+  airPressureCheckPrice:number;
+  waterServicePrice:number;
+  evChargeFacilityPrice:number;
+  pricePerHour:number;
+  availableSpace:number;
+}

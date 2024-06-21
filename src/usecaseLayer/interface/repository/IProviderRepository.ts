@@ -28,5 +28,4 @@ export interface IProviderRepository {
   getParkingLotsForHome(searchQuery: IFetchParkingLot): Promise<{}>
   getLotDetails(lotId: string): Promise<{}[]>
   updateProfile(lotId: string, toUpdate: IProvUpdateProfile): Promise<{}>
-
 }

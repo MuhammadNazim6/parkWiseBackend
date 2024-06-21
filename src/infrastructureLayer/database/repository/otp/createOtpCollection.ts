@@ -2,8 +2,6 @@ import { IOtp } from "../../../../domainLayer/otps";
 import { IOtpDocSaveResponse } from "../../../../usecaseLayer/interface/services/IResponses";
 import OtpModel from "../../model/otpModel";
 
-
-
 export const createOtpCollection = async (
   newOtpDoc: IOtp,
   otpModels: typeof OtpModel

@@ -3,13 +3,13 @@ import { IAddressRepository } from "../../../usecaseLayer/interface/repository/I
 import AddressModel from "../model/addressModel";
 import { createAddress } from "./address/createAddress";
 
-export class AddressRepository implements IAddressRepository{
-  constructor (private readonly addressModel: typeof AddressModel){
-  } 
+export class AddressRepository implements IAddressRepository {
+  constructor(private readonly addressModel: typeof AddressModel) {
+  }
 
-   // creating address
-   createAddress(newAddress:IAddress): Promise<IAddress> {
+  // creating address
+  createAddress(newAddress: IAddress): Promise<IAddress> {
     return createAddress(newAddress, this.addressModel)
-}
+  }
 
 }

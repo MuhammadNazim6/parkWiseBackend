@@ -405,5 +405,105 @@ export class UserAdapter {
     }
   }
 
+  async getUserBookingCount(req: Req, res: Res, next: Next) {
+    try {
+      const { userId } = req.params
+      const bookingsCount = await this._userusecase.getUserBookingCount(userId);
+      if (bookingsCount) {
+        res.status(200).json({
+          success: true,
+          data: bookingsCount
+        })
+      } else {
+        res.status(200).json({
+          success: false,
+          message: 'Unable to get bookings Count'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async addFeedback(req: Req, res: Res, next: Next) {
+    try {
+      const addedFeedback = await this._userusecase.addFeedback(req.body);
+      if (addedFeedback) {
+        res.status(200).json({
+          success: true,
+          data: addedFeedback
+        })
+      } else {
+        res.status(400).json({
+          success: false,
+          message: 'Unable to add feedback'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async deleteFeedback(req: Req, res: Res, next: Next) {
+    try {
+      const { userId, feedbackId } = req.body
+      const deletedFeedback = await this._userusecase.deleteFeedback(userId, feedbackId);
+      if (deletedFeedback) {
+        res.status(200).json({
+          success: true,
+          message: 'Feedback has been deleted'
+        })
+      } else {
+        res.status(400).json({
+          success: false,
+          message: 'Unable to delete feedback'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async editFeedback(req: Req, res: Res, next: Next) {
+    try {
+      const { feedbackId, rating, review } = req.body
+      const editedFeedback = await this._userusecase.editFeedback(feedbackId, rating, review);
+      if (editedFeedback) {
+        res.status(200).json({
+          success: true,
+          data: editedFeedback
+        })
+      } else {
+        res.status(400).json({
+          success: false,
+          message: 'Unable to delete feedback'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+
+  async getLotFeedbacks(req: Req, res: Res, next: Next) {
+    try {
+      const { lotId } = req.params
+      const lotFeedbacks = await this._userusecase.getLotFeedbacks(lotId);
+      if (lotFeedbacks) {
+        res.status(200).json({
+          success: true,
+          data: lotFeedbacks
+        })
+      } else {
+        res.status(400).json({
+          success: false,
+          message: 'Unable to get feedbacks'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
 
 }

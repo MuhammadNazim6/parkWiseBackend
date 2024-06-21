@@ -3,7 +3,6 @@ import cookieParser from "cookie-parser";
 import cors from 'cors';
 import morgan from "morgan";
 import { createServer } from 'node:http';
-import { Server } from "socket.io";
 
 import userRouter from '../route/userRoute';
 import adminRouter from '../route/adminRoutes';
@@ -17,28 +16,6 @@ export const app = express();
 export const httpServer = createServer(app);
 
 const socketServer = new SocketServer(httpServer, process.env.CORS_URL as string);
-
-// const io = new Server(httpServer,{
-//   cors:{
-//     origin:process.env.CORS_URL,
-//     methods: ['GET', 'POST'], 
-//     credentials: true
-//   }
-// });
-
-
-// io.on("connection", (socket) => {
-//   console.log(`⚡: ${socket.id} user just connected!`);
-  
-//   socket.on('chatMessage', (data) => {
-//     console.log(`Message from ${data.user}: ${data.message}`);
-//     io.emit('chatMessage', data);
-//   });
-
-//   socket.on('disconnect', () => {
-//     console.log('🔥: A user disconnected');
-//   });
-// });
 
 app.use(cookieParser())
 app.use(cors(

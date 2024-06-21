@@ -55,6 +55,13 @@ router.post('/checkProvPassword',
     providerAdapter.checkProvPassword(req, res, next)
   })
 
+router.patch('/updateParkingLot',
+  // providerAuth,
+  upload.array('images'),
+  (req: Req, res: Res, next: Next) => {
+    providerAdapter.updateParkingLotDetails(req, res, next)
+  })
+
 
 
 export default router; 

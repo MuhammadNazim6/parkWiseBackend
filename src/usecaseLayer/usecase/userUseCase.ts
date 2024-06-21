@@ -22,11 +22,17 @@ import { checkUserPassword } from "./user/checkUserPassword";
 import { IBookingRepository } from "../interface/repository/IBookingRepository";
 import { fetchUserBookings } from "./user/fetchUserBookings";
 import { cancelBooking } from "./user/cancelBooking";
-import { IConfirmAvailablityOfSlots } from "../interface/repository/ICommonInterfaces";
+import { IAddFeedback, IConfirmAvailablityOfSlots } from "../interface/repository/ICommonInterfaces";
 import { confirmSlot } from "./user/confirmSlot";
 import { getFilledSlots } from "./user/getFilledSlots";
 import { rescheduleSlots } from "./user/rescheduleSlots";
 import { getUserDetails } from "./user/getUserDetails";
+import { getUserBookingCount } from "./user/getUserBookingCount";
+import { IFeedbackRepository } from "../interface/repository/IFeedbackRepository";
+import { addFeedback } from "./user/addFeedback";
+import { deleteFeedback } from "./user/deleteFeedback";
+import { editFeedback } from "./user/editFeedback";
+import { getLotFeedbacks } from "./user/getLotFeedbacks";
 
 
 export class UserUseCase {
@@ -39,6 +45,7 @@ export class UserUseCase {
   private readonly providerRepository: IProviderRepository
   private readonly s3Bucket: IS3Bucket;
   private readonly bookingRepository: IBookingRepository;
+  private readonly feedbackRepository: IFeedbackRepository;
 
 
   constructor(
@@ -51,6 +58,7 @@ export class UserUseCase {
     providerRepository: IProviderRepository,
     s3Bucket: IS3Bucket,
     bookingRepository: IBookingRepository,
+    feedbackRepository: IFeedbackRepository,
 
   ) {
     this.userRepository = userRepository;
@@ -62,6 +70,7 @@ export class UserUseCase {
     this.providerRepository = providerRepository;
     this.s3Bucket = s3Bucket;
     this.bookingRepository = bookingRepository;
+    this.feedbackRepository = feedbackRepository;
 
   }
 
@@ -301,6 +310,44 @@ export class UserUseCase {
     return getUserDetails(
       this.userRepository,
       userId
+    )
+  }
+
+  async getUserBookingCount(userId: string) {
+    return getUserBookingCount(
+      this.bookingRepository,
+      userId
+    )
+  }
+
+  async addFeedback(data: IAddFeedback) {
+    return addFeedback(
+      this.feedbackRepository,
+      data
+    )
+  }
+
+  async deleteFeedback(userId: string, feedbackId: string) {
+    return deleteFeedback(
+      this.feedbackRepository,
+      userId,
+      feedbackId
+    )
+  }
+
+  async editFeedback(feedbackId: string, rating: number, review: string) {
+    return editFeedback(
+      this.feedbackRepository,
+      feedbackId,
+      rating,
+      review
+    )
+  }
+
+  async getLotFeedbacks(lotId: string) {
+    return getLotFeedbacks(
+      this.feedbackRepository,
+      lotId
     )
   }
 

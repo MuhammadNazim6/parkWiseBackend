@@ -16,6 +16,8 @@ import AddressModel from "../../database/model/addressModel";
 import { BookingRepository } from "../../database/repository/bookingRepository";
 import BookingModel from "../../database/model/bookingModel";
 import S3Bucket from "../../services/s3BucketAws";
+import { FeedbackRepository } from "../../database/repository/feedbackRepository";
+import FeedbackModel from "../../database/model/feedbackModel";
 
 
 const userRepository = new UserRepository(UserModel);
@@ -28,6 +30,7 @@ const otpRepository = new OtpRepository(OtpModel);
 const addressRepository = new AddressRepository(AddressModel);
 const providerRepository = new ProviderRepository(ParkingProviderModel)
 const bookingRepository = new BookingRepository(BookingModel)
+const feedbackRepository = new FeedbackRepository(FeedbackModel)
 
 
 const userusecase = new UserUseCase(
@@ -39,7 +42,8 @@ const userusecase = new UserUseCase(
   otpRepository,
   providerRepository,
   s3Bucket,
-  bookingRepository
+  bookingRepository,
+  feedbackRepository
 );
 
 const providerUseCase = new ProviderUseCase(

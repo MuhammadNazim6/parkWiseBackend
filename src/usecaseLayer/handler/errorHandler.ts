@@ -4,7 +4,7 @@ import ErrorResponse from "./errorResponse";
 const errorHandler = (error: any, req: Req, res: Res, next: Next) => {
 
   console.error(error);
-  console.log('ERROR HANDLER');
+  console.log('ERROR HANDLER INNNNNNNNNNN');
   
   if (error instanceof ErrorResponse) {
     return res.status(error.status).json({
@@ -16,7 +16,7 @@ const errorHandler = (error: any, req: Req, res: Res, next: Next) => {
   return res.status(500).json({
     success: false,
     status: 500,
-    message: "Something went wrong"
+    message: "Something went wrong, Try again later"
   });
 };
 

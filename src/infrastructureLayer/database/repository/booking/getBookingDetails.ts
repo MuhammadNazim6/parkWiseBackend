@@ -5,38 +5,40 @@ export const getBookingDetails = async (
   bookingModel: typeof BookingModel,
   bookingId: string
 ): Promise<{}> => {
-
-  const bookingObjId = new ObjectId(bookingId);
-
-  const details = await bookingModel.aggregate([
-    {
-      $match: {
-        _id: bookingObjId
+  try{
+    const bookingObjId = new ObjectId(bookingId);
+    const details = await bookingModel.aggregate([
+      {
+        $match: {
+          _id: bookingObjId
+        }
+      },
+      {
+        $lookup: {
+          from: 'providers',
+          localField: 'parkingLotId',
+          foreignField: '_id',
+          as: 'provider'
+        }
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'userId',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      {
+        $unwind: '$provider'
+      },
+      {
+        $unwind: '$user'
       }
-    },
-    {
-      $lookup: {
-        from: 'providers',
-        localField: 'parkingLotId',
-        foreignField: '_id',
-        as: 'provider'
-      }
-    },
-    {
-      $lookup: {
-        from: 'users',
-        localField: 'userId',
-        foreignField: '_id',
-        as: 'user'
-      }
-    },
-    {
-      $unwind: '$provider'
-    },
-    {
-      $unwind: '$user'
-    }
-  ])
-
-  return details
+    ])
+  
+    return details
+  }catch(error){
+    throw error
+  }
 }

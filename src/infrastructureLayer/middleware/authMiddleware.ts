@@ -17,7 +17,6 @@ export const userAuth = async (req: Request, res: Response, next: NextFunction) 
   if (token) {
     try {
       const decodedToken = jwt.verify(token, process.env.JWT_KEY as string) as JwtPayload;
-      console.log('DECODE', decodedToken);
       if (decodedToken.role !== 'user') {
         return res.status(403).json({ message: 'Unauthorized access' });
       }

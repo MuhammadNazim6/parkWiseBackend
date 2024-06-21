@@ -1,4 +1,3 @@
-import { IConversation } from "../../../../domainLayer/conversation";
 import ConversationModel from "../../model/conversationModel";
 
 export const createConversation = async (

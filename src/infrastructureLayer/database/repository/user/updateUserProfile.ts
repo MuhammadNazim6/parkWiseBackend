@@ -1,5 +1,3 @@
-import { profile } from "console";
-import { IUser } from "../../../../domainLayer/users";
 import UserModel from "../../model/userModel";
 
 export const updateUserProfile = async (
