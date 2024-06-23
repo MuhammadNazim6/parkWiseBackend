@@ -5,4 +5,5 @@ export interface IFeedback {
   userId: ObjectId;
   rating: number;
   review: string;
+  likes: { userId: ObjectId }[]
 }

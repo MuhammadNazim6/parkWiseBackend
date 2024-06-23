@@ -61,7 +61,6 @@ class SocketServer {
 
         const recipientData = this.userSocketMap.get(data.recipient)
         if (recipientData) {
-          // this.io.to(recipientData.socketId).emit('chatMessage', data)
           if (recipientData.inChat) {
             this.io.to(recipientData.socketId).emit('chatMessage', data)
             console.log('The recipent is in chat, sending message');
@@ -75,6 +74,16 @@ class SocketServer {
         }
       });
 
+
+      socket.on('startVideoCall',(data)=>{
+        console.log('data');
+        console.log(data);
+        const recipientData = this.userSocketMap.get(data.receiverId)
+        if(recipientData){
+          const roomId = data.roomId
+          this.io.to(recipientData.socketId).emit('videoCallNotification', data)
+        }
+      })
 
       socket.on('disconnect', () => {
         console.log('🔥: A user disconnected');

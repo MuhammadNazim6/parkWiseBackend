@@ -5,15 +5,17 @@ import mongoose from "mongoose";
 
 export const editFeedback = async (
   feedbackModel: typeof FeedbackModel,
-  feedbackId: string,
+  userId: string,
+  parkingLotId: string,
   rating: number,
   review: string
 ): Promise<IFeedback | null> => {
   try {
-    const feedbackIdObj = new mongoose.Types.ObjectId(feedbackId);
+    const userIdObj = new mongoose.Types.ObjectId(userId);
+    const parkingLotIdObj = new mongoose.Types.ObjectId(parkingLotId);
 
     const updatedFeedback = await feedbackModel.findOneAndUpdate(
-      { _id: feedbackIdObj },
+      { userId: userIdObj, parkingLotId: parkingLotIdObj },
       { $set: { rating, review } },
       { new: true }
     )

@@ -13,6 +13,9 @@ export const addFeedback = async (
     if (!feedbackExists) {
       const feedback = await feedbackRepository.addFeedback(parkingLotId, userId, rating, review)
       return feedback
+    } else {
+      const updated = await feedbackRepository.editFeedback(userId, parkingLotId, rating, review)
+      return updated
     }
     return null
 

@@ -20,8 +20,8 @@ export class FeedbackRepository implements IFeedbackRepository {
   async deleteFeedback(feedbackId: string, userId: string): Promise<boolean> {
     return deleteFeedback(this.feedbackModel, feedbackId, userId);
   }
-  async editFeedback(feedbackId: string, rating: number, review: string): Promise<IFeedback | null> {
-    return editFeedback(this.feedbackModel, feedbackId, rating, review);
+  async editFeedback(userId: string, parkingLotId: string, rating: number, review: string): Promise<IFeedback | null> {
+    return editFeedback(this.feedbackModel, userId, parkingLotId, rating, review);
   }
   async getParkingFeedbacks(parkingLotId: string): Promise<IFeedback[]> {
     return getParkingFeedbacks(this.feedbackModel, parkingLotId);

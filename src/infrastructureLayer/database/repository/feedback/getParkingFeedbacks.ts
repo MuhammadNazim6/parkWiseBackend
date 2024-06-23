@@ -8,8 +8,7 @@ export const getParkingFeedbacks = async (
 ): Promise<IFeedback[]> => {
   try {
     const parkingLotIdObj = new mongoose.Types.ObjectId(parkingLotId);
-    const feedbacks = await feedbackModel.find({ parkingLotId: parkingLotIdObj })
-    console.log(feedbacks);
+    const feedbacks = await feedbackModel.find({ parkingLotId: parkingLotIdObj }).populate('userId')
     
     return feedbacks
 
