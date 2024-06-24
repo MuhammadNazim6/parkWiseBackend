@@ -138,6 +138,16 @@ router.get('/getLotFeedbacks/:lotId',
     userAdapter.getLotFeedbacks(req, res, next)
   })
 
+router.post('/suggestions',
+  // userAuth,
+  (req: Req, res: Res, next: Next) => {
+    console.log('Helloo');
+    userAdapter.addSuggestion(req, res, next)
+    console.log(req.body);
+     
+    return
+  })
+ 
   
 
 export default router;              

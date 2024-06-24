@@ -18,6 +18,8 @@ import BookingModel from "../../database/model/bookingModel";
 import S3Bucket from "../../services/s3BucketAws";
 import { FeedbackRepository } from "../../database/repository/feedbackRepository";
 import FeedbackModel from "../../database/model/feedbackModel";
+import { SuggestionRepository } from "../../database/repository/suggestionRepository";
+import SuggestionModel from "../../database/model/suggestionsModel";
 
 
 const userRepository = new UserRepository(UserModel);
@@ -31,6 +33,7 @@ const addressRepository = new AddressRepository(AddressModel);
 const providerRepository = new ProviderRepository(ParkingProviderModel)
 const bookingRepository = new BookingRepository(BookingModel)
 const feedbackRepository = new FeedbackRepository(FeedbackModel)
+const suggestionRepository = new SuggestionRepository(SuggestionModel)
 
 
 const userusecase = new UserUseCase(
@@ -43,7 +46,8 @@ const userusecase = new UserUseCase(
   providerRepository,
   s3Bucket,
   bookingRepository,
-  feedbackRepository
+  feedbackRepository,
+  suggestionRepository
 );
 
 const providerUseCase = new ProviderUseCase(

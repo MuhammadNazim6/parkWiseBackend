@@ -17,7 +17,6 @@ export const addFeedback = async (
       const updated = await feedbackRepository.editFeedback(userId, parkingLotId, rating, review)
       return updated
     }
-    return null
 
   } catch (error) {
     throw error

@@ -8,23 +8,23 @@ import { findFeedback } from "./feedback/findFeedback";
 import { getParkingFeedbacks } from "./feedback/getParkingFeedbacks";
 
 export class FeedbackRepository implements IFeedbackRepository {
-  constructor(private readonly feedbackModel: typeof FeedbackModel) {
+  constructor(private readonly _feedbackModel: typeof FeedbackModel) {
   }
 
   async findFeedback(parkingLotID: string, userId: string): Promise<boolean> {
-    return findFeedback(this.feedbackModel, parkingLotID, userId);
+    return findFeedback(this._feedbackModel, parkingLotID, userId);
   }
   async addFeedback(parkingLotID: string, userId: string, rating: number, review: string): Promise<IFeedback> {
-    return addFeedback(this.feedbackModel, parkingLotID, userId, rating, review);
+    return addFeedback(this._feedbackModel, parkingLotID, userId, rating, review);
   }
   async deleteFeedback(feedbackId: string, userId: string): Promise<boolean> {
-    return deleteFeedback(this.feedbackModel, feedbackId, userId);
+    return deleteFeedback(this._feedbackModel, feedbackId, userId);
   }
   async editFeedback(userId: string, parkingLotId: string, rating: number, review: string): Promise<IFeedback | null> {
-    return editFeedback(this.feedbackModel, userId, parkingLotId, rating, review);
+    return editFeedback(this._feedbackModel, userId, parkingLotId, rating, review);
   }
   async getParkingFeedbacks(parkingLotId: string): Promise<IFeedback[]> {
-    return getParkingFeedbacks(this.feedbackModel, parkingLotId);
+    return getParkingFeedbacks(this._feedbackModel, parkingLotId);
   }
 
 

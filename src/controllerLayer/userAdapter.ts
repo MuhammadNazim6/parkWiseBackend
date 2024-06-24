@@ -466,8 +466,8 @@ export class UserAdapter {
 
   async editFeedback(req: Req, res: Res, next: Next) {
     try {
-      const { feedbackId, rating, review } = req.body
-      const editedFeedback = await this._userusecase.editFeedback(feedbackId, rating, review);
+      const { userId, parkingLotId, rating, review } = req.body
+      const editedFeedback = await this._userusecase.editFeedback(userId, parkingLotId, rating, review);
       if (editedFeedback) {
         res.status(200).json({
           success: true,
@@ -498,6 +498,26 @@ export class UserAdapter {
         res.status(400).json({
           success: false,
           message: 'Unable to get feedbacks'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async addSuggestion(req: Req, res: Res, next: Next) {
+    try {
+      const { id, feedbackType, email, url, message } = req.body
+      const addedSuggestion = await this._userusecase.addSuggestion(id, feedbackType, email, url, message );
+      if (addedSuggestion) {
+        res.status(200).json({
+          success: true,
+          message: 'Suggestion added'
+        })
+      } else {
+        res.status(400).json({
+          success: false,
+          message: 'Unable to add suggestion'
         });
       }
     } catch (err) {

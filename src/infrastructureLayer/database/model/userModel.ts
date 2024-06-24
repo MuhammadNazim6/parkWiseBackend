@@ -19,10 +19,15 @@ const userSchema: Schema = new Schema<IUser & Document>({
   isBlocked: { type: Boolean },
   favParkingLots: [{ type: Schema.Types.ObjectId }],     //Object id reference to be given
   wallet: {
-    balance: { type: Number },
+    balance: { type: Number, default: 0 },
     history: {
-      amount: { type: Number },
-      transactionType: { type: String },
+      type: [
+        {
+          amount: { type: Number },
+          transactionType: { type: String },
+        },
+      ],
+      default: [],
     },
   },
   joinedAt: { type: Date },

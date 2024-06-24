@@ -13,7 +13,7 @@ export const sendOtpUser = async (
   otpRepository: IOtpRepository,
   email: string,
   name: string,
-  nodemailer:INodemailer
+  nodemailer: INodemailer
 ): Promise<IOtpSendResponse> => {
   try {
     const validation = requestValidator.validateRequiredFields(
@@ -42,11 +42,13 @@ export const sendOtpUser = async (
       let expiryTime = new Date();
       expiryTime.setMinutes(expiryTime.getMinutes() + 3);
 
-      const otpSaved = await otpRepository.createOtpCollection(email, role , OTP, expiryTime)
+      const otpSaved = await otpRepository.createOtpCollection(email, role, OTP, expiryTime)
+      console.log(OTP);
+
       return {
         status: 200,
         success: true,
-        message:'Otp sent to mail'
+        message: 'Otp sent to mail'
       }
     }
     return {

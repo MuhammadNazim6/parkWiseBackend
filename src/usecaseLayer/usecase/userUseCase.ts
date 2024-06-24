@@ -33,6 +33,8 @@ import { addFeedback } from "./user/addFeedback";
 import { deleteFeedback } from "./user/deleteFeedback";
 import { editFeedback } from "./user/editFeedback";
 import { getLotFeedbacks } from "./user/getLotFeedbacks";
+import { ISuggestionRepository } from "../interface/repository/ISuggestionRepository";
+import { addSuggestion } from "./user/addSuggestion";
 
 
 export class UserUseCase {
@@ -46,6 +48,7 @@ export class UserUseCase {
   private readonly s3Bucket: IS3Bucket;
   private readonly bookingRepository: IBookingRepository;
   private readonly feedbackRepository: IFeedbackRepository;
+  private readonly suggestionRepository: ISuggestionRepository;
 
 
   constructor(
@@ -59,6 +62,7 @@ export class UserUseCase {
     s3Bucket: IS3Bucket,
     bookingRepository: IBookingRepository,
     feedbackRepository: IFeedbackRepository,
+    suggestionRepository: ISuggestionRepository,
 
   ) {
     this.userRepository = userRepository;
@@ -71,6 +75,7 @@ export class UserUseCase {
     this.s3Bucket = s3Bucket;
     this.bookingRepository = bookingRepository;
     this.feedbackRepository = feedbackRepository;
+    this.suggestionRepository = suggestionRepository;
 
   }
 
@@ -335,10 +340,11 @@ export class UserUseCase {
     )
   }
 
-  async editFeedback(feedbackId: string, rating: number, review: string) {
+  async editFeedback(userId: string, parkingLotId: string, rating: number, review: string) {
     return editFeedback(
       this.feedbackRepository,
-      feedbackId,
+      userId,
+      parkingLotId,
       rating,
       review
     )
@@ -348,6 +354,18 @@ export class UserUseCase {
     return getLotFeedbacks(
       this.feedbackRepository,
       lotId
+    )
+  }
+
+  async addSuggestion(
+    id: string,
+    feedbackType: string,
+    email: string,
+    url: string,
+    message: string) {
+    return addSuggestion(
+      this.suggestionRepository,
+      id, feedbackType, email, url, message 
     )
   }
 

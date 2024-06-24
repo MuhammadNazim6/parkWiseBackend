@@ -4,12 +4,13 @@ import { IFeedbackRepository } from "../../interface/repository/IFeedbackReposit
 
 export const editFeedback = async (
   feedbackRepository: IFeedbackRepository,
-  feedbackId: string,
+  userId: string,
+  parkingLotId: string,
   rating: number,
   review: string
 ): Promise<IFeedback | null> => {
   try {
-    const feedbackEdited = await feedbackRepository.editFeedback(feedbackId, rating, review)
+    const feedbackEdited = await feedbackRepository.editFeedback(userId, parkingLotId, rating, review)
     if (feedbackEdited) {
       return feedbackEdited
     }
