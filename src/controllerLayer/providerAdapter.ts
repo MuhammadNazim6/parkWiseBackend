@@ -196,9 +196,6 @@ export class ProviderAdapter {
   async updateParkingLotDetails(req: Req, res: Res, next: Next) {
     try {
       const files = req.files as IFile[];
-      console.log('files::::::::::::::',files);
-      console.log(req.body);
-      
       
       const updated = await this._providerUseCase.updateParkingLotDetails(req.body, files);
       if (updated) {

@@ -33,9 +33,19 @@ export interface IAddFeedback {
 }
 
 export interface IUpdateParkingLot {
-  airPressureCheckPrice:number;
-  waterServicePrice:number;
-  evChargeFacilityPrice:number;
-  pricePerHour:number;
-  availableSpace:number;
+  airPressureCheckPrice:string;
+  email:string;
+  waterServicePrice:string;
+  evChargeFacilityPrice:string;
+  pricePerHour:string;
+  availableSpace:string;
+  indexes:string | string[]
+}
+
+export interface IUpdateDataAvailableParkingLot {
+  waterServicePrice?: number;
+  airPressureCheckPrice?: number;
+  evChargeFacilityPrice?: number;
+  availableSpace?: number;
+  pricePerHour?: number;
 }

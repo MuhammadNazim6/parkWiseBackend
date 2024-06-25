@@ -6,9 +6,9 @@ const providerSchema: Schema = new Schema<IParkingProviderReady & Document>({
   password: { type: String },
   mobile: { type: Number },
   email: { type: String },
-  waterServicePrice: { type: Number },
-  airPressureCheckPrice: { type: Number },
-  evChargeFacilityPrice: { type: Number },
+  waterServicePrice: { type: Number, default: null },
+  airPressureCheckPrice: { type: Number, default: null },
+  evChargeFacilityPrice: { type: Number, default: null },
   startTime: { type: String },
   availableSpace: { type: Number },
   feedbacks: [{ type: Schema.Types.ObjectId }],    //Object id reference to be given

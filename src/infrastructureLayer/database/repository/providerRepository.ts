@@ -15,6 +15,8 @@ import { getLotDetails } from "./provider/getLotDetails";
 import { getBookedSlots } from "./booking/getBookedSlots";
 import { IProvUpdateProfile } from "../../types/providerTypes";
 import { updateProfile } from "./provider/updateProfile";
+import { IUpdateParkingLot } from "../../../usecaseLayer/interface/repository/ICommonInterfaces";
+import { updateParkingLotDetails } from "./provider/updateParkingLotDetails";
 
 export class ProviderRepository implements IProviderRepository {
   constructor(private readonly providerModel: typeof ParkingProviderModel) { }
@@ -101,9 +103,12 @@ export class ProviderRepository implements IProviderRepository {
     return getLotDetails(lotId, this.providerModel);
   }
 
-  async updateProfile(lotId: string, toUpdate: IProvUpdateProfile): Promise<{}> {    
+  async updateProfile(lotId: string, toUpdate: IProvUpdateProfile): Promise<{}> {
     return updateProfile(lotId, toUpdate, this.providerModel);
   }
 
+  async updateParkingLotDetails(email: string, data: IUpdateParkingLot, images: string[]): Promise<{}> {
+    return updateParkingLotDetails(email, data, images, this.providerModel);
+  }
 
 }

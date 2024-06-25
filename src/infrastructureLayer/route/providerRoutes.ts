@@ -59,6 +59,8 @@ router.patch('/updateParkingLot',
   // providerAuth,
   upload.array('images'),
   (req: Req, res: Res, next: Next) => {
+    console.log(req.body);
+    
     providerAdapter.updateParkingLotDetails(req, res, next)
   })
 

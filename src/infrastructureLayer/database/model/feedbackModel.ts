@@ -6,7 +6,8 @@ const FeedbackSchema: Schema = new Schema<IFeedback & Document>({
   userId: { type: Schema.Types.ObjectId, ref: 'User' },
   rating: { type: Number },
   review: { type: String },
-  likes: [{ userId: { type: Schema.Types.ObjectId, ref: 'User' } }]
+  likes: [{ userId: { type: Schema.Types.ObjectId, ref: 'User' } }],
+  // noted: { type: Boolean, default: false }
 }, { timestamps: true })
 
 
