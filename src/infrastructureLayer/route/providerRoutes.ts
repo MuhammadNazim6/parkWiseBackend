@@ -16,13 +16,16 @@ router.post('/logout',
     providerAdapter.logoutProvider(req, res, next)
   })
 // Provider OTP send to mail
-router.post('/send-otp', (req: Req, res: Res, next: Next) => {
-  providerAdapter.sendOtp(req, res, next)
-})
+router.post('/send-otp',
+  providerAuth,
+  (req: Req, res: Res, next: Next) => {
+    providerAdapter.sendOtp(req, res, next)
+  })
 // For checking user entered otp and stored otp
-router.post('/check-otp', (req: Req, res: Res, next: Next) => {
-  providerAdapter.checkOtp(req, res, next)
-})
+router.post('/check-otp',
+  (req: Req, res: Res, next: Next) => {
+    providerAdapter.checkOtp(req, res, next)
+  })
 // For sending approval request to admin and add parking slot
 router.post('/sendLotForApproval',
   providerAuth,
@@ -56,11 +59,9 @@ router.post('/checkProvPassword',
   })
 
 router.patch('/updateParkingLot',
-  // providerAuth,
+  providerAuth,
   upload.array('images'),
   (req: Req, res: Res, next: Next) => {
-    console.log(req.body);
-    
     providerAdapter.updateParkingLotDetails(req, res, next)
   })
 
