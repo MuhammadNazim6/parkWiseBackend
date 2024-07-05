@@ -8,16 +8,7 @@ const userSchema: Schema = new Schema<IUser & Document>({
   email: { type: String, required: true },
   profilePic: { type: String },
   google: { type: Boolean, default: false },
-  bookingHistory: [{
-    amount: { type: Number },
-    date: { type: Date },
-    duration: { type: String },
-    parkingLotId: { type: Schema.Types.ObjectId },  //Object id reference to be given
-    servicesTaken: [{ type: String, }],
-  }],
-  status: { type: Boolean },
   isBlocked: { type: Boolean },
-  favParkingLots: [{ type: Schema.Types.ObjectId }],     //Object id reference to be given
   wallet: {
     balance: { type: Number, default: 0 },
     history: {
@@ -30,12 +21,8 @@ const userSchema: Schema = new Schema<IUser & Document>({
       default: [],
     },
   },
-  joinedAt: { type: Date },
-  reports: [{
-    providerId: { type: Schema.Types.ObjectId, },     //Object id reference to be given
-    reason: { type: String },
-  }]
-});
+  
+}, { timestamps: true });
 
 const UserModel: Model<IUser & Document> = mongoose.model<IUser & Document>(
   "User",

@@ -28,7 +28,7 @@ export const updateToken = async (
     return {
       status: 403,
       success: false,
-      message: 'Invalid hhjhjjh re,ngvkgcvkngvmnbvfresh token'
+      message: 'Invalid refresh token'
     }
   }
 }
