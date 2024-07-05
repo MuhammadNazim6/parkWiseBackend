@@ -108,7 +108,7 @@ export class UserAdapter {
         success: signed.success,
         message: signed.message,
         token: signed.token,
-        data: signed.data,
+        data: signed.data, 
       });
     } catch (err) {
       next(err);

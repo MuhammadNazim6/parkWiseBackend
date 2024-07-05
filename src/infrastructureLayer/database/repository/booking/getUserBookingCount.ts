@@ -6,9 +6,7 @@ export const getUserBookingCount = async (
   userId: string
 ): Promise<Number> => {
   try {
-    const count = await bookingModel.countDocuments({ userId }, { bookingStatus: 'booked' })
-    console.log('HEllo');
-    
+    const count = await bookingModel.countDocuments({ userId }, { bookingStatus: 'booked' })    
     return count
 
   } catch (error) {

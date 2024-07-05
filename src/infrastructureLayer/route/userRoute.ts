@@ -14,11 +14,9 @@ router.post('/logout',
   (req: Req, res: Res, next: Next) => {
     userAdapter.logoutuser(req, res, next)
   })
-// User OTP send to mail
 router.post('/send-otp', (req: Req, res: Res, next: Next) => {
   userAdapter.sendOtp(req, res, next)
 })
-// For checking user entered otp and stored otp
 router.post('/check-otp', (req: Req, res: Res, next: Next) => {
   userAdapter.checkOtp(req, res, next)
 })
@@ -30,11 +28,9 @@ router.post('/signGoogle', (req: Req, res: Res, next: Next) => {
 router.post('/forgotPassword', (req: Req, res: Res, next: Next) => {
   userAdapter.forgotPassword(req, res, next)
 })
-// For changing password 
 router.post('/changePassword', (req: Req, res: Res, next: Next) => {
   userAdapter.changePassword(req, res, next)
 })
-// For fetching searched providers 
 router.get('/parking-lots', (req: Req, res: Res, next: Next) => {
   userAdapter.fetchParkingLotsInHome(req, res, next)
 })

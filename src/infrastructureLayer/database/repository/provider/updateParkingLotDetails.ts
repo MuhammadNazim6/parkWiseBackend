@@ -9,11 +9,6 @@ export const updateParkingLotDetails = async (
   provModel: typeof ParkingProviderModel
 ): Promise<{}> => {
   try {
-    console.log('HEllo');
-    console.log(email);
-    console.log(images);
-    console.log(data);
-
     const updatedProvider = await provModel.updateOne(
       { email },
       {
