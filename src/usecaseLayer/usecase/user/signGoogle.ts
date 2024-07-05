@@ -1,4 +1,6 @@
 import ErrorResponse from '../../handler/errorResponse';
+import { IAdminRepsitory } from '../../interface/repository/IAdminRepository';
+import { IProviderRepository } from '../../interface/repository/IProviderRepository';
 import { IUserRepository } from '../../interface/repository/IUserRepository';
 import { IRequestValidator } from '../../interface/repository/IvalidateRepository';
 import IHashpassword from '../../interface/services/IHashpassword';
@@ -8,6 +10,8 @@ import { Ijwt } from "../../interface/services/Ijwt";
 export const signGoogleUser = async (
   requestValidator: IRequestValidator,
   userRepository: IUserRepository,
+  providerRepository: IProviderRepository,
+  adminRepository: IAdminRepsitory,
   bcrypt: IHashpassword,
   jwt: Ijwt,
   name: string,
@@ -25,7 +29,7 @@ export const signGoogleUser = async (
       throw ErrorResponse.badRequest(validation.message as string)
     }
     const user = await userRepository.findUser(email);
-    if (user) {
+    if (user?.google) {
       // user alreday present so logging in 
       const token = jwt.createJWT(user._id as string, user.email, "user", user.name);
       const refreshToken = jwt.createRefreshToken(user._id as string, user.email, "user", user.name);
@@ -43,6 +47,37 @@ export const signGoogleUser = async (
         }
       };
     } else {
+      // checking if the email is taken by prov or admin
+       // checking if prov exists with same email
+    const prov = await providerRepository.findProvider(email);
+    if (prov) {
+      return {
+        status: 200,
+        success: false,
+        message: `This email is already registered as a provider`,
+      }
+    }
+
+    // checking if admin exists with same email
+    const admin = await adminRepository.findAdmin(email);
+    if (admin) {
+      return {
+        status: 200,
+        success: false,
+        message: `This email is not available for registration`,
+      }
+    }
+
+    // checking if user exists with same email
+    const user = await userRepository.findUser(email);
+    if (user) {
+      return {
+        status: 200,
+        success: false,
+        message: `This email is already registered`,
+      }
+    }
+
       // registering as a user
       const hashedPassword = await bcrypt.createHash(password);
       const newUser = {

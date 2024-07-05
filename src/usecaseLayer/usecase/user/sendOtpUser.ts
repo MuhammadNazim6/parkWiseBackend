@@ -1,6 +1,7 @@
-import Nodemailer from '../../../infrastructureLayer/services/nodemailer';
 import ErrorResponse from '../../handler/errorResponse';
+import { IAdminRepsitory } from '../../interface/repository/IAdminRepository';
 import { IOtpRepository } from '../../interface/repository/IOtpRepository';
+import { IProviderRepository } from '../../interface/repository/IProviderRepository';
 import { IUserRepository } from '../../interface/repository/IUserRepository';
 import { IRequestValidator } from '../../interface/repository/IvalidateRepository';
 import { INodemailer } from '../../interface/services/INodemailer';
@@ -13,7 +14,9 @@ export const sendOtpUser = async (
   otpRepository: IOtpRepository,
   email: string,
   name: string,
-  nodemailer: INodemailer
+  nodemailer: INodemailer,
+  provRepository: IProviderRepository,
+  adminRepository: IAdminRepsitory,
 ): Promise<IOtpSendResponse> => {
   try {
     const validation = requestValidator.validateRequiredFields(
@@ -28,13 +31,32 @@ export const sendOtpUser = async (
     const user = await userRepository.findUser(email);
     if (user) {
       return {
-        status: 200, //changed from 200 to 409 for checking
+        status: 200,
         success: false,
         message: `This user already exists`,
       }
     }
+    // checking if prov exists with same email
+    const prov = await provRepository.findProvider(email);
+    if (prov) {
+      return {
+        status: 200,
+        success: false,
+        message: `This email is already registered as a provider`,
+      }
+    }
+
+    // checking if admin exists with same email
+    const admin = await adminRepository.findAdmin(email);
+    if (admin) {
+      return {
+        status: 200,
+        success: false,
+        message: `This email is not available for registration`,
+      }
+    }
+
     const role = 'user'
-    // const nodemailerInstance = new Nodemailer();
     const OTP = await nodemailer.sendOtpToMail(email, name, role);
 
 

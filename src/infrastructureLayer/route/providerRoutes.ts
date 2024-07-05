@@ -5,11 +5,9 @@ import { providerAdapter } from './injections/providerInjection';
 import { providerAuth } from '../middleware/authMiddleware';
 
 const router = express();
-// Provider register
 router.post('/signup', (req: Req, res: Res, next: Next) => {
   providerAdapter.createProvider(req, res, next)
 })
-// Provider logout
 router.post('/logout',
   providerAuth,
   (req: Req, res: Res, next: Next) => {
@@ -20,7 +18,6 @@ router.post('/send-otp',
   (req: Req, res: Res, next: Next) => {
     providerAdapter.sendOtp(req, res, next)
   })
-// For checking user entered otp and stored otp
 router.post('/check-otp',
   (req: Req, res: Res, next: Next) => {
     providerAdapter.checkOtp(req, res, next)

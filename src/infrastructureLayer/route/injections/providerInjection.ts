@@ -13,6 +13,10 @@ import AddressModel from "../../database/model/addressModel";
 import { BookingRepository } from "../../database/repository/bookingRepository";
 import BookingModel from "../../database/model/bookingModel";
 import S3Bucket from "../../services/s3BucketAws";
+import { UserRepository } from "../../database/repository/userRepository";
+import UserModel from "../../database/model/userModel";
+import { AdminRepository } from "../../database/repository/adminRepository";
+import AdminModel from "../../database/model/adminModel";
 
 
 const providerRepository = new ProviderRepository(ParkingProviderModel);
@@ -24,6 +28,8 @@ const requestValidator = new RequestValidator();
 const otpRepository = new OtpRepository(OtpModel);
 const addressRepository = new AddressRepository(AddressModel);
 const bookingRepository = new BookingRepository(BookingModel);
+const userRepository = new UserRepository(UserModel);
+const adminRepository = new AdminRepository(AdminModel);
 const providerUseCase = new ProviderUseCase(
   providerRepository,
   bcrypt,
@@ -33,7 +39,9 @@ const providerUseCase = new ProviderUseCase(
   otpRepository,
   addressRepository,
   bookingRepository,
-  s3Bucket
+  s3Bucket,
+  userRepository,
+  adminRepository
 );
 const providerAdapter = new ProviderAdapter(providerUseCase);
 

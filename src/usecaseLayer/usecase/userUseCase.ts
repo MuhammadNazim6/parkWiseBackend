@@ -35,6 +35,7 @@ import { editFeedback } from "./user/editFeedback";
 import { getLotFeedbacks } from "./user/getLotFeedbacks";
 import { ISuggestionRepository } from "../interface/repository/ISuggestionRepository";
 import { addSuggestion } from "./user/addSuggestion";
+import { IAdminRepsitory } from "../interface/repository/IAdminRepository";
 
 
 export class UserUseCase {
@@ -49,6 +50,7 @@ export class UserUseCase {
   private readonly bookingRepository: IBookingRepository;
   private readonly feedbackRepository: IFeedbackRepository;
   private readonly suggestionRepository: ISuggestionRepository;
+  private readonly adminRepository: IAdminRepsitory;
 
 
   constructor(
@@ -63,6 +65,7 @@ export class UserUseCase {
     bookingRepository: IBookingRepository,
     feedbackRepository: IFeedbackRepository,
     suggestionRepository: ISuggestionRepository,
+    adminRepository: IAdminRepsitory,
 
   ) {
     this.userRepository = userRepository;
@@ -76,6 +79,7 @@ export class UserUseCase {
     this.bookingRepository = bookingRepository;
     this.feedbackRepository = feedbackRepository;
     this.suggestionRepository = suggestionRepository;
+    this.adminRepository = adminRepository;
 
   }
 
@@ -126,10 +130,12 @@ export class UserUseCase {
       email,
       name,
       this.nodemailer,
+      this.providerRepository,
+      this.adminRepository,
     )
   }
 
-
+ 
   // checking otp of user
   async checkOtpUser({
     email,
@@ -165,6 +171,8 @@ export class UserUseCase {
     return signGoogleUser(
       this.requestValidator,
       this.userRepository,
+      this.providerRepository,
+      this.adminRepository,
       this.bcrypt,
       this.jwt,
       name,

@@ -33,6 +33,8 @@ import { fetchTodaysBookingCountProv } from "./provider/fetchTodaysBookingCountP
 import { fetchMonthlyProv } from "./provider/fetchMonthlyProv";
 import { fetchWeeklyProv } from "./provider/fetchWeeklyProv";
 import { fetchDailyProv } from "./provider/fetchDailyProv";
+import { IUserRepository } from "../interface/repository/IUserRepository";
+import { IAdminRepsitory } from "../interface/repository/IAdminRepository";
 
 export class ProviderUseCase {
   private readonly providerRepository: IProviderRepository;
@@ -44,6 +46,8 @@ export class ProviderUseCase {
   private readonly addressRepository: IAddressRepository;
   private readonly bookingRepository: IBookingRepository;
   private readonly s3Bucket: IS3Bucket;
+  private readonly userRepository: IUserRepository;
+  private readonly adminRepository: IAdminRepsitory;
 
   constructor(
     providerRepository: IProviderRepository,
@@ -54,7 +58,10 @@ export class ProviderUseCase {
     otpRepository: IOtpRepository,
     addressRepository: IAddressRepository,
     bookingRepository: IBookingRepository,
-    s3Bucket: IS3Bucket
+    s3Bucket: IS3Bucket,
+    userRepository: IUserRepository,
+    adminRepository: IAdminRepsitory,
+
 
   ) {
     this.providerRepository = providerRepository;
@@ -66,6 +73,8 @@ export class ProviderUseCase {
     this.addressRepository = addressRepository;
     this.bookingRepository = bookingRepository;
     this.s3Bucket = s3Bucket;
+    this.userRepository = userRepository;
+    this.adminRepository = adminRepository;
   }
 
   // provider register
@@ -105,6 +114,8 @@ export class ProviderUseCase {
       this.requestValidator,
       this.providerRepository,
       this.otpRepository,
+      this.userRepository,
+      this.adminRepository,
       email,
       name
     )

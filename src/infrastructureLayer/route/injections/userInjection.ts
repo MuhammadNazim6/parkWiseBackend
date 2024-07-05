@@ -20,6 +20,8 @@ import { FeedbackRepository } from "../../database/repository/feedbackRepository
 import FeedbackModel from "../../database/model/feedbackModel";
 import { SuggestionRepository } from "../../database/repository/suggestionRepository";
 import SuggestionModel from "../../database/model/suggestionsModel";
+import { AdminRepository } from "../../database/repository/adminRepository";
+import AdminModel from "../../database/model/adminModel";
 
 
 const userRepository = new UserRepository(UserModel);
@@ -34,6 +36,7 @@ const providerRepository = new ProviderRepository(ParkingProviderModel)
 const bookingRepository = new BookingRepository(BookingModel)
 const feedbackRepository = new FeedbackRepository(FeedbackModel)
 const suggestionRepository = new SuggestionRepository(SuggestionModel)
+const adminRepository = new AdminRepository(AdminModel)
 
 
 const userusecase = new UserUseCase(
@@ -47,7 +50,8 @@ const userusecase = new UserUseCase(
   s3Bucket,
   bookingRepository,
   feedbackRepository,
-  suggestionRepository
+  suggestionRepository,
+  adminRepository
 );
 
 const providerUseCase = new ProviderUseCase(
@@ -59,7 +63,9 @@ const providerUseCase = new ProviderUseCase(
   otpRepository,
   addressRepository,
   bookingRepository,
-  s3Bucket
+  s3Bucket,
+  userRepository,
+  adminRepository
 )
 const userAdapter = new UserAdapter(userusecase, providerUseCase);
 

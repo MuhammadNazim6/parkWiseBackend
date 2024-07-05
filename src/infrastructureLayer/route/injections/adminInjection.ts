@@ -57,7 +57,10 @@ const providerUseCase = new ProviderUseCase(
   otpRepository,
   addressRepository,
   bookingRepository,
-  s3Bucket
+  s3Bucket,
+  userRepository,
+  adminRepository
+
 )
 
 const userUseCase = new UserUseCase(
@@ -71,9 +74,10 @@ const userUseCase = new UserUseCase(
   s3Bucket,
   bookingRepository,
   feedbackRepository,
-  suggestionRepository
+  suggestionRepository,
+  adminRepository
 )
 
 const adminAdapter = new AdminAdapter(adminUseCase, providerUseCase, userUseCase);
 
-export { adminAdapter, adminRepository };    
+export { adminAdapter, adminRepository };     
