@@ -196,7 +196,7 @@ export class ProviderAdapter {
   async updateParkingLotDetails(req: Req, res: Res, next: Next) {
     try {
       const files = req.files as IFile[];
-      
+
       const updated = await this._providerUseCase.updateParkingLotDetails(req.body, files);
       if (updated) {
         res.status(200).json({
@@ -207,6 +207,46 @@ export class ProviderAdapter {
         res.status(400).json({
           success: false,
           message: 'Unable to update parking lot'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async fetchServicesCount(req: Req, res: Res, next: Next) {
+    try {
+      const { provId } = req.params
+      const count = await this._providerUseCase.fetchServicesCount(provId);
+      if (count) {
+        res.status(200).json({
+          success: true,
+          data: count
+        })
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'Unable to fetch used services count'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async getProvProfile(req: Req, res: Res, next: Next) {
+    try {
+      const { provId } = req.params
+      const profile = await this._providerUseCase.getProvProfile(provId);
+      if (profile) {
+        res.status(200).json({
+          success: true,
+          data: profile
+        })
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'Unable to fetch provider profile'
         });
       }
     } catch (err) {

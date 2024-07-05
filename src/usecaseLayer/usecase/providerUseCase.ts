@@ -27,6 +27,8 @@ import { updateProvProfile } from "./provider/updateProvProfile";
 import { fetchLotsBookings } from "./provider/fetchLotsBookings";
 import { checkProvPassword } from "./provider/checkProvPassword";
 import { updateParkingLotDetails } from "./provider/updateParkingLotDetails";
+import { fetchServicesCount } from "./provider/fetchServicesCount";
+import { getProvProfile } from "./provider/getProvProfile";
 
 export class ProviderUseCase {
   private readonly providerRepository: IProviderRepository;
@@ -300,6 +302,20 @@ export class ProviderUseCase {
       this.s3Bucket,
       body,
       files
+    )
+  }
+
+  async fetchServicesCount(provId:string) {
+    return fetchServicesCount(
+      this.bookingRepository,
+      provId
+    )
+  }
+
+  async getProvProfile(provId:string) {
+    return getProvProfile(
+      this.providerRepository,
+      provId
     )
   }
 

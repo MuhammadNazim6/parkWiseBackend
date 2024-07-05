@@ -45,6 +45,35 @@ router.patch("/rejectReq",
   (req: Req, res: Res, next: Next) => {
     adminAdapter.rejectRequest(req, res, next);
   });
+router.get("/fetchServicesCount",
+  adminAuth,
+  (req: Req, res: Res, next: Next) => {
+    adminAdapter.fetchServicesCount(req, res, next);
+  });
 
+router.get("/fetchTotalBookingsToday",
+  adminAuth,
+  (req: Req, res: Res, next: Next) => {
+    adminAdapter.fetchTotalBookingsToday(req, res, next);
+  });
 
-export default router;
+router.get("/fetchMonthly",
+  adminAuth,
+  (req: Req, res: Res, next: Next) => {
+    adminAdapter.fetchMonthly(req, res, next);
+  });
+
+router.get("/fetchWeekly",
+  adminAuth,
+  (req: Req, res: Res, next: Next) => {
+    adminAdapter.fetchWeekly(req, res, next);
+  });
+
+router.get("/fetchDaily",
+  adminAuth,
+  (req: Req, res: Res, next: Next) => {
+    adminAdapter.fetchDaily(req, res, next);
+  });
+ 
+
+export default router

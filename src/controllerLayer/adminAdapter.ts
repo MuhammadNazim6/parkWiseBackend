@@ -166,6 +166,105 @@ export class AdminAdapter {
       next(err);
     }
   }
+  async fetchServicesCount(req: Req, res: Res, next: Next) {
+    try {
+      const count = await this._adminUsecase.fetchServicesCount();
+      if (count) {
+        res.status(200).json({
+          success: true,
+          data: count
 
+        })
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'Unable to fetch used services count'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
 
+  async fetchTotalBookingsToday(req: Req, res: Res, next: Next) {
+    try {
+      const count = await this._adminUsecase.fetchTotalBookingsToday();
+      if (count) {
+        res.status(200).json({
+          success: true,
+          data: count
+
+        })
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'Unable to fetch count'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async fetchMonthly(req: Req, res: Res, next: Next) {
+    try {
+      const monthly = await this._adminUsecase.fetchMonthly();
+      if (monthly) {
+        res.status(200).json({
+          success: true,
+          data: monthly
+
+        })
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'Unable to fetch monthly data'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async fetchWeekly(req: Req, res: Res, next: Next) {
+    try {
+      const weekly = await this._adminUsecase.fetchWeekly();
+      if (weekly) {
+        res.status(200).json({
+          success: true,
+          data: weekly
+
+        })
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'Unable to fetch weekly data'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async fetchDaily(req: Req, res: Res, next: Next) {
+    try {
+      const daily = await this._adminUsecase.fetchDaily();
+      if (daily) {
+        res.status(200).json({
+          success: true,
+          data: daily
+
+        })
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'Unable to fetch daily data'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+   
 }

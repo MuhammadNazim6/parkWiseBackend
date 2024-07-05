@@ -36,6 +36,8 @@ export const sendOtpProvider = async (
     const OTP = await nodemailerInstance.sendOtpToMail(email, name, role);
 
     if (OTP) {
+      console.log(OTP);
+      
       let expiryTime = new Date();
       expiryTime.setMinutes(expiryTime.getMinutes() + 5);
 

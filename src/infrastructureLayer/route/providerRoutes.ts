@@ -17,7 +17,6 @@ router.post('/logout',
   })
 // Provider OTP send to mail
 router.post('/send-otp',
-  providerAuth,
   (req: Req, res: Res, next: Next) => {
     providerAdapter.sendOtp(req, res, next)
   })
@@ -63,6 +62,18 @@ router.patch('/updateParkingLot',
   upload.array('images'),
   (req: Req, res: Res, next: Next) => {
     providerAdapter.updateParkingLotDetails(req, res, next)
+  })
+
+router.get('/fetchServicesCount/:provId',
+  // providerAuth,
+  (req: Req, res: Res, next: Next) => {
+    providerAdapter.fetchServicesCount(req, res, next)
+  })
+
+router.get('/provProfile/:provId',
+  providerAuth,
+  (req: Req, res: Res, next: Next) => {
+    providerAdapter.getProvProfile(req, res, next)
   })
 
 

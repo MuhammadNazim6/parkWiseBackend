@@ -1,6 +1,5 @@
 import { IParkingProvider, IFetchParkingLot } from "../../../domainLayer/providers";
 import { IProvUpdateProfile } from "../../../infrastructureLayer/types/providerTypes";
-import { StoreData } from "../services/IResponses";
 import { IUpdateParkingLot } from "./ICommonInterfaces";
 
 export interface IProviderRepository {
@@ -30,4 +29,5 @@ export interface IProviderRepository {
   getLotDetails(lotId: string): Promise<{}[]>
   updateProfile(lotId: string, toUpdate: IProvUpdateProfile): Promise<{}>
   updateParkingLotDetails(email: string, data: IUpdateParkingLot, images: string[]): Promise<{}>
+  getProvProfile(provId:string): Promise<IParkingProvider | null>
 }

@@ -1,6 +1,5 @@
 import { IRequestValidator } from "../../interface/repository/IvalidateRepository";
 import { IErrorResponse, ISuccessResponse } from "../../interface/services/IResponses";
-import ErrorResponse from "../../handler/errorResponse";
 import { IOtpRepository } from "../../interface/repository/IOtpRepository";
 
 export const checkOtpCommon = async (

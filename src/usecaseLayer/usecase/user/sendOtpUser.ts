@@ -39,11 +39,11 @@ export const sendOtpUser = async (
 
 
     if (OTP) {
+      console.log(OTP);
       let expiryTime = new Date();
       expiryTime.setMinutes(expiryTime.getMinutes() + 3);
 
       const otpSaved = await otpRepository.createOtpCollection(email, role, OTP, expiryTime)
-      console.log(OTP);
 
       return {
         status: 200,

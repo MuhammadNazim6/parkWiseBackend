@@ -1,6 +1,5 @@
-import { IFetchParkingLot, IParkingProvider, IParkingProviderReady } from "../../../domainLayer/providers";
+import { IFetchParkingLot, IParkingProvider } from "../../../domainLayer/providers";
 import { IProviderRepository } from "../../../usecaseLayer/interface/repository/IProviderRepository";
-import { IProviderLoginResponse, StoreData } from "../../../usecaseLayer/interface/services/IResponses";
 import ParkingProviderModel from "../model/providerModel";
 import { createProvider } from "./provider/createProvider";
 import { findProvider, findProviderWithId } from "./provider/findProvider";
@@ -109,6 +108,10 @@ export class ProviderRepository implements IProviderRepository {
 
   async updateParkingLotDetails(email: string, data: IUpdateParkingLot, images: string[]): Promise<{}> {
     return updateParkingLotDetails(email, data, images, this.providerModel);
+  }
+
+  async getProvProfile(provId: string): Promise<IParkingProvider | null> {
+    return findProviderWithId(provId, this.providerModel);
   }
 
 }

@@ -45,6 +45,7 @@ const adminUseCase = new AdminUseCase(
   bcrypt,
   jwt,
   requestValidator,
+  bookingRepository
 );
 
 const providerUseCase = new ProviderUseCase(
