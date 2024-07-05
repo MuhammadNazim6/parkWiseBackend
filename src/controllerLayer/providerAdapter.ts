@@ -217,7 +217,29 @@ export class ProviderAdapter {
   async fetchServicesCount(req: Req, res: Res, next: Next) {
     try {
       const { provId } = req.params
-      const count = await this._providerUseCase.fetchServicesCount(provId);
+      const count = await this._providerUseCase.fetchServicesCount(provId) as { services: { name: string; value: number }[] }
+
+      if (count) {
+        res.status(200).json({
+          success: true,
+          data: count.services
+        })
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'Unable to fetch used services count'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async fetchTodaysBookingCountProv(req: Req, res: Res, next: Next) {
+    try {
+      const { provId } = req.params
+      const count = await this._providerUseCase.fetchTodaysBookingCountProv(provId)
+
       if (count) {
         res.status(200).json({
           success: true,
@@ -226,7 +248,71 @@ export class ProviderAdapter {
       } else {
         res.status(404).json({
           success: false,
-          message: 'Unable to fetch used services count'
+          message: 'Unable to fetch todays booking count'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async fetchMonthlyProv(req: Req, res: Res, next: Next) {
+    try {
+      const { provId } = req.params
+      const monthly = await this._providerUseCase.fetchMonthlyProv(provId)
+
+      if (monthly) {
+        res.status(200).json({
+          success: true,
+          data: monthly
+        })
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'Unable to fetch monthly bookings'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async fetchWeeklyProv(req: Req, res: Res, next: Next) {
+    try {
+      const { provId } = req.params
+      const weekly = await this._providerUseCase.fetchWeeklyProv(provId)
+
+      if (weekly) {
+        res.status(200).json({
+          success: true,
+          data: weekly
+        })
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'Unable to fetch weekly bookings'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async fetchDailyProv(req: Req, res: Res, next: Next) {
+    try {
+      const { provId } = req.params
+      const daily = await this._providerUseCase.fetchDailyProv(provId)
+      console.log('Count', daily);
+
+      if (daily) {
+        res.status(200).json({
+          success: true,
+          data: daily
+        })
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'Unable to fetch daily bookings'
         });
       }
     } catch (err) {

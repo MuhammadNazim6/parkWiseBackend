@@ -65,11 +65,35 @@ router.patch('/updateParkingLot',
   })
 
 router.get('/fetchServicesCount/:provId',
-  // providerAuth,
+  providerAuth,
   (req: Req, res: Res, next: Next) => {
     providerAdapter.fetchServicesCount(req, res, next)
   })
 
+router.get('/fetchTodaysBookingCountProv/:provId',
+  providerAuth,
+  (req: Req, res: Res, next: Next) => {
+    providerAdapter.fetchTodaysBookingCountProv(req, res, next)
+  })
+
+router.get('/fetchMonthly/:provId',
+  providerAuth,
+  (req: Req, res: Res, next: Next) => {
+    providerAdapter.fetchMonthlyProv(req, res, next)
+  })
+
+router.get('/fetchWeekly/:provId',
+  providerAuth,
+  (req: Req, res: Res, next: Next) => {
+    providerAdapter.fetchWeeklyProv(req, res, next)
+  })
+
+router.get('/fetchDaily/:provId',
+  providerAuth,
+  (req: Req, res: Res, next: Next) => {
+    providerAdapter.fetchDailyProv(req, res, next)
+  })
+  
 router.get('/provProfile/:provId',
   providerAuth,
   (req: Req, res: Res, next: Next) => {

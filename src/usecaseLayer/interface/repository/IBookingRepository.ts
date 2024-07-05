@@ -16,5 +16,10 @@ export interface IBookingRepository {
   fetchWeeklyForAdmin(): Promise<{}[]>
   fetchDailyForAdmin(): Promise<{}[]>
 
-  fetchServicesCountForProvider(provId:string):Promise<{}>
+  fetchServicesCountForProvider(provId: string): Promise<{}>
+  fetchTodaysBookingCountProv(provId: string): Promise<number>
+  fetchMonthlyForProv(provId: string): Promise<{}[]>
+  fetchWeeklyForProv(provId: string): Promise<{}[]>
+  fetchDailyForProv(provId: string): Promise<{}[]>
+
 }

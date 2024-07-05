@@ -1,13 +1,13 @@
 import { IBookingRepository } from "../../interface/repository/IBookingRepository"
 
-export const fetchTotalBookingsToday = async (
+export const fetchDailyProv = async (
   bookingRepository: IBookingRepository,
-): Promise<number> => {
+  provId: string
+): Promise<{}[]> => {
   try {
-    const count = await bookingRepository.fetchTotalBookingsTodayForAdmin()    
-    return count
+    const dailyData = await bookingRepository.fetchDailyForProv(provId)
+    return dailyData
   } catch (error) {
     throw error
   }
-
 }

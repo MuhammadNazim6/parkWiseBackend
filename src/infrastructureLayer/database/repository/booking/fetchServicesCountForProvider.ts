@@ -8,11 +8,9 @@ export const fetchServicesCountForProvider = async (
   try {
 
     const provObjId = new ObjectId(provId);
-console.log(provObjId);
-
     const servicesCount = await bookingModel.aggregate([
       {
-        "$match": { "_id": provObjId }
+        "$match": { "parkingLotId": provObjId }
       },
       {
         "$group": {
@@ -43,17 +41,14 @@ console.log(provObjId);
             { "name": "EV charging", "value": "$evChargingCount" }
           ]
         }
-      }
+      } 
+     
     ]);
 
-    const initial = [
-      { "name": "Air pressure", "value": 0 },
-      { "name": "Water service", "value": 0 },
-      { "name": "EV charging", "value": 0 }
-    ]
-console.log(servicesCount);
 
-    return servicesCount
+console.log(servicesCount[0]);  
+
+    return servicesCount[0]
   } catch (error) {
     throw error 
   }

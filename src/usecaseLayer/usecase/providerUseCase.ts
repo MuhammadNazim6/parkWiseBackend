@@ -29,6 +29,10 @@ import { checkProvPassword } from "./provider/checkProvPassword";
 import { updateParkingLotDetails } from "./provider/updateParkingLotDetails";
 import { fetchServicesCount } from "./provider/fetchServicesCount";
 import { getProvProfile } from "./provider/getProvProfile";
+import { fetchTodaysBookingCountProv } from "./provider/fetchTodaysBookingCountProv";
+import { fetchMonthlyProv } from "./provider/fetchMonthlyProv";
+import { fetchWeeklyProv } from "./provider/fetchWeeklyProv";
+import { fetchDailyProv } from "./provider/fetchDailyProv";
 
 export class ProviderUseCase {
   private readonly providerRepository: IProviderRepository;
@@ -315,6 +319,34 @@ export class ProviderUseCase {
   async getProvProfile(provId:string) {
     return getProvProfile(
       this.providerRepository,
+      provId
+    )
+  }
+
+  async fetchTodaysBookingCountProv(provId:string) {
+    return fetchTodaysBookingCountProv(
+      this.bookingRepository,
+      provId
+    )
+  }
+
+  async fetchMonthlyProv(provId:string) {
+    return fetchMonthlyProv(
+      this.bookingRepository,
+      provId
+    )
+  }
+
+  async fetchWeeklyProv(provId:string) {
+    return fetchWeeklyProv(
+      this.bookingRepository,
+      provId
+    )
+  }
+
+  async fetchDailyProv(provId:string) {
+    return fetchDailyProv(
+      this.bookingRepository,
       provId
     )
   }

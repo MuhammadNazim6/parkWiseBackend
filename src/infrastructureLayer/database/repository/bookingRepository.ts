@@ -5,12 +5,16 @@ import BookingModel from "../model/bookingModel";
 import { bookSlot } from "./booking/bookSlot";
 import { cancelBooking } from "./booking/cancelBooking";
 import { fetchDailyForAdmin } from "./booking/fetchDailyForAdmin";
+import { fetchDailyForProv } from "./booking/fetchDailyForProv";
 import { fetchMonthlyForAdmin } from "./booking/fetchMonthlyForAdmin";
+import { fetchMonthlyForProv } from "./booking/fetchMonthlyForProv";
 import { fetchServicesCountForAdmin } from "./booking/fetchServicesCountForAdmin";
 import { fetchServicesCountForProvider } from "./booking/fetchServicesCountForProvider";
+import { fetchTodaysBookingCountProv } from "./booking/fetchTodaysBookingCountProv";
 import { fetchTotalBookingsTodayForAdmin } from "./booking/fetchTotalBookingsTodayForAdmin";
 import { fetchUserBookings } from "./booking/fetchUserBookings";
 import { fetchWeeklyForAdmin } from "./booking/fetchWeeklyForAdmin";
+import { fetchWeeklyForProv } from "./booking/fetchWeeklyForProv";
 import { getBookedSlots } from "./booking/getBookedSlots";
 import { getBookingDetails } from "./booking/getBookingDetails";
 import { getParkingLotBookings } from "./booking/getParkingLotBookings";
@@ -63,6 +67,18 @@ export class BookingRepository implements IBookingRepository {
   //
   async fetchServicesCountForProvider(provId: string): Promise<{}> {
     return fetchServicesCountForProvider(this.bookingModel, provId);
+  }
+  async fetchTodaysBookingCountProv(provId: string): Promise<number> {
+    return fetchTodaysBookingCountProv(this.bookingModel, provId);
+  }
+  async fetchMonthlyForProv(provId: string): Promise<{}[]> {
+    return fetchMonthlyForProv(this.bookingModel, provId);
+  }
+  async fetchWeeklyForProv(provId: string): Promise<{}[]> {
+    return fetchWeeklyForProv(this.bookingModel, provId);
+  }
+  async fetchDailyForProv(provId: string): Promise<{}[]> {
+    return fetchDailyForProv(this.bookingModel, provId);
   }
 
 
