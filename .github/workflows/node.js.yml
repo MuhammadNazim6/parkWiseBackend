@@ -29,3 +29,4 @@ jobs:
     - run: |
             touch .env
             echo "${{ secrets.PARKWISE_ENV_FILE }}"  > .env
+    - run: pm2 restart parkwise
