@@ -20,12 +20,23 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
+        
+    - name: Check for dependency changes
+      id: check-dependency-changes
+      run: |
+        git diff --quiet HEAD^ HEAD package-lock.json package.json || echo "dependencies_changed=true" >> $GITHUB_ENV
+
+    - name: Install dependencies
+      if: env.dependencies_changed == 'true'
+      run: npm ci
+
+    - name: Create .env file
     - run: |
             touch .env
             echo "${{ secrets.PARKWISE_ENV_FILE }}"  > .env
