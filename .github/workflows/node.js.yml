@@ -29,4 +29,4 @@ jobs:
     - run: |
             touch .env
             echo "${{ secrets.PARKWISE_ENV_FILE }}"  > .env
-    - run: pm2 restart parkwise
+    - run: pm2 start src/index.ts --interpreter ./node_modules/.bin/ts-node
