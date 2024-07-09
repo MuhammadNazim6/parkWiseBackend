@@ -26,15 +26,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        
-    - name: Check for dependency changes
-      id: check-dependency-changes
-      run: |
-        git diff --quiet HEAD^ HEAD package-lock.json package.json || echo "dependencies_changed=true" >> $GITHUB_ENV
-
-    - name: Install dependencies
-      if: env.dependencies_changed == 'true'
-      run: npm ci
+      
 
     - name: Create .env file
     - run: |
