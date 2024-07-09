@@ -33,20 +33,18 @@ jobs:
     - name: Check if parkwise process exists
       id: check_parkwise
       run: |
-        pm2 describe parkwise > /dev/null 2>&1 && echo "exists=true" || echo "exists=false"
-      continue-on-error: true
-
-    - name: Set output
-      id: set_output
-      run: |
-        echo "::set-output name=exists::$(steps.check_parkwise.outputs.exists)"
+        if pm2 describe parkwise > /dev/null 2>&1; then
+          echo "exists=true" >> $GITHUB_ENV
+        else
+          echo "exists=false" >> $GITHUB_ENV
+        fi
 
     - name: Restart parkwise
-      if: steps.check_parkwise.outputs.exists == 'true'
+      if: env.exists == 'true'
       run: pm2 restart parkwise --update-env --wait-ready
 
     - name: Start parkwise
-      if: steps.check_parkwise.outputs.exists == 'false'
+      if: env.exists == 'false'
       run: pm2 start src/index.ts --interpreter ./node_modules/.bin/ts-node --name parkwise --wait-ready
 
     - name: Save PM2 configuration
