@@ -1,18 +1,12 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
-name: Node.js CI/CD/
+name: Node.js CI/CD
 
 on:
   push:
     branches: [ "main" ]
 
-
 jobs:
   build:
-
     runs-on: self-hosted
-
     strategy:
       matrix:
         node-version: [18.x]
@@ -27,11 +21,19 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
       
+    - name: Check for dependency changes
+      id: check-dependency-changes
+      run: |
+        git diff --quiet HEAD^ HEAD package-lock.json package.json || echo "dependencies_changed=true" >> $GITHUB_ENV
+
+    - name: Install dependencies
+      if: env.dependencies_changed == 'true'
+      run: npm ci
 
     - name: Create .env file
-    - run: |
-            touch .env
-            echo "${{ secrets.PARKWISE_ENV_FILE }}"  > .env
+      run: |
+        touch .env
+        echo "${{ secrets.PARKWISE_ENV_FILE }}" > .env
    
     - name: Check if parkwise process exists
       id: check_parkwise
@@ -41,6 +43,7 @@ jobs:
         else
           echo "exists=false" >> $GITHUB_ENV
         fi
+      continue-on-error: true
 
     - name: Restart parkwise
       if: env.exists == 'true'
@@ -52,4 +55,3 @@ jobs:
 
     - name: Save PM2 configuration
       run: pm2 save
-
