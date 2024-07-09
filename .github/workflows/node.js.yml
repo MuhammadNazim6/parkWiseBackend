@@ -28,4 +28,4 @@ jobs:
     - run: npm ci
     - run: |
             touch .env
-            echo "{{ secrets.PARKWISE_ENV_FILE }}"  > .env
+            echo "${{ secrets.PARKWISE_ENV_FILE }}"  > .env
