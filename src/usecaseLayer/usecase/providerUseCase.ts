@@ -205,9 +205,10 @@ export class ProviderUseCase {
 
 
   // fetch providers requests
-  async getRequests() {
+  async getRequests(page:string) {
     return getRequests(
-      this.providerRepository
+      this.providerRepository,
+      page
     )
   }
   async getApprovedProviders() {

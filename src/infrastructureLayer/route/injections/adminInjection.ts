@@ -45,7 +45,8 @@ const adminUseCase = new AdminUseCase(
   bcrypt,
   jwt,
   requestValidator,
-  bookingRepository
+  bookingRepository,
+  suggestionRepository
 );
 
 const providerUseCase = new ProviderUseCase(
@@ -60,7 +61,6 @@ const providerUseCase = new ProviderUseCase(
   s3Bucket,
   userRepository,
   adminRepository
-
 )
 
 const userUseCase = new UserUseCase(

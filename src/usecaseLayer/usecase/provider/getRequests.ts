@@ -2,8 +2,9 @@ import { IProviderRepository } from "../../interface/repository/IProviderReposit
 
 export const getRequests = async (
   providerRepository: IProviderRepository,
-): Promise<{}[]> => {
-  const getProvidersRequests = await providerRepository.getProviderRequests()
+  page:string
+): Promise<{}> => {
+  const data = await providerRepository.getProviderRequests(page)
 
-  return getProvidersRequests
+  return data
 }  

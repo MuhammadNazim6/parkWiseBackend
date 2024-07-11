@@ -67,9 +67,10 @@ export class ProviderRepository implements IProviderRepository {
       this.providerModel)
   }
 
-  async getProviderRequests(): Promise<{}[]> {
+  async getProviderRequests(page:string): Promise<{}> {
     return getProviderRequests(
-      this.providerModel
+      this.providerModel,
+      page
     )
   }
 

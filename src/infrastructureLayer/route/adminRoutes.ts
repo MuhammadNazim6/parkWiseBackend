@@ -57,7 +57,7 @@ router.get("/fetchTotalBookingsToday",
     adminAdapter.fetchTotalBookingsToday(req, res, next);
   });
 
-router.get("/fetchMonthly",
+router.get("/fetchMonthlyAdmin",
   adminAuth,
   (req: Req, res: Res, next: Next) => {
     adminAdapter.fetchMonthly(req, res, next);
@@ -69,10 +69,10 @@ router.get("/fetchWeekly",
     adminAdapter.fetchWeekly(req, res, next);
   });
 
-router.get("/fetchDaily",
+router.get("/getSuggestions",
   adminAuth,
   (req: Req, res: Res, next: Next) => {
-    adminAdapter.fetchDaily(req, res, next);
+    adminAdapter.getSuggestions(req, res, next);
   });
  
 

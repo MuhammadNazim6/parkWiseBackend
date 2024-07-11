@@ -24,7 +24,7 @@ export const fetchTotalBookingsTodayForAdmin = async (
       }
     ]);
     
-    return result[0].totalBookingsToday
+    return result[0]?.totalBookingsToday ? result[0]?.totalBookingsToday : 0
   } catch (error) {
     throw error
   }

@@ -11,7 +11,7 @@ export interface IUserRepository {
   loginUser(email: string, password: string): Promise<IUser | null>;
   createGoogleUser(newUser: IUser): Promise<StoreData>;
   changePassword(email: string, password: string): Promise<boolean>;
-  getUsers(): Promise<{}[]>;
+  getUsers(page:string): Promise<{}>;
   blockUnblockUser(email: string, status: boolean): Promise<boolean>;
   updateUserProfile(id: string, email: string, name: string, mobile: number, uploadedImageName: string): Promise<{}>;
   updateUserProfileWithoutImage(id: string, email: string, name: string, mobile: number): Promise<{}>;

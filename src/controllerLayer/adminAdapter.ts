@@ -8,7 +8,7 @@ export class AdminAdapter {
   private readonly _providerUsecase: ProviderUseCase
   private readonly _userUseCase: UserUseCase
 
-  constructor (adminUsecase: AdminUseCase, providerUsecase: ProviderUseCase, userUseCase: UserUseCase) {
+  constructor(adminUsecase: AdminUseCase, providerUsecase: ProviderUseCase, userUseCase: UserUseCase) {
     this._adminUsecase = adminUsecase // using dependency injection to call the adminUsecase
     this._providerUsecase = providerUsecase
     this._userUseCase = userUseCase
@@ -37,10 +37,12 @@ export class AdminAdapter {
   // @access Private
   async getProvidersRequests(req: Req, res: Res, next: Next) {
     try {
-      const requests = await this._providerUsecase.getRequests()
-      if (requests) {
+      const { page } = req.query
+      const data = await this._providerUsecase.getRequests(page as string)
+      if (data) {
         res.status(200).json({
-          data: requests
+          success: true,
+          data
         })
       } else {
         res.status(404).json({
@@ -58,6 +60,7 @@ export class AdminAdapter {
       const providers = await this._providerUsecase.getApprovedProviders();
       if (providers) {
         res.status(200).json({
+          success: true,
           data: providers
         })
       } else {
@@ -73,10 +76,12 @@ export class AdminAdapter {
 
   async getUsers(req: Req, res: Res, next: Next) {
     try {
-      const requests = await this._userUseCase.getUsers();
-      if (requests) {
+      const { page } = req.query
+      const data = await this._userUseCase.getUsers(page as string);
+      if (data) {
         res.status(200).json({
-          data: requests
+          success: true,
+          data
         })
       } else {
         res.status(404).json({
@@ -196,9 +201,9 @@ export class AdminAdapter {
 
         })
       } else {
-        res.status(404).json({
+        res.status(200).json({
           success: false,
-          message: 'Unable to fetch count'
+          data: count
         });
       }
     } catch (err) {
@@ -253,7 +258,6 @@ export class AdminAdapter {
         res.status(200).json({
           success: true,
           data: daily
-
         })
       } else {
         res.status(404).json({
@@ -266,5 +270,25 @@ export class AdminAdapter {
     }
   }
 
-   
+  async getSuggestions(req: Req, res: Res, next: Next) {
+    try {
+      const { page } = req.query
+      const data = await this._adminUsecase.getSuggestions(page as string);
+      if (data) {
+        res.status(200).json({
+          success: true,
+          data
+        })
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'Unable to fetch suggestions'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+
 }

@@ -221,9 +221,12 @@ export class UserUseCase {
     )
   }
 
-  async getUsers() {
+  async getUsers(
+    page:string
+  ) {
     return getUsers(
-      this.userRepository
+      this.userRepository,
+      page
     )
   }
 

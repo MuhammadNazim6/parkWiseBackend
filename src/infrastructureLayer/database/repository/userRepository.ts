@@ -45,9 +45,10 @@ export class UserRepository implements IUserRepository {
   async changePassword(email: string, password: string): Promise<boolean> {
     return changePassword(email, password, this.usersModel)
   }
-  async getUsers(): Promise<{}[]> {
+  async getUsers(page:string): Promise<{}> {
     return getUsers(
-      this.usersModel
+      this.usersModel,
+      page
     )
   }
   async blockUnblockUser(email: string, state: boolean): Promise<boolean> {

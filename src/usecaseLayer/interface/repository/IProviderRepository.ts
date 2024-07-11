@@ -21,7 +21,7 @@ export interface IProviderRepository {
     startEndTime: string,
     uploadedImageNames: string[]
   ): Promise<boolean>;
-  getProviderRequests(): Promise<{}[]>;
+  getProviderRequests(page:string): Promise<{}>;
   getApprovedProviders(): Promise<{}[]>;
   blockUnblockProvider(email: string, status: boolean): Promise<boolean>;
   manageRequest(id: string, action: string): Promise<boolean>;
