@@ -1,4 +1,4 @@
-name: Node.js CI/CD/updated
+name: Node.js CI/CD/updated1
 
 on:
   push:
@@ -34,24 +34,31 @@ jobs:
       run: |
         touch .env
         echo "${{ secrets.PARKWISE_ENV_FILE }}" > .env
+
+
    
-    - name: Check if parkwise process exists
-      id: check_parkwise
+    - name: Check if parkwise process exists and stop if running
+    - name: Check if parkwise process exists and stop if running
+      id: check_and_stop_parkwise
       run: |
         if pm2 describe parkwise > /dev/null 2>&1; then
           echo "exists=true" >> $GITHUB_ENV
+          pm2 stop parkwise
         else
           echo "exists=false" >> $GITHUB_ENV
         fi
-      continue-on-error: true
 
-    - name: Restart parkwise
-      if: env.exists == 'true'
-      run: pm2 restart parkwise --update-env --wait-ready
+    - name: Perform your build steps
+      run: |
+        # Add any build steps you need here
 
-    - name: Start parkwise
-      if: env.exists == 'false'
-      run: pm2 start src/index.ts --interpreter ./node_modules/.bin/ts-node --name parkwise --wait-ready
+    - name: Restart or start parkwise
+      run: |
+        if [ "${{ env.exists }}" == "true" ]; then
+          pm2 restart parkwise --update-env --wait-ready
+        else
+          pm2 start src/index.ts --interpreter ./node_modules/.bin/ts-node --name parkwise --wait-ready
+        fi
 
     - name: Save PM2 configuration
       run: pm2 save
