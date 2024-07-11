@@ -21,7 +21,7 @@ router.get('/getConnections/:id',
   (req: Req, res: Res, next: Next) => {
     commonAdapter.getConnections(req, res, next)
   })
-  router.get('/getMessagess',
+  router.get('/getMessages',
     (req: Req, res: Res, next: Next) => {
       commonAdapter.getMessages(req, res, next)
     })
