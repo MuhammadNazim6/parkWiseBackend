@@ -20,7 +20,17 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-      
+
+    - name: Check if parkwise process exists and stop if running
+      id: check_and_stop_parkwise
+      run: |
+        if pm2 describe parkwise > /dev/null 2>&1; then
+          echo "exists=true" >> $GITHUB_ENV
+          pm2 stop parkwise
+        else
+          echo "exists=false" >> $GITHUB_ENV
+        fi
+
     - name: Check for dependency changes
       id: check-dependency-changes
       run: |
@@ -34,19 +44,6 @@ jobs:
       run: |
         touch .env
         echo "${{ secrets.PARKWISE_ENV_FILE }}" > .env
-
-
-   
-    - name: Check if parkwise process exists and stop if running
-    - name: Check if parkwise process exists and stop if running
-      id: check_and_stop_parkwise
-      run: |
-        if pm2 describe parkwise > /dev/null 2>&1; then
-          echo "exists=true" >> $GITHUB_ENV
-          pm2 stop parkwise
-        else
-          echo "exists=false" >> $GITHUB_ENV
-        fi
 
     - name: Perform your build steps
       run: |
