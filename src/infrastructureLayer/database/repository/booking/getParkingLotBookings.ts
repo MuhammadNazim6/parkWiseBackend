@@ -3,10 +3,15 @@ import BookingModel from "../../model/bookingModel";
 
 export const getParkingLotBookings = async (
   bookingModel: typeof BookingModel,
-  lotId: string
-): Promise<{}[]> => {
-  try{
+  lotId: string,
+  page: string
+): Promise<{}> => {
+  try {
     const lotObjectId = new ObjectId(lotId);
+    const pageInt = parseInt(page)
+    const limit = 4;
+    const skip = (pageInt - 1) * limit;
+
     const bookings = await bookingModel.aggregate([
       {
         $match: {
@@ -34,11 +39,24 @@ export const getParkingLotBookings = async (
       },
       {
         $unwind: '$user'
+      },
+      {
+        $skip: skip
+      },
+      {
+        $limit: limit
       }
     ])
-      
-    return bookings
-  }catch(error){
+
+    const totalBookings = await bookingModel.countDocuments({ parkingLotId: lotObjectId });
+
+    const totalPages = Math.ceil(totalBookings / limit);
+    const data = {
+      bookings,
+      totalPages
+    }
+    return data
+  } catch (error) {
     throw error
   }
 }

@@ -11,9 +11,6 @@ export const addFeedback = async (
 ): Promise<IFeedback> => {
   try {
     const addedFeedback = await feedbackModel.create({ parkingLotId, userId, rating, review })
-    console.log(addedFeedback);
-    console.log('Feedback added');
-    
     return addedFeedback
   } catch (error) {
     console.log(error);

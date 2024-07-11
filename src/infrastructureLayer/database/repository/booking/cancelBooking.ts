@@ -14,10 +14,8 @@ export const cancelBooking = async (
     );
 
     if (updatedBooking) {
-      console.log('Updated Booking:', updatedBooking);
       return updatedBooking;
     } else {
-      console.log('No booking found with the given ID');
       return null;
     }
   } catch (error) {

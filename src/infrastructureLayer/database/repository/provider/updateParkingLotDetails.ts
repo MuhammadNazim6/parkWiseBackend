@@ -22,10 +22,7 @@ export const updateParkingLotDetails = async (
         },
       }
     );
-    if (updatedProvider) {
-      console.log('DONE');
 
-    }
     return updatedProvider.modifiedCount > 0;
 
   } catch (error) {

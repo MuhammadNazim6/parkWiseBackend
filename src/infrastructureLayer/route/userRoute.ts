@@ -111,37 +111,33 @@ router.get('/bookingCount/:userId',
   })
 
 router.post('/addFeedback',
-  // userAuth,
+  userAuth,
   (req: Req, res: Res, next: Next) => {
     userAdapter.addFeedback(req, res, next)
   })
 
 router.delete('/deleteFeedback',
-  // userAuth,
+  userAuth,
   (req: Req, res: Res, next: Next) => {
     userAdapter.deleteFeedback(req, res, next)
   })
 
 router.patch('/editFeedback',
-  // userAuth,
+  userAuth,
   (req: Req, res: Res, next: Next) => {
     userAdapter.editFeedback(req, res, next)
   })
 
 router.get('/getLotFeedbacks/:lotId',
-  // userAuth,
+  userAuth,
   (req: Req, res: Res, next: Next) => {
     userAdapter.getLotFeedbacks(req, res, next)
   })
 
 router.post('/suggestions',
-  // userAuth,
+  userAuth,
   (req: Req, res: Res, next: Next) => {
-    console.log('Helloo');
     userAdapter.addSuggestion(req, res, next)
-    console.log(req.body);
-     
-    return
   })
  
   

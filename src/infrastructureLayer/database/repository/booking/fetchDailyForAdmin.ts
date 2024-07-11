@@ -49,9 +49,6 @@ export const fetchDailyForAdmin = async (
       }
     ])
     
-
-    console.log(results);
-
     return results
   } catch (error) {
     throw error

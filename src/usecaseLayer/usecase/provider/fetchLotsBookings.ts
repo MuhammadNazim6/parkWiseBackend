@@ -2,10 +2,11 @@ import { IBookingRepository } from "../../interface/repository/IBookingRepositor
 
 export const fetchLotsBookings = async (
   bookingRepository: IBookingRepository,
-  lotId: string
-): Promise<{}[]> => {
+  lotId: string,
+  page: string
+): Promise<{}> => {
   try {
-   const bookings = await bookingRepository.getParkingLotBookings(lotId)
+    const bookings = await bookingRepository.getParkingLotBookings(lotId, page)
     return bookings
   } catch (error) {
     throw error

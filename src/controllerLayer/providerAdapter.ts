@@ -155,8 +155,9 @@ export class ProviderAdapter {
 
   async fetchLotsBookings(req: Req, res: Res, next: Next) {
     try {
-      const { lotId } = req.params
-      const bookings = await this._providerUseCase.fetchLotsBookings(lotId);
+
+      const { lotId, page } = req.query
+      const bookings = await this._providerUseCase.fetchLotsBookings(lotId as string, page as string);
       if (bookings) {
         res.status(200).json({
           success: true,
@@ -302,7 +303,6 @@ export class ProviderAdapter {
     try {
       const { provId } = req.params
       const daily = await this._providerUseCase.fetchDailyProv(provId)
-      console.log('Count', daily);
 
       if (daily) {
         res.status(200).json({

@@ -57,11 +57,12 @@ export class AdminAdapter {
 
   async getApprovedProviders(req: Req, res: Res, next: Next) {
     try {
-      const providers = await this._providerUsecase.getApprovedProviders();
-      if (providers) {
+      const { page } = req.query
+      const data = await this._providerUsecase.getApprovedProviders(page as string);
+      if (data) {
         res.status(200).json({
           success: true,
-          data: providers
+          data
         })
       } else {
         res.status(404).json({

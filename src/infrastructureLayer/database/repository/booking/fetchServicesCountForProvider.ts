@@ -45,9 +45,6 @@ export const fetchServicesCountForProvider = async (
      
     ]);
 
-
-console.log(servicesCount[0]);  
-
     return servicesCount[0]
   } catch (error) {
     throw error 

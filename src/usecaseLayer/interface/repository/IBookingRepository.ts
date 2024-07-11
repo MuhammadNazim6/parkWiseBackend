@@ -5,7 +5,7 @@ export interface IBookingRepository {
   getBookedSlots(date: string, lotId: string): Promise<{}[]>
   bookSlot(bookingData: ISlotBooking): Promise<{}>
   getBookingDetails(bookingId: string): Promise<{}>
-  getParkingLotBookings(lotId: string): Promise<{}[]>
+  getParkingLotBookings(lotId: string, page: string): Promise<{}>
   fetchUserBookings(userId: string, page: string): Promise<{}>
   cancelBooking(bookingId: string): Promise<IBooking | null>
   rescheduleBooking(bookingId: string, slots: Array<string>): Promise<IBooking | null>

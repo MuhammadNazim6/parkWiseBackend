@@ -53,7 +53,6 @@ export const fetchWeeklyForProv = async (
         }
       }
     ])
-    console.log(results);
 
     return results
   } catch (error) {

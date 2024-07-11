@@ -205,15 +205,16 @@ export class ProviderUseCase {
 
 
   // fetch providers requests
-  async getRequests(page:string) {
+  async getRequests(page: string) {
     return getRequests(
       this.providerRepository,
       page
     )
   }
-  async getApprovedProviders() {
+  async getApprovedProviders(page: string) {
     return getApprovedProviders(
-      this.providerRepository
+      this.providerRepository,
+      page
     )
   }
 
@@ -296,10 +297,11 @@ export class ProviderUseCase {
       toUpdate
     )
   }
-  async fetchLotsBookings(lotId: string) {
+  async fetchLotsBookings(lotId: string, page: string) {
     return fetchLotsBookings(
       this.bookingRepository,
-      lotId
+      lotId,
+      page
     )
   }
 
@@ -321,42 +323,42 @@ export class ProviderUseCase {
     )
   }
 
-  async fetchServicesCount(provId:string) {
+  async fetchServicesCount(provId: string) {
     return fetchServicesCount(
       this.bookingRepository,
       provId
     )
   }
 
-  async getProvProfile(provId:string) {
+  async getProvProfile(provId: string) {
     return getProvProfile(
       this.providerRepository,
       provId
     )
   }
 
-  async fetchTodaysBookingCountProv(provId:string) {
+  async fetchTodaysBookingCountProv(provId: string) {
     return fetchTodaysBookingCountProv(
       this.bookingRepository,
       provId
     )
   }
 
-  async fetchMonthlyProv(provId:string) {
+  async fetchMonthlyProv(provId: string) {
     return fetchMonthlyProv(
       this.bookingRepository,
       provId
     )
   }
 
-  async fetchWeeklyProv(provId:string) {
+  async fetchWeeklyProv(provId: string) {
     return fetchWeeklyProv(
       this.bookingRepository,
       provId
     )
   }
 
-  async fetchDailyProv(provId:string) {
+  async fetchDailyProv(provId: string) {
     return fetchDailyProv(
       this.bookingRepository,
       provId

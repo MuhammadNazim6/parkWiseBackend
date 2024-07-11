@@ -42,7 +42,7 @@ router.patch('/updateProfile/:lotId',
     providerAdapter.updateProvProfile(req, res, next)
   })
 
-router.get('/lotsBookings/:lotId',
+router.get('/lotsBookings',
   providerAuth,
   (req: Req, res: Res, next: Next) => {
     providerAdapter.fetchLotsBookings(req, res, next)

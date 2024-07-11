@@ -10,8 +10,6 @@ export const addSuggestion = async (
 ): Promise<boolean> => {
   try {
     const added = await suggestionModel.create({ id, feedbackType, email, url, message })
-    console.log(added);
-
     return true
   } catch (error) {
     console.log(error);

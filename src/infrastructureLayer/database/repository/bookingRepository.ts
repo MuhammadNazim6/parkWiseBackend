@@ -33,8 +33,8 @@ export class BookingRepository implements IBookingRepository {
   async getBookingDetails(bookingId: string): Promise<{}> {
     return getBookingDetails(this.bookingModel, bookingId);
   }
-  async getParkingLotBookings(lotId: string): Promise<{}[]> {
-    return getParkingLotBookings(this.bookingModel, lotId);
+  async getParkingLotBookings(lotId: string, page: string): Promise<{}> {
+    return getParkingLotBookings(this.bookingModel, lotId, page);
   }
   async fetchUserBookings(userId: string, page: string): Promise<{}> {
     return fetchUserBookings(this.bookingModel, userId, page);

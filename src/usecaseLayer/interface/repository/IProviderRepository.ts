@@ -21,13 +21,13 @@ export interface IProviderRepository {
     startEndTime: string,
     uploadedImageNames: string[]
   ): Promise<boolean>;
-  getProviderRequests(page:string): Promise<{}>;
-  getApprovedProviders(): Promise<{}[]>;
+  getProviderRequests(page: string): Promise<{}>;
+  getApprovedProviders(page: string): Promise<{}>;
   blockUnblockProvider(email: string, status: boolean): Promise<boolean>;
   manageRequest(id: string, action: string): Promise<boolean>;
   getParkingLotsForHome(searchQuery: IFetchParkingLot): Promise<{}>
   getLotDetails(lotId: string): Promise<{}[]>
   updateProfile(lotId: string, toUpdate: IProvUpdateProfile): Promise<{}>
   updateParkingLotDetails(email: string, data: IUpdateParkingLot, images: string[]): Promise<{}>
-  getProvProfile(provId:string): Promise<IParkingProvider | null>
+  getProvProfile(provId: string): Promise<IParkingProvider | null>
 }

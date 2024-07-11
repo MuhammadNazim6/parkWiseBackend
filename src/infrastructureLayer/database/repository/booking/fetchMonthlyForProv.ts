@@ -45,7 +45,6 @@ export const fetchMonthlyForProv = async (
       }
     ])
 
-    console.log(results);
     return results
   } catch (error) {
     throw error

@@ -19,8 +19,6 @@ export const updateUserProfile = async (
         },
       }
     );
-
-    console.log(updatedUser);
     
     return updatedUser.modifiedCount > 0;
 

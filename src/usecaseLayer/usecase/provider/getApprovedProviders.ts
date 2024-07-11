@@ -2,8 +2,8 @@ import { IProviderRepository } from "../../interface/repository/IProviderReposit
 
 export const getApprovedProviders = async (
   providerRepository: IProviderRepository,
-): Promise<{}[]> => {
-  const providers = await providerRepository.getApprovedProviders()
-
-  return providers
+  page:string
+): Promise<{}> => {
+  const datas = await providerRepository.getApprovedProviders(page)
+  return datas
 }  

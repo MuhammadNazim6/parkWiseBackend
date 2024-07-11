@@ -16,9 +16,6 @@ export const getProviderRequests = async (
       .limit(limit);
 
     const totalPages = Math.ceil(totalCount / limit);
-    console.log(requests);
-    
-    // const requests = await provModel.find({approvalStatus:'pending'}).populate('addressId');
     const data = {
       requests,
       totalPages

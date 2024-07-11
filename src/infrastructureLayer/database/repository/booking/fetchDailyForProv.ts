@@ -54,9 +54,6 @@ export const fetchDailyForProv = async (
       }
     ])
 
-
-    console.log(results);
-
     return results
   } catch (error) {
     throw error

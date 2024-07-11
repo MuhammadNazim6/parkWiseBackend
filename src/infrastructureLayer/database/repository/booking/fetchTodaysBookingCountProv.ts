@@ -28,8 +28,6 @@ export const fetchTodaysBookingCountProv = async (
         $count: "totalBookingsToday"
       }
     ]);
-    console.log('TOTOAL COUNT');
-    console.log(result);
     
     return result[0].totalBookingsToday
   } catch (error) {
