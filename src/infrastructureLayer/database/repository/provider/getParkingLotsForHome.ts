@@ -37,7 +37,7 @@ export const getParkingLotsForHome = async (
         $geoNear: {
           near: { type: 'Point', coordinates: [coordinatesObj[0], coordinatesObj[1]] },
           distanceField: 'distance',
-          maxDistance: 10000,
+          maxDistance: 20000,
           spherical: true
         }
       },
