@@ -135,7 +135,6 @@ router.get('/getLotFeedbacks/:lotId',
   })
 
 router.post('/suggestions',
-  userAuth,
   (req: Req, res: Res, next: Next) => {
     userAdapter.addSuggestion(req, res, next)
   })
