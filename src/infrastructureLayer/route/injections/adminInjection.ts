@@ -23,6 +23,8 @@ import { FeedbackRepository } from "../../database/repository/feedbackRepository
 import FeedbackModel from "../../database/model/feedbackModel";
 import { SuggestionRepository } from "../../database/repository/suggestionRepository";
 import SuggestionModel from "../../database/model/suggestionsModel";
+import { ConversationRepository } from "../../database/repository/conversationRepository";
+import ConversationModel from "../../database/model/conversationModel";
 
 
 const adminRepository = new AdminRepository(AdminModel);
@@ -38,6 +40,8 @@ const nodemailer = new Nodemailer();
 const bookingRepository = new BookingRepository(BookingModel)
 const feedbackRepository = new FeedbackRepository(FeedbackModel)
 const suggestionRepository = new SuggestionRepository(SuggestionModel)
+const conversationRepository = new ConversationRepository(ConversationModel)
+
 
 
 const adminUseCase = new AdminUseCase(
@@ -75,7 +79,8 @@ const userUseCase = new UserUseCase(
   bookingRepository,
   feedbackRepository,
   suggestionRepository,
-  adminRepository
+  adminRepository,
+  conversationRepository
 )
 
 const adminAdapter = new AdminAdapter(adminUseCase, providerUseCase, userUseCase);

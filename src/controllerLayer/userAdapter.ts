@@ -425,6 +425,26 @@ export class UserAdapter {
     }
   }
 
+  async getUserChatCount(req: Req, res: Res, next: Next) {
+    try {
+      const { userId } = req.params
+      const chatCount = await this._userusecase.getUserChatCount(userId);
+      if (chatCount) {
+        res.status(200).json({
+          success: true,
+          data: chatCount
+        })
+      } else {
+        res.status(200).json({
+          success: false,
+          message: 'Unable to get chat Count'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
   async addFeedback(req: Req, res: Res, next: Next) {
     try {
       const addedFeedback = await this._userusecase.addFeedback(req.body);

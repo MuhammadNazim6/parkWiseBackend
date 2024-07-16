@@ -22,6 +22,8 @@ import { SuggestionRepository } from "../../database/repository/suggestionReposi
 import SuggestionModel from "../../database/model/suggestionsModel";
 import { AdminRepository } from "../../database/repository/adminRepository";
 import AdminModel from "../../database/model/adminModel";
+import { ConversationRepository } from "../../database/repository/conversationRepository";
+import ConversationModel from "../../database/model/conversationModel";
 
 
 const userRepository = new UserRepository(UserModel);
@@ -37,6 +39,7 @@ const bookingRepository = new BookingRepository(BookingModel)
 const feedbackRepository = new FeedbackRepository(FeedbackModel)
 const suggestionRepository = new SuggestionRepository(SuggestionModel)
 const adminRepository = new AdminRepository(AdminModel)
+const conversationRepository = new ConversationRepository(ConversationModel)
 
 
 const userusecase = new UserUseCase(
@@ -51,7 +54,8 @@ const userusecase = new UserUseCase(
   bookingRepository,
   feedbackRepository,
   suggestionRepository,
-  adminRepository
+  adminRepository,
+  conversationRepository
 );
 
 const providerUseCase = new ProviderUseCase(

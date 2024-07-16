@@ -109,6 +109,12 @@ router.get('/bookingCount/:userId',
   (req: Req, res: Res, next: Next) => {
     userAdapter.getUserBookingCount(req, res, next)
   })
+  
+router.get('/chatCount/:userId',
+  userAuth,
+  (req: Req, res: Res, next: Next) => {
+    userAdapter.getUserChatCount(req, res, next)
+  })
 
 router.post('/addFeedback',
   userAuth,

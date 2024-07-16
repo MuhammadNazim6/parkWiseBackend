@@ -1,6 +1,5 @@
 import BookingModel from "../../model/bookingModel";
 
-
 export const getUserBookingCount = async (
   bookingModel: typeof BookingModel,
   userId: string

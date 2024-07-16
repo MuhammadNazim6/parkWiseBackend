@@ -3,6 +3,7 @@ import { IConversationRepository } from "../../../usecaseLayer/interface/reposit
 import ConversationModel from "../model/conversationModel";
 import { createConversation } from "./conversation/createConversation";
 import { getConversation } from "./conversation/getConversation";
+import { getUserChatCount } from "./conversation/getUserChatCount";
 import { updateConversation } from "./conversation/updateConversation";
 
 export class ConversationRepository implements IConversationRepository {
@@ -16,5 +17,8 @@ export class ConversationRepository implements IConversationRepository {
   }
   async updateConversation(firstPersonId: string, secondPersonId: string, secondPersonType: string, message: string): Promise<boolean> {
     return updateConversation(this.conversationModel, firstPersonId, secondPersonId, secondPersonType, message)
+  }
+  async getUserChatCount(firstPersonId: string): Promise<number> {
+    return getUserChatCount(this.conversationModel, firstPersonId)
   }
 }

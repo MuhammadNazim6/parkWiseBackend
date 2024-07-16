@@ -36,6 +36,8 @@ import { getLotFeedbacks } from "./user/getLotFeedbacks";
 import { ISuggestionRepository } from "../interface/repository/ISuggestionRepository";
 import { addSuggestion } from "./user/addSuggestion";
 import { IAdminRepsitory } from "../interface/repository/IAdminRepository";
+import { IConversationRepository } from "../interface/repository/IConversationRepository";
+import { getUserChatCount } from "./user/getUserChatCount";
 
 
 export class UserUseCase {
@@ -51,6 +53,8 @@ export class UserUseCase {
   private readonly feedbackRepository: IFeedbackRepository;
   private readonly suggestionRepository: ISuggestionRepository;
   private readonly adminRepository: IAdminRepsitory;
+  private readonly conversationRepository: IConversationRepository;
+
 
 
   constructor(
@@ -66,6 +70,7 @@ export class UserUseCase {
     feedbackRepository: IFeedbackRepository,
     suggestionRepository: ISuggestionRepository,
     adminRepository: IAdminRepsitory,
+    conversationRepository: IConversationRepository,
 
   ) {
     this.userRepository = userRepository;
@@ -80,6 +85,7 @@ export class UserUseCase {
     this.feedbackRepository = feedbackRepository;
     this.suggestionRepository = suggestionRepository;
     this.adminRepository = adminRepository;
+    this.conversationRepository = conversationRepository;
 
   }
 
@@ -332,6 +338,13 @@ export class UserUseCase {
   async getUserBookingCount(userId: string) {
     return getUserBookingCount(
       this.bookingRepository,
+      userId
+    )
+  }
+
+  async getUserChatCount(userId: string) {
+    return getUserChatCount(
+      this.conversationRepository,
       userId
     )
   }
