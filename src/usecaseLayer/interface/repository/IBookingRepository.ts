@@ -10,6 +10,8 @@ export interface IBookingRepository {
   cancelBooking(bookingId: string): Promise<IBooking | null>
   rescheduleBooking(bookingId: string, slots: Array<string>): Promise<IBooking | null>
   getUserBookingCount(userId: string): Promise<Number>
+  checkIsAllowedToRate(userId:string, lotId:string): Promise<boolean>
+
   fetchServicesCountForAdmin(): Promise<{}>
   fetchTotalBookingsTodayForAdmin(): Promise<number>
   fetchMonthlyForAdmin(): Promise<{}[]>

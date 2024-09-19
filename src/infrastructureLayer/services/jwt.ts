@@ -36,7 +36,6 @@ class JwtPassword implements Ijwt {
 
   //for decoding the jwt token
   decodeJWT(refreshToken:string): JwtPayload {
-    console.log('Reaching in decodeJWT');
     
     const jwtKey = process.env.JWT_KEY;
     console.log(jwtKey);

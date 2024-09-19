@@ -135,7 +135,6 @@ router.patch('/editFeedback',
   })
 
 router.get('/getLotFeedbacks/:lotId',
-  userAuth,
   (req: Req, res: Res, next: Next) => {
     userAdapter.getLotFeedbacks(req, res, next)
   })
@@ -143,6 +142,12 @@ router.get('/getLotFeedbacks/:lotId',
 router.post('/suggestions',
   (req: Req, res: Res, next: Next) => {
     userAdapter.addSuggestion(req, res, next)
+  })
+
+router.get('/checkIsAllowedToRate/:lotId/:userId',
+  userAuth,
+  (req: Req, res: Res, next: Next) => {    
+    userAdapter.checkIsAllowedToRate(req, res, next)
   })
  
   

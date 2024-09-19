@@ -38,6 +38,7 @@ import { addSuggestion } from "./user/addSuggestion";
 import { IAdminRepsitory } from "../interface/repository/IAdminRepository";
 import { IConversationRepository } from "../interface/repository/IConversationRepository";
 import { getUserChatCount } from "./user/getUserChatCount";
+import { checkIsAllowedToRate } from "./user/checkIsAllowedToRate";
 
 
 export class UserUseCase {
@@ -141,7 +142,7 @@ export class UserUseCase {
     )
   }
 
- 
+
   // checking otp of user
   async checkOtpUser({
     email,
@@ -228,7 +229,7 @@ export class UserUseCase {
   }
 
   async getUsers(
-    page:string
+    page: string
   ) {
     return getUsers(
       this.userRepository,
@@ -389,7 +390,16 @@ export class UserUseCase {
     message: string) {
     return addSuggestion(
       this.suggestionRepository,
-      id, feedbackType, email, url, message 
+      id, feedbackType, email, url, message
+    )
+  }
+
+  async checkIsAllowedToRate(
+    userId: string,
+    lotId: string) {
+    return checkIsAllowedToRate(
+      this.bookingRepository,
+      userId, lotId
     )
   }
 

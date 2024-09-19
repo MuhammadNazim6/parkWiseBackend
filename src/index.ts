@@ -18,15 +18,5 @@ const startServer = ()=>{
   })
 }
 
-// cron.schedule('*/10 * * * *', () => {
-//   axios
-//       .get(SERVER)
-//       .then((response) => {
-//           console.log(`Request sent successfully at ${new Date()}`);
-//       })
-//       .catch((error) => {
-//           console.error(`Error sending request: ${error.message}`);
-//       });
-// });
 
 startServer()

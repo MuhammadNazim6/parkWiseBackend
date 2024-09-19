@@ -23,6 +23,8 @@ export const checkOtpCommon = async (
     }
 
     const otpFound = await otpRepository.findOtp(email)
+    console.log('FOUND OTP IS ',otpFound);
+    
     if (!otpFound) {
       return {
         status: 200,
@@ -30,12 +32,14 @@ export const checkOtpCommon = async (
         message: `The otp have been expired`,
       }
     }
+console.log(typeof enteredOtp);
+console.log(typeof otpFound.otp);
 
     if (enteredOtp !== otpFound.otp) {
       return {
         status: 200,
         success: false,
-        message: `Entered otp is correct`,
+        message: `Entered otp is incorrect`,
       }
       // throw ErrorResponse.badRequest("Incorrect Otp");
     }

@@ -79,8 +79,7 @@ export class UserAdapter {
   // @access Public
   async checkOtp(req: Req, res: Res, next: Next) {
     try {
-      const matched = await this._userusecase.checkOtpUser(req.body);
-
+      const matched = await this._userusecase.checkOtpUser(req.body);      
       res.status(matched.status).json({
         success: matched.success,
         message: matched.message,
@@ -538,6 +537,26 @@ export class UserAdapter {
         res.status(400).json({
           success: false,
           message: 'Unable to add suggestion'
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async checkIsAllowedToRate(req: Req, res: Res, next: Next) {
+    try {
+      const { userId, lotId } = req.params
+      const isAllowed = await this._userusecase.checkIsAllowedToRate(userId, lotId);
+      if (isAllowed) {
+        res.status(200).json({
+          success: true,
+          message: 'User allowed to rate'
+        })
+      } else {
+        res.status(400).json({
+          success: false,
+          message: 'User not allowed to rate'
         });
       }
     } catch (err) {

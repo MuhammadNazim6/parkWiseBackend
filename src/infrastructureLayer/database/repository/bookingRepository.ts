@@ -4,6 +4,7 @@ import { ISlotBooking } from "../../../usecaseLayer/interface/repository/ICommon
 import BookingModel from "../model/bookingModel";
 import { bookSlot } from "./booking/bookSlot";
 import { cancelBooking } from "./booking/cancelBooking";
+import { checkIsAllowedToRate } from "./booking/checkIsAllowedToRate";
 import { fetchDailyForAdmin } from "./booking/fetchDailyForAdmin";
 import { fetchDailyForProv } from "./booking/fetchDailyForProv";
 import { fetchMonthlyForAdmin } from "./booking/fetchMonthlyForAdmin";
@@ -45,6 +46,10 @@ export class BookingRepository implements IBookingRepository {
   async rescheduleBooking(bookingId: string, slots: Array<string>): Promise<IBooking | null> {
     return rescheduleBooking(this.bookingModel, bookingId, slots);
   }
+  async checkIsAllowedToRate(userId: string, lotId:string): Promise<boolean> {
+    return checkIsAllowedToRate(this.bookingModel, userId, lotId);
+  }
+
   async getUserBookingCount(userId: string): Promise<Number> {
     return getUserBookingCount(this.bookingModel, userId);
   }
